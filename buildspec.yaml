@@ -6,7 +6,7 @@ phases:
 
   install:
     commands:
-      - pip install mkdocs
+      - pip install mkdocs pymdown-extensions mkdocs-material
 
   build:
     commands:
