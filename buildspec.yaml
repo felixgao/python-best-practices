@@ -17,6 +17,6 @@ phases:
       - |
         if [ $CODEBUILD_BUILD_SUCCEEDING -eq 1 -a "$BUILD_TYPE" = release ]; then
           GH_TOKEN=$(aws secretsmanager get-secret-value --secret-id $GH_TOKEN_KEY --output text --query SecretString)
-          git remote set-url origin https://ibp-cgdo:${$GH_TOKEN}@github.intuit.com/data-science/best-python-practices.git
+          git remote set-url origin https://ibp-cgdo:${GH_TOKEN}@github.intuit.com/data-science/best-python-practices.git
           mkdocs gh-deploy
         fi
