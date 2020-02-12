@@ -4,7 +4,7 @@
     
     :white_check_mark: Use [Google-style docstrings]
 
-    :white_check_mark: Use either [napoleon] docstring or [PEP-484] built-in type annotations 
+    :white_check_mark: Use either [napoleon] docstring type annotations or [PEP-484] built-in type annotations 
 
     :white_check_mark: (Optional) Use [mypy] or [pyre-check] for type checking
     
