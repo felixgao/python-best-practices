@@ -1,0 +1,23 @@
+version: 0.2
+env:
+  variables:
+    GH_TOKEN_KEY: 'arn:aws:secretsmanager:us-west-2:320832428716:secret:/agi-repo/data-science/best-python-practices/release/gh-token'
+phases:
+
+  install:
+    commands:
+      - pip install mkdocs
+
+  build:
+    commands:
+      - mkdocs build
+
+  post_build:
+    commands:
+      - |
+        if [ $CODEBUILD_BUILD_SUCCEEDING -eq 1 -a "$BUILD_TYPE" = release ]; then
+          GH_TOKEN=$(aws secretsmanager get-secret-value --secret-id $GH_TOKEN_KEY --output text --query SecretString)
+          git config --global user.name ibp-cgdo
+          git config --global user.password $GH_TOKEN
+          mkdocs gh-deploy
+        fi

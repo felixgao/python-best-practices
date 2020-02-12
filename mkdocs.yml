@@ -1,0 +1,40 @@
+site_name: Best Python Practices
+nav:
+  - Home: index.md
+  - Tutorials:
+      - Overview: tutorials.md
+      - Profiling:
+          - Profiling Tools: tutorials/performance/profiling_tools.md
+          - Lookup Tables: tutorials/performance/lookup_tables.md
+          - Array Multi-Processing: tutorials/performance/array_multiprocessing.md
+      - Packaging:
+          - Structure: tutorials/packaging/structure.md
+          - Code Style: tutorials/packaging/code_style.md
+          - Logging: tutorials/packaging/logging.md
+          - API Design: tutorials/packaging/api_design.md
+          - Testing: tutorials/packaging/testing.md
+  - Libraries & Tools: libraries.md
+
+repo_name: 'best-python-practices'
+repo_url: 'https://github.intuit.com/data-science/best-python-practices'
+
+theme:
+  name: material
+  logo: images/python.svg
+  primary: indigo
+  accent: yello
+
+markdown_extensions:
+  - codehilite
+  - admonition
+  - toc:
+      permalink: true
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+
+extra:
+  social:
+    - type: 'github'
+      link: 'https://github.intuit.com/data-science/best-python-practices'
+    - type: 'slack'
+      link: 'https://intuit-teams.slack.com/channels/cmty-cdo-data-science'
