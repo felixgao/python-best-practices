@@ -161,7 +161,7 @@ variables should have the following properties:
 Dictionaries should have information about both the **key and value** in 
 the name. These should have the following forms:
 
-- `{singular-key}_{plural-values}` *Somewhat ambiguous, but succinct*
+- `{singular-key}_{plural-values}` *(Preferred) Somewhat ambiguous, but succinct*
 - `{key}_to_{value}` *Somewhat verbose*
 - `{value}_by_{key}` *Somewhat verbose, less direct than `{key}_to_{value}`*
 - `{key}_{value}_lookup` *Somewhat verbose, but describes how it should be used*
@@ -185,7 +185,7 @@ word_dict = {1: "hello", 2: "world"}    # Type included in name
 
 In some cases there are well-understood mappings that are meant to be iterated
 over. In these cases it makes sense to just use the pluralized version of the 
-word and just mention what the contents are. Anything that is meant to be 
+word and name the variable after the contents. Anything that is meant to be 
 iterated over should be pluralized.
 
 :white_check_mark:
@@ -193,13 +193,24 @@ iterated over should be pluralized.
 headers = {"Content-Type": "application/json"}
 cookies = {"tz": "America/Los_Angeles"}
 hyperparameters = {"min_samples_leaf": 50}
-gunicorn_options = {"workers": 8}
+gunicorn_options = {"workers": 8} # Gunicorn uses `options`
 ```
 :x:
 ```python
 header_name_to_value = {"Content-Type": "application/json"}  # Too verbose
 cookie_name_to_value = {"tz": "America/Los_Angeles"}         # Too verbose
 hyperparameter_name_to_value = {"min_samples_leaf": 50}      # Too verbose
+```
+
+In other cases, there are libraries that have predefined names for their 
+arguments that do not follow the conventions above. In this case it is 
+acceptable to follow their conventions when interacting with their code. This
+makes the code less ambiguous because the library name and the application-code 
+variable name match.
+
+:white_check_mark:
+```python
+feed_dict = {"name": tensor} # TensorFlow uses this name so it is acceptable
 ```
 
 ### Tuples
