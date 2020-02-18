@@ -87,7 +87,7 @@ code usage is less ambiguous.
 
 There are two good strategies for annotating the types of your code:
 
-### [PEP-484] Style type annotations:
+### [PEP-484] Style type annotations
 
 This places the type annotation directly in code. 
 
@@ -114,7 +114,7 @@ def subtract(minuend: int, subtrahend: int) -> int:
     return minuend + subtrahend
 ```
 
-### Restructured Text type annotations:
+### Restructured Text type annotations
 
 This places type annotations in the docstrings of your code.
 
@@ -159,7 +159,9 @@ variables should have the following properties:
 ### Dictionaries
 
 Dictionaries should have information about both the **key and value** in 
-the name. These should have the following forms:
+the name. 
+
+Acceptable Forms:
 
 - `{singular-key}_{plural-values}` *(Preferred) Somewhat ambiguous, but succinct*
 - `{key}_to_{value}` *Somewhat verbose*
@@ -213,12 +215,77 @@ variable name match.
 feed_dict = {"name": tensor} # TensorFlow uses this name so it is acceptable
 ```
 
-### Tuples
-### Lists
-### Integers
-### Floats
+### Lists/Series/Arrays/Sets
+
+Collections (non-dictionary) should always be the plural version of whatever is 
+contained within. In the case where the value type is ambiguous, try to name
+the collection so it is possible to determine what is contained within.
+
+:white_check_mark:
+```python
+zip_codes = [92127, 12345]
+names = {"Johnny", "Lisa", "Mark", "Denny"}
+column_names = ["zip_code", "wages"] # `names` suffix indicates string value
+```
+:x:
+```python
+zip_list = [92127, 12345]        # Do not include type
+list = [92127, 12345]            # Shadows built-in list, Ambiguous
+items = [92127, 12345]           # Ambiguous
+columns = ["zip_code", "wages"]  # Value type is ambiguous
+```
+
+
+### Integers/Floats
+
+When possible, number names should indicate the how the value that is being 
+used. Contrary to the rules regarding collections, there are a many 
+well-understood values that indicate a number which should be unambiguous.
+
+:white_check_mark:
+```python
+limit = 10
+threshold = 0.7
+size = 10       # Potentially ambiguous
+index = 10      # Potentially ambiguous
+count = 10      # Potentially ambiguous
+n_items = 10    # `n` prefix always indicates a number
+min_items = 10  # `min` prefix always indicates a number
+max_items = 10  # `max` prefix always indicates a number
+buy_price = 10  # Domain specific words always indicate a number 
+```
+:x:
+```python
+items = 10   # Ambiguous, could indicate a collection
+n = 10       # Not Descriptive
+n_value = 10 # `value` suffix is not descriptive
+n_quantity = 10 # `value` suffix is not descriptive
+```
+
+
 ### Strings
 ### Classes
+
+Class instances should always be named after the class itself. For the purposes
+of describing the forms which a variable should be named the following class
+name will be used `DescriptionNoun`.
+
+Acceptable Forms:
+
+- `{description}_{noun}` *(Preferred) CamelCase to snake_case conversion*
+- `{noun}` *More succinct, potentially ambiguous*
+
+:white_check_mark:
+```python
+class ExampleContext:
+    pass
+
+example_context = ExampleContext()
+context = ExampleContext()
+```
+
+### Tuples
+
 
 
 [yapf]: https://github.com/google/yapf/
