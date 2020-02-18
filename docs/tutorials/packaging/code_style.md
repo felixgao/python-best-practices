@@ -82,9 +82,10 @@ are essential reference for how to write clean, simple python code.
 ## Type Annotations
 
 Type annotations of some kind are recommended but can be implemented in 
-different ways.
+different ways. Some form of type annotation is always recommended so that
+code usage is less ambiguous.
 
-There are good strategies for annotating the types of your code:
+There are two good strategies for annotating the types of your code:
 
 ### [PEP-484] Style type annotations:
 
@@ -115,10 +116,12 @@ def subtract(minuend: int, subtrahend: int) -> int:
 
 ### Restructured Text type annotations:
 
+This places type annotations in the docstrings of your code.
+
 Pros:
 
 - Backwards compatible with python 2
-- Type-checked by modern interpreters
+- Type-checked by modern IDE's. Pycharm understands docstring types.
 
 Cons:
 
@@ -137,6 +140,74 @@ def subtract(minuend, subtrahend):
     """
     return minuend + subtrahend
 ```
+
+## Variable Naming
+
+In the style guides mentioned above, the naming conventions are primarily
+concerned with the case used (snake_case vs CamelCase, etc.) However, this
+section is in regards to the actual words which should be used in a name.
+
+Naming is one of the hardest problems in programming. Good naming can 
+drastically increase the readability of your code. To name things well, 
+variables should have the following properties:
+
+- Descriptive
+- Unambiguous
+- Should not contain the type. This is what type annotations are for
+- Should be short if possible. Long names make code more difficult to read
+
+### Dictionaries
+
+Dictionaries should have information about both the **key and value** in 
+the name. These should have the following forms:
+
+- `{singular-key}_{plural-values}` *Somewhat ambiguous, but succinct*
+- `{key}_to_{value}` *Somewhat verbose*
+- `{value}_by_{key}` *Somewhat verbose, less direct than `{key}_to_{value}`*
+- `{key}_{value}_lookup` *Somewhat verbose, but describes how it should be used*
+
+Each of the forms can be more appropriate in different scenarios where the 
+meaning is more clear in context.
+
+:white_check_mark:
+```python
+word_lengths = {"hello": 5, "world": 5}
+index_to_word = {1: "hello", 2: "world"}
+word_by_index = {1: "hello", 2: "world"}
+index_word_lookup = {1: "hello", 2: "world"}
+```
+:x:
+```python
+words = {1: "hello", 2: "world"}        # Ambiguous, No key information
+word_lookup = {1: "hello", 2: "world"}  # No key information
+word_dict = {1: "hello", 2: "world"}    # Type included in name
+```
+
+In some cases there are well-understood mappings that are meant to be iterated
+over. In these cases it makes sense to just use the pluralized version of the 
+word and just mention what the contents are. Anything that is meant to be 
+iterated over should be pluralized.
+
+:white_check_mark:
+```python
+headers = {"Content-Type": "application/json"}
+cookies = {"tz": "America/Los_Angeles"}
+hyperparameters = {"min_samples_leaf": 50}
+gunicorn_options = {"workers": 8}
+```
+:x:
+```python
+header_name_to_value = {"Content-Type": "application/json"}  # Too verbose
+cookie_name_to_value = {"tz": "America/Los_Angeles"}         # Too verbose
+hyperparameter_name_to_value = {"min_samples_leaf": 50}      # Too verbose
+```
+
+### Tuples
+### Lists
+### Integers
+### Floats
+### Strings
+### Classes
 
 
 [yapf]: https://github.com/google/yapf/
