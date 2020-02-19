@@ -235,10 +235,9 @@ items = [92127, 12345]           # Ambiguous
 columns = ["zip_code", "wages"]  # Value type is ambiguous
 ```
 
-
 ### Integers/Floats
 
-When possible, number names should indicate the how the value that is being 
+When possible, number names should indicate the how the value should be 
 used. Contrary to the rules regarding collections, there are a many 
 well-understood values that indicate a number which should be unambiguous.
 
@@ -262,8 +261,30 @@ n_value = 10 # `value` suffix is not descriptive
 n_quantity = 10 # `value` suffix is not descriptive
 ```
 
-
 ### Strings
+
+When possible, string names should indicate how the value should be used. The
+naming conventions of strings are similar to the conventions of numbers. There 
+are many well-understood names that could indicate a string type.
+
+Common Forms:
+
+- `{descriptor}_key` *May indicate lookup key*
+- `{descriptor}_name` *May indicate lookup key*
+
+:white_check_mark:
+```python
+environment_name = 'cdev'
+environment_key = 'cdev'
+environment = 'cdev'      # Well-known string value, Potentially ambiguous
+env = 'cdev'              # Well-known abbreviation, Potentially ambiguous
+```
+:x:
+```python
+value = 'cdev'  # Ambiguous
+config = 'cdev' # Ambiguous could indicate an object
+```
+
 ### Classes
 
 Class instances should always be named after the class itself. For the purposes
@@ -283,9 +304,6 @@ class ExampleContext:
 example_context = ExampleContext()
 context = ExampleContext()
 ```
-
-### Tuples
-
 
 
 [yapf]: https://github.com/google/yapf/
