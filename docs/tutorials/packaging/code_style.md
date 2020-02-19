@@ -255,9 +255,9 @@ buy_price = 10  # Domain specific words always indicate a number
 ```
 :x:
 ```python
-items = 10   # Ambiguous, could indicate a collection
-n = 10       # Not Descriptive
-n_value = 10 # `value` suffix is not descriptive
+items = 10      # Ambiguous, could indicate a collection
+n = 10          # Not Descriptive
+n_value = 10    # `value` suffix is not descriptive
 n_quantity = 10 # `quantity` suffix is not descriptive
 ```
 
