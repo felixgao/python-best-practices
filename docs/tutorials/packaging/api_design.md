@@ -95,7 +95,7 @@ To model ourselves after the standard library, attempt to always use functions
 which consume native types on the arguments and as return types. The common case
 where this is not done is in library oriented code (i.e `numpy`, `pandas`, 
 `sklearn`, `tensorflow`, `pytorch`). This is a huge problem in data science
-code bases because it becomes difficult to determine what types are expected in
+codebases because it becomes difficult to determine what types are expected in
 each function. Furthermore, to unit-test a function sometimes requires a
 DataFrame as an input. 
 
@@ -108,8 +108,8 @@ to read the body of every function included in the python standard library in
 order to understand it. We take it for granted that the API is so simple and
 easy to understand.
 
-**Example 1**: This is the *most common* type of function in data science code 
-bases (often significantly more complex).
+**Example 1**: This is the *most common* type of function in data science 
+codebases (often significantly more complex).
 
 :x:
 ```python
@@ -141,11 +141,11 @@ df['zip'] = typecast_zip_codes(df['zip'].values)
 The calling code is burdened with the responsibilty of deconstructing/modifying
 the dataframe but this is a *good thing*. This allows the calling code to fully
 understand the side-effects of the call without having to look at the 
-implementation. This easier to test and much more maintainable. If this kind of 
-API is used throughout the codebase then there will be very few places that 
+implementation. This is easier to test and much more maintainable. If this kind 
+of API is used throughout the codebase, then there will be very few places that 
 have assumptions about DataFrame structure. 
 
-**Example 2** A similar problem occurs in object oriented problem but to a
+**Example 2**: A similar problem occurs in object oriented problem but to a
 worse degree.
 
 :x:
@@ -153,7 +153,7 @@ worse degree.
 ```python
 class MyPredictor:
     def __init__(self, df: pd.DataFrame, config: dict):
-        self.train = df
+        self.train_df = df
         self.iterations = config.get('iterations', 0)
     def train(self):
         ...
