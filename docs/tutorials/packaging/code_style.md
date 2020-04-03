@@ -15,7 +15,9 @@
 
 A consistent code style makes code easier to read and understand. If increased
 legibility and beautiful code are not enough reason to embrace a consistent 
-style, then time is
+style, then the ability to save yourself lots of time should be. A consistent
+code style allows you to quickly familiarize yourself with a codebase even if 
+it is being worked on by many people.
 
 There are many tools which can be used to check code style in python 
 (e.g. [pylint], [pep8], [yapf], etc.) so a common question is which one to use. 
