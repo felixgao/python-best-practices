@@ -1,8 +1,12 @@
+:warning: UNDER CONSTRUCTION :warning:
+
 !!! Summary
 
     :white_check_mark: Use a flat namespace
     
     :white_check_mark: Use minimal natively-typed arguments
+    
+    :x: Avoid pandas objects as arguments and returns
     
     :x: Avoid exposing classes
 
@@ -52,9 +56,12 @@ when designing an API but not absolute strict rules. There are always exceptions
 to the following cases:
 
 1. Use a flat namespace.
-2. Use primitive types as arguments and returns
+2. Use primitive types as arguments and returns.
+    - Avoid pandas as arguments and returns.
+    - Avoid dictionaries as arguments and returns.
 3. Avoid variable length keyword arguments (**kwargs)
 4. Avoid exposing stateful objects. Use mostly functions.
+5. Minimize disk access and serialization.
 
 ### Use a flat namespace
 
@@ -81,6 +88,106 @@ from my_library import my_submodule
 result = my_submodule.my_function()
 container = my_submodule.MyClass()
 ```
+
+### Use primitive types as arguments and returns
+
+To model ourselves after the standard library, attempt to always use functions
+which consume native types on the arguments and as return types. The common case
+where this is not done is in library oriented code (i.e `numpy`, `pandas`, 
+`sklearn`, `tensorflow`, `pytorch`). This is a huge problem in data science
+code bases because it becomes difficult to determine what types are expected in
+each function. Furthermore, to unit-test a function sometimes requires a
+DataFrame as an input. 
+
+The worst functions are those that consume DataFrames as arguments and have very 
+specific requirements on what columns are present. This is one of the most
+common anti-patterns found in data science python code. This creates an implicit 
+API that in the worst case (and most common case) requires that the developer 
+read the entire function body to understand how to use it. Imagine if you needed
+to read the body of every function included in the python standard library in 
+order to understand it. We take it for granted that the API is so simple and
+easy to understand.
+
+**Example 1**: This is the *most common* type of function in data science code 
+bases (often significantly more complex).
+
+:x:
+```python
+def typecast_zip_codes(df: pd.DataFrame):
+    df['zip'] = df['zip'].astype(int)
+
+# Example call
+typecast_zip_codes(df)
+```
+
+It is a function designed for a specific dataset that assumes that the calling 
+code has a dataframe with a specific column. It is unclear from the signature
+that the dataframe is modified in-place. It is unclear from the signature if
+there is a return that should be used.
+
+The remedy to this problem is to make the API oriented around a series/array
+and to leave the deconstruction of the frame to the calling code.
+
+:white_check_mark:
+
+```python
+def typecast_zip_codes(array: np.ndarray):
+    return array.astype(int)
+
+# Example call
+df['zip'] = typecast_zip_codes(df['zip'].values)
+```
+
+The calling code is burdened with the responsibilty of deconstructing/modifying
+the dataframe but this is a *good thing*. This allows the calling code to fully
+understand the side-effects of the call without having to look at the 
+implementation. This easier to test and much more maintainable. If this kind of 
+API is used throughout the codebase then there will be very few places that 
+have assumptions about DataFrame structure. 
+
+**Example 2** A similar problem occurs in object oriented problem but to a
+worse degree.
+
+:x:
+
+```python
+class MyPredictor:
+    def __init__(self, df: pd.DataFrame, config: dict):
+        self.train = df
+        self.iterations = config.get('iterations', 0)
+    def train(self):
+        ...
+    def predict(self):
+        ...
+```
+
+In this code it is confusing what the lifetime of the `df` argument is and what
+it is even used for. An object should only track state that must be present 
+during the entire lifetime of the object.
+
+The second issue is that the config dictionary argument creates an implicit API.
+The user of the class cannot tell what the contents of the config dictionary
+should be without looking at the implementation of the constructor. This is why
+frameworks like `sklearn` make all of their hyperparameters explicit in their 
+constructors. It allows you to be able to tell at the call-site if you are
+configuring the estimator correctly. Imagine if the caller had made a typo in
+a dictionary key for the example above. The mistake would be silently ignored.
+
+The remedy to these issues are to colocate the DataFrame with its usage and
+then to make the class constructor explicit.
+
+:white_check_mark:
+
+```python
+class MyPredictor:
+    def __init__(n_iterations: int):
+        self.n_iterations = n_iterations
+    def train(self, X, y):
+        ...
+    def predict(self, X):
+        ...
+```
+
 
 ### Avoid variable length keyword arguments (**kwargs)
 
