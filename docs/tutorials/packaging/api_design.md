@@ -57,8 +57,8 @@ to the following cases:
 
 1. Use a flat namespace.
 2. Use primitive types as arguments and returns.
-    - Avoid pandas as arguments and returns.
     - Avoid dictionaries as arguments and returns.
+    - Avoid pandas as arguments and returns.
 3. Avoid variable length keyword arguments (**kwargs)
 4. Avoid exposing stateful objects. Use mostly functions.
 5. Minimize disk access and serialization.
@@ -99,6 +99,80 @@ codebases because it becomes difficult to determine what types are expected in
 each function. Furthermore, to unit-test a function sometimes requires a
 DataFrame as an input. 
 
+
+#### Dictionary-Oriented Code
+
+A common pattern is to use dictionary arguments and return values. The problem 
+with this kind of design is it often creates an implicit API which is not 
+immediately obvious from the function signature. A function that can be 
+understood from inspecting the name and arguments is generally better than one
+that requires reading the docstring.
+
+**Example 1**: Often times deeply nested structures are required as input 
+parameters. These structures are often unnecessary to perform the core 
+logic/utility provided by the code. This causes the input parameter to have a 
+structural requirement that cannot be known by inspecting the function 
+arguments. The user of the function must look at the documentation or the 
+function body to understand how to use it.
+
+:x:
+```python
+def join_first_and_last(parts, sep=' '):
+    return parts["first"] + sep + parts["last"]
+
+# Example call
+data = {"first": "hello", "last": "world"}
+result = join_first_and_last(data)
+```
+
+**Solution**: Force the user to destructure the data prior to passing it in to 
+the function. This is usually a good practice to limit the scope of what each 
+function "knows" about. If the function can be written in a way that the 
+context in which is it called is unimportant, this  makes the code more 
+reusable and generally easier to test.
+
+:white_check_mark:
+```python
+def join_first_and_last(first, last, sep=' '):
+    return first + sep + last
+
+# Example call
+data = {"first": "hello", "last": "world"}
+result = join_first_and_last(data["first"], data["last"])
+```
+
+**Example 2**: When dictionaries are used as return values, this causes a 
+similar problem to using them as an arguments. The user of the function cannot
+determine the structure of the dictionary by inspecting the signature. This
+has the second effect of nearly always requiring the user to destructure the 
+return value.
+
+:x:
+```python
+def truth_values():
+    return {"true": True, "false": False}
+
+# Example call
+result = truth_values()
+true = result["true"]
+false = result["false"]
+```
+
+**Solution**: Use tuples as returns. This avoids forcing the user to 
+destructure the return value. Notice that in the above example the dictionary 
+keys needed to be duplicated in the calling code in order to access the data. 
+
+:white_check_mark:
+```python
+def truth_values():
+    return True, False
+
+# Example call
+true, false = truth_values()
+```
+
+#### Pandas-Oriented Code
+
 The worst functions are those that consume DataFrames as arguments and have very 
 specific requirements on what columns are present. This is one of the most
 common anti-patterns found in data science python code. This creates an implicit 
@@ -121,12 +195,12 @@ typecast_zip_codes(df)
 ```
 
 It is a function designed for a specific dataset that assumes that the calling 
-code has a dataframe with a specific column. It is unclear from the signature
-that the dataframe is modified in-place. It is unclear from the signature if
+code has a DataFrame with a specific column. It is unclear from the signature
+that the DataFrame is modified in-place. It is unclear from the signature if
 there is a return that should be used.
 
-The remedy to this problem is to make the API oriented around a series/array
-and to leave the deconstruction of the frame to the calling code.
+**Solution**: Make the API oriented around a series/array and to leave the 
+deconstruction of the DataFrame to the calling code.
 
 :white_check_mark:
 
@@ -139,7 +213,7 @@ df['zip'] = typecast_zip_codes(df['zip'].values)
 ```
 
 The calling code is burdened with the responsibilty of deconstructing/modifying
-the dataframe but this is a *good thing*. This allows the calling code to fully
+the DataFrame but this is a *good thing*. This allows the calling code to fully
 understand the side-effects of the call without having to look at the 
 implementation. This is easier to test and much more maintainable. If this kind 
 of API is used throughout the codebase, then there will be very few places that 
@@ -173,14 +247,14 @@ constructors. It allows you to be able to tell at the call-site if you are
 configuring the estimator correctly. Imagine if the caller had made a typo in
 a dictionary key for the example above. The mistake would be silently ignored.
 
-The remedy to these issues are to colocate the DataFrame with its usage and
-then to make the class constructor explicit.
+**Solution**: Colocate the DataFrame with its usage and make the class 
+constructor take explicit arguments.
 
 :white_check_mark:
 
 ```python
 class MyPredictor:
-    def __init__(n_iterations: int):
+    def __init__(self, n_iterations: int):
         self.n_iterations = n_iterations
     def train(self, X, y):
         ...
