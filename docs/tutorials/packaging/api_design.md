@@ -14,12 +14,12 @@
 # API Design
 
 The goal of any API should be to have the following properties:
-- **Legibility**: The user should immediately understand how to use a library 
+* **Legibility**: The user should immediately understand how to use a library 
   function/class. The documentation should be largely unnecessary. How arguments
   function should be obvious. The return type of a function should be obvious.
-- **State Simplicity**: The user should immediately understand the state 
+* **State Simplicity**: The user should immediately understand the state 
   lifetime of a library function/class.
-- **Interoperability**: The user should immediately understand how to use 
+* **Interoperability**: The user should immediately understand how to use 
   library function/class with other functions/classes even outside of the given
   library.
 
@@ -28,8 +28,8 @@ This is a library that follows a consistent style and uses patterns that make it
 extremely easy to use.
 
 Two third party libraries of note that have very easy to understand APIs are:
-- [numpy]: Function-oriented library which exposes 1 primary class
-- [sklearn]: Object-oriented library which exposes many class
+* [numpy]: Function-oriented library which exposes 1 primary class
+* [sklearn]: Object-oriented library which exposes many class
 
 The design of these libraries is almost completely opposite, but they
 both manage to make their API easy to understand. By having consistent API rules
