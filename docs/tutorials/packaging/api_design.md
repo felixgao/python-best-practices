@@ -182,18 +182,19 @@ data = {"first": "hello", "last": "world"}
 result = join_first_and_last(data["first"], data["last"])
 ```
 
-**Exception**: The most common exception to using a dictionary as an argument 
-is when the  dictionary is meant to be iterated over by the calling code or used
+**Exception**: The most common exceptions to using a dictionary as an argument 
+is when the dictionary is meant to be iterated over within the function or used
 as a lookup table.
 
 :white_check_mark:
 ```python
-def get_column_types():
-    return {
-        'zip_code': str,
-        'salaries_and_wages': int,
-        'flag_old_or_blind': bool,
-    }
+# Iteration usage
+def max_key_length(dictionary: dict):
+    return max(map(len, dictionary.keys()))
+
+# Lookup table usage
+def largest_zip_code_population(zip_codes: list, zip_to_population: dict):
+    return max(zip_to_population.get(code, -1) for code in zip_codes)
 ```
 
 ##### Dictionary Returns
@@ -206,13 +207,15 @@ in order to use it.
 
 :x:
 ```python
-def truth_values():
-    return {"true": True, "false": False}
+def precision_recall(model, x_test, y_test):
+    precision = model.precision(x_test, y_test)
+    recall = model.recall(x_test, y_test)
+    return {"precision": precision, "recall": recall}
 
 # Example call
-result = truth_values()
-true = result["true"]
-false = result["false"]
+result = precision_recall(...)
+precision = result["precision"]
+recall = result["recall"]
 ```
 
 **Solution**: Use tuples as returns. This avoids forcing the user to 
@@ -221,11 +224,13 @@ keys needed to be duplicated in the calling code in order to access the data.
 
 :white_check_mark:
 ```python
-def truth_values():
-    return True, False
+def precision_recall(model, x_test, y_test):
+    precision = model.precision(x_test, y_test)
+    recall = model.recall(x_test, y_test)
+    return precision, recall
 
 # Example call
-true, false = truth_values()
+precision, recall = precision_recall(...)
 ```
 
 **Exception**: The most common exception to using a dictionary as a return type 
@@ -401,7 +406,7 @@ Functions/classes should almost never read from disk to execute the provided
 logic. The logic and the state management should always be separated.
 
 The following example may seem like an egregious use of serialization, but 
-these patterns can all be commonly found in data science codebases.
+these patterns can all be commonly found in code.
 
 :x:
 
