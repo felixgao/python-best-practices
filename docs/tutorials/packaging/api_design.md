@@ -296,7 +296,10 @@ have assumptions about DataFrame structure.
 ##### Pandas Class Arguments
 
 A similar problem occurs in object-oriented library design but to a worse 
-degree.
+degree. A common anti-pattern in data science code is to unnecessarily save 
+entire datasets as a class member (or within multiple classes). This is 
+generally done so that the class can later reference that member variable 
+from a method without including it in the method argument list.
 
 :x:
 
@@ -313,15 +316,19 @@ class MyPredictor:
 
 In this code it is confusing what the lifetime of the `df` argument is and what
 it is even used for. An object should only track state that must be present 
-during the entire lifetime of the object.
+during the entire lifetime of the object. If the `df` is only used in the 
+`train` method then it should not be passed to the constructor.
 
-The second issue is that the config dictionary argument creates an implicit API.
-The user of the class cannot tell what the contents of the config dictionary
-should be without looking at the implementation of the constructor. This is why
-frameworks like `sklearn` make all of their hyperparameters explicit in their 
-constructors. It allows you to be able to tell at the call-site if you are
-configuring the estimator correctly. Imagine if the caller had made a typo in
-a dictionary key for the example above. The mistake would be silently ignored.
+A second issue here is that the config dictionary argument creates an implicit 
+API. The user of the class cannot tell what the contents of the config 
+dictionary should be without looking at the implementation of the constructor. 
+This is why frameworks like `sklearn` make all of their hyperparameters explicit 
+in their constructors. It allows you to be able to tell at the call-site if you 
+are configuring the estimator correctly. Imagine if the caller had made a typo 
+in a dictionary key for the example above. The mistake would be silently 
+ignored unless an explict check was implemented. An explicit check would 
+introduce unnecessary complexity when a language feature (arguments) is already
+available to handle this.
 
 **Solution**: Colocate the DataFrame with its usage and make the class 
 constructor take explicit arguments.
@@ -373,11 +380,95 @@ def example(arg, **kwargs):
 
 ### Avoid exposing stateful objects {#classes}
 
-Only expose classes when the library **must** manage state.
+Only expose classes when a library/module **must** manage state. Object-oriented
+data science code is very useful when complex state cannot be abstracted into
+procedures without exposing many different internal state variables to the end
+user. However, nearly all object-oriented code can be written in a 
+procedure-oriented style. The benefit of procedure-oriented code is that it 
+makes the lifetime and usage of in-memory state well-understood.
+
 
 ### Minimize disk access and serialization. {#serialization}
 
-Almost 
+It is common for data science code to produce and consume many artifacts during
+both training and prediction. This causes many codebases to become saturated 
+with disk access to these artifacts and hardcoded paths in every single module. 
+In codebases where this is left unchecked, disk access can be nearly everywhere 
+and cause huge performance issues. It is common to find a class which has a 
+path as a constuctor argument to load some  config or data.
+
+Functions/classes should almost never read from disk to execute the provided 
+logic. The logic and the state management should always be separated.
+
+The following example may seem like an egregious use of serialization, but 
+these patterns can all be commonly found in data science codebases.
+
+:x:
+
+```python
+import numpy as np
+import yaml
+
+class Encoder:
+    def __init__(self, config_filename: str, categories_filename: str):    
+        config = yaml.load(config_filename, Loader=yaml.FullLoader)
+        self.min_frequency = config.get('min_frequency', 10)
+        self.default = config.get('default', -1)
+
+        self.categories = None
+        if categories_filename is not None:
+            self.categories = np.load(categories_filename)
+
+    def train(self, training_filename: str):
+        values = np.load(training_filename)
+        unique, counts = np.unique(values, return_counts=True)
+        categories = unique[counts >= self.min_frequency]
+        self.categories = categories
+    
+    def predict(self, test_filename):
+        values = np.load(test_filename)
+        lookup_table = dict(zip(self.categories, range(len(self.categories))))
+        return np.array([lookup_table.get(item, self.default) for item in values])
+
+    def save(self, output_filename):
+        np.save(output_filename, self.categories)
+```
+
+The constructor expects two arguments, one for configuration and one for a 
+previously saved state. Unless the function body were read, it would be unclear
+that the second argument was used to load previously saved state. Next, each
+function takes a filename as input instead of an in-memory object which makes 
+the object fare more difficult to use.
+
+**Solution**: The exposed API should always assume that configurations and
+parameters will be in-memory (unless they absolutely cannot be). This vastly
+simplifies the usage of the object.
+
+:white_check_mark:
+
+```python
+import numpy as np
+import yaml
+
+class FrequencyEncoder:
+    def __init__(self, min_frequency=10, default=-1):    
+        self.min_frequency = min_frequency
+        self.default = default
+        self.lookup_table = None
+
+    def train(self, values: np.ndarray):
+        unique, counts = np.unique(values, return_counts=True)
+        categories = unique[counts >= self.min_frequency]
+        self.lookup_table = dict(zip(categories, range(len(categories))))
+    
+    def predict(self, values):
+        return np.array([self.lookup_table.get(item, self.default) for item in values])
+```
+
+This design requires that the `FrequencyEncoder` object would be serialized by 
+user. This is preferable to implementing custom serialization logic as part of
+the class since the user can use common shared serialization facilities 
+(e.g. pickle) to manage disk access.
 
 [python standard library]: https://docs.python.org/3/library/
 [numpy]: https://docs.scipy.org/doc/numpy/
