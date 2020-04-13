@@ -1,13 +1,13 @@
 # Best Python Practices
 
-A collection of python tutorials and patterns to use in data science projects
+A collection of python tutorials and patterns to use in data science projects.
 
-This project is meant to address common pitfalls and difficult areas of python
-which are important in data science code but not commonly easily solved with a
-simple stack overflow post. This includes topics such as organization and 
-optimization.
+This guide is meant to address common pitfalls and difficult areas of python
+which are important in data science code and not easily solved with a
+simple stack overflow search. The tutorials explore topics such as organization 
+and performance optimization.
 
-The Zen of Python is one of the guiding principles of this guide:
+The Zen of Python is one of the guiding principles for this documentation:
 
 ```python
 import this
