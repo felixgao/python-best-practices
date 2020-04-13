@@ -13,44 +13,79 @@
 
 # Code Style
 
-A consistent code style makes code easier to read and understand. If increased
-legibility and beautiful code are not enough reason to embrace a consistent 
-style, then the ability to save yourself lots of time should be. A consistent
-code style allows you to quickly familiarize yourself with a codebase even if 
-it is being worked on by many people.
+A consistent code style makes code easier to read and understand. The main 
+benefit of increased legibility and beautiful code is saving developer time. A 
+consistent code style allows anyone to quickly familiarize themselves with a 
+codebase even if it is being worked on by many people.
 
-There are many tools which can be used to check code style in python 
-(e.g. [pylint], [pep8], [yapf], etc.) so a common question is which one to use. 
-The reality is that most of these tools are fairly good and have generally 
-useful default behavior. 
+There are many tools/guidelines which can be used to for code style in python 
+so a common question is which one to use. The reality is that most of the 
+tools/guidelines are fairly good and have generally useful default behavior. 
 
-However, in practice, warnings end up being ignored or specific linting options 
-are turned off because they are too restrictive. If the developer of a 
-repository disagrees with an option, then they will just remove it entirely so 
-that it does not bother them anymore.
+In practice, for most tools, warnings end up being ignored or specific 
+linting options are turned off because they are too restrictive. If a developer 
+of a repository disagrees with an option, then they will just remove it 
+entirely so that it does not bother them anymore.
 
-The best code styling tool/specification would have the following properties:
+When using a set of guidelines which does not have a tool associated with it, 
+rules are often forgotten or implemented differently by different developers.
 
-- **Automation**: Automated formatting to remove styling burden from users.
-- **Minimal Configuration**: Minimize options to reduce decisions about style.
+## Goals
 
-The problem with [pylint] is that there is no automated way to apply the rules
-to your project. This makes it very easy to either ignore the warnings or place
-unnecessary burden on developers to modify their code until it passes linting.
+Due to the reasons above, the goal of a styling specification would be to 
+have the following properties:
 
-In contrast, a tool like [pep8] also provides automation through [autopep8] 
-which will automatically reformat your code rather than just warning you. 
-However, even with automation this still allows users to ignore specific
-warnings and set their own styling.
+- **Automation**: The code style must have a tool. It must have automated 
+    formatting so that users do not need to worry about styling the code 
+    manually.
+- **Minimal Configuration**: Minimize options so that users do not need to make
+    decisions about style. More decisions leads to more configuration and more
+    inconsistencies in code style.
+- **Permissive Rules**: The tool should not have so many rules that it makes 
+    using it a burden.
 
-Similarly, [yapf] is an automated code formatter, with optional configurations.
+## Example Tools
 
-In a very controlled development environment, these may be useful tools by just
+The following are the most commonly used tools:
+
+- [pylint]: A custom set of code style rules (more restrictive than [PEP-8])
+
+    The problem with pylint is that there is no automated way to apply the 
+    rules to your project. You must run it, look at the errors generated, and
+    then update your code manually. This makes it very easy to either ignore 
+    the warnings or place unnecessary burden on developers to modify their code 
+    until it passes linting. Pylint is opinionated about nearly all aspects of 
+    code style including variable naming and number of arguments. This one of 
+    the reasons that it is so common to see custom `pylint.rc` files in 
+    repositories with specific errors turned off.
+
+- [pep8]: A code style checker that follows the official [PEP-8] style.
+
+    In contrast to pylint, this style provides automation through [autopep8] 
+    which will automatically reformat your code rather than just warning you. 
+    This tools will only reformat code if the code results in a linting error, 
+    otherwise the code will not be touched. Even with automation this still 
+    allows users to ignore specific warnings and set their own styling.
+    
+- [yapf]: An automated code formatter that follows [PEP-8] style.
+
+    Unlike [autopep8] this does not not only remove linting errors, but rather
+    reformats all code in an opinionated style (which is [PEP-8] compliant). 
+    Like the previous code stylers, this allows for a huge amount of 
+    configuration and even allows you to swap out code style entirely.
+
+- [black] An automated code formatter with no configuration options.
+
+    A huge benefit of black is that unlike the previously mentioned tools this 
+    does not have formatting options. Black does not strictly follow 
+    [PEP-8] guidelines but is generally compliant.
+
+In a very controlled development environment, each may be useful tools by just
 enabling the default behavior and forbidding custom options.
 
-## Black
+## Recommendation
 
-The library [black] is a new code formatter that closely follows the principles 
+The [black] library is a new code formatter that closely follows the principles 
 of the golang formatter [gofmt]. Unlike the aforementioned tools, it fulfills
 both requirements of having automation and zero configuration. Like gofmt, black
 is opinionated and does not allow you to choose how to format your code. The
