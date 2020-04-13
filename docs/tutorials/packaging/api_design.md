@@ -13,9 +13,9 @@
 
 # API Design
 
-This guide uses API to refer to the interface of a package, module, class and
-function. There are specific recommendations for each type of API but the 
-general rules apply to all.
+This guide uses the term "API" to refer to the interface of a package, module, 
+class or function. There are specific recommendations for each type of API but 
+the general rules apply to all.
 
 ## Goals
 
@@ -438,7 +438,7 @@ The constructor expects two arguments, one for configuration and one for a
 previously saved state. Unless the function body were read, it would be unclear
 that the second argument was used to load previously saved state. Next, each
 function takes a filename as input instead of an in-memory object which makes 
-the object fare more difficult to use.
+the object far more difficult to use.
 
 **Solution**: The exposed API should always assume that configurations and
 parameters will be in-memory (unless they absolutely cannot be). This vastly
