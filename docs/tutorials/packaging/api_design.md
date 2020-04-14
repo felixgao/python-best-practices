@@ -17,6 +17,22 @@ This guide uses the term "API" to refer to the interface of a package, module,
 class or function. There are specific recommendations for each type of API but 
 the general rules apply to all.
 
+API design is arguably the most important part of writing clean reusable code.
+A good API should not not stand out to the end-user because it's so easy and
+natural to use.
+
+This topic is particularly relevant to data science code because API design is 
+often left as an afterthought to the actual functionality and data modeling. 
+This creates a problem where code is often used only once even when the core 
+functionality is fairly general. Duplicate functionality is implemented in
+completely separate repositories by different developers who decide that it is
+not worth the time to adapt hardcoded/specialized logic to their own projects.
+
+The problem exists even within a single project/respository. Modules can be
+tailored so specifically to a dataset or model architecture that it becomes
+impossible to use outside of that context.
+
+
 ## Goals
 
 The goal of any API should be to have the following properties:
@@ -30,6 +46,7 @@ The goal of any API should be to have the following properties:
 - **Interoperability**: The user should immediately understand how to use 
   library function/class with other functions/classes even outside of the given
   library.
+
 
 ## Example Libraries
 
@@ -62,6 +79,7 @@ The libraries mentioned above are all heavily used within data science code
 and they follow design patterns that we can learn from. We can derive a base 
 set of guidelines from the patterns we see in these interfaces.
 
+
 ## Guidelines 
 
 The following guidelines are principals which you should try to adhere to
@@ -75,6 +93,7 @@ to the following cases:
 3. [Avoid variable length keyword arguments (**kwargs)](#kwargs)
 4. [Avoid exposing stateful objects. Use mostly functions.](#classes)
 5. [Minimize disk access and serialization.](#serialization)
+
 
 ### Use a flat namespace for packages/modules {#namespace}
 
@@ -103,6 +122,7 @@ container = my_submodule.MyClass()
 ```
 
 An example of a library that does this extremely well is [numpy].
+
 
 ### Use primitive types in function/method interfaces {#types}
 
@@ -137,6 +157,7 @@ should be as follows:
 The cases where these rules are most often broken are where either dictionaries 
 or DataFrames are present in the interface. The following sections
 describe mechanisms to avoid the use of these when possible.
+
 
 #### Dictionary-Oriented Interfaces {#dictionary-types}
 
@@ -259,6 +280,7 @@ to read the body of every function included in the python standard library in
 order to understand it. We take it for granted that the API is so simple and
 easy to understand.
 
+
 ##### Pandas Arguments
 
 This is the *most common* type of function in data science codebases (often 
@@ -297,6 +319,7 @@ understand the side-effects of the call without having to look at the
 implementation. This is easier to test and much more maintainable. If this kind 
 of API is used throughout the codebase, then there will be very few places that 
 have assumptions about DataFrame structure. 
+
 
 ##### Pandas Class Arguments
 
