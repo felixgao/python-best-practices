@@ -478,7 +478,7 @@ simplifies the usage of the object.
 import numpy as np
 import yaml
 
-class FrequencyEncoder:
+class Encoder:
     def __init__(self, min_frequency=10, default=-1):    
         self.min_frequency = min_frequency
         self.default = default
@@ -493,7 +493,7 @@ class FrequencyEncoder:
         return np.array([self.lookup_table.get(item, self.default) for item in values])
 ```
 
-This design requires that the `FrequencyEncoder` object would be serialized by 
+This design requires that the `Encoder` object would be serialized by 
 user. This is preferable to implementing custom serialization logic as part of
 the class since the user can use common shared serialization facilities 
 (e.g. pickle) to manage disk access.
