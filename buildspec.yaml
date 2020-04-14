@@ -6,7 +6,7 @@ phases:
 
   install:
     commands:
-      - pip install mkdocs pymdown-extensions mkdocs-material
+      - pip install -r requirements.txt
 
   build:
     commands:
