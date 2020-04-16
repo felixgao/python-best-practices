@@ -415,6 +415,83 @@ user. However, nearly all object-oriented code can be written in a
 procedure-oriented style. The benefit of procedure-oriented code is that it 
 makes the lifetime and usage of in-memory state well-understood.
 
+#### Single Method Classes
+
+The most common object-oriented anti-pattern is when a class has a constructor
+and only a single public method. This can almost always be replaced with a 
+function call with zero cost.
+
+:x:
+```python
+class Greeter:
+    def __init__(self, name):
+        self.name = name
+
+    def greet(self):
+        return f'Hello, {self.name}!'
+```
+
+:white_check_mark:
+```python
+def greet(name):
+    return f'Hello, {name}!'
+```
+
+
+#### Argument Avoidance
+
+Another common anti-pattern is the use of classes to reduce the number of 
+arguments on each method call. Rather than scoping arguments to the functions 
+they are relevant to, all arguments for all methods are passed to the 
+constructor and then 0-argument methods called. This design pattern often occurs 
+when developers attempt to define a process with an object.
+
+:x:
+```python
+from sklearn.tree import DecisionTreeRegressor
+
+class MyModel:
+    def __init__(self, X_train, y_train, X_test, y_test, hyperparams):
+        self.X_train = X_train
+        self.y_train = y_train
+        self.X_test = X_test
+        self.y_test = y_test
+        self.hyperparams = hyperparams
+        self.model = None
+    
+    def create_model(self):
+        self.model = DecisionTreeRegressor(**self.hyperparams)
+
+    def train(self):
+        if not self.model:
+            self.create_model()
+        self.model.fit(self.X_train, self.y_train)
+
+    def score(self):
+        return self.model.score(self.X_test, self.y_test)
+```
+
+A common problem with this type of design is that the class methods have a 
+required call order that is not explicit in the API. In the example above, this
+is remedied by checking if member variables have been set. This complicates the 
+logic, adds almost no value, and distracts from the actual logical operations
+being performed.
+
+
+:white_check_mark:
+```python
+from sklearn.tree import DecisionTreeRegressor
+
+def create_model(hyperparams):
+    return DecisionTreeRegressor(**hyperparams)
+
+def train(model, X_train, y_train):
+    model.fit(X_train, y_train)
+
+def score(model, X_test, y_test):
+    return model.score(X_test, y_test)
+```
+
 
 ### Minimize disk access and serialization. {#serialization}
 
