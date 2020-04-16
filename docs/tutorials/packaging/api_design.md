@@ -1,5 +1,3 @@
-:warning: UNDER CONSTRUCTION :warning:
-
 !!! Summary
 
     :white_check_mark: Use a flat namespace for packages/modules
@@ -378,19 +376,20 @@ class MyPredictor:
 
 Variable length keyword arguments should almost never be used because they hide 
 what is actually being done with them. Whenever they are used, the user will
-almost always have to read the documentation to understand 
+almost always have to read the documentation to understand how they are being
+used.
 
-The only time to use them is if your library is wrapping a call to another 
-library which is highly configurable. Rather than replicating all of the keyword 
-arguments in the calling function signature, forward the configuration parameters 
-with kwargs.
+:x:
+```python
+def example(arg, **kwargs):
+    if 'foo' in kwargs: 
+        ...
+```
 
-Another potential use-case where keyword arguments are useful is if the 
-intention is to iterate over the key-value pairs 
-(for example to use as metadata). Because this actually changes the call syntax
-of the function, it is generally more explicit to pass this kind of object in
-as a dictionary instead.
-
+The only time when keyword arguments reduce ambiguity is if your library is 
+wrapping a call to another library which is highly configurable. Rather than 
+replicating all of the keyword arguments in the calling function signature, 
+forward the configuration parameters with kwargs.
 
 :white_check_mark:
 ```python
@@ -399,12 +398,24 @@ def example(arg, **foo_params):
     result = foo_library.example_call(**foo_params)
     ...
 ```
+
+Another potential use-case where keyword arguments are useful is if the 
+intention is to iterate over the key-value pairs 
+(for example to use as metadata). Because this actually changes the call syntax
+of the function, it is generally more explicit to pass this kind of object in
+as a dictionary instead.
+
 :x:
 ```python
-def example(arg, **kwargs):
-    if 'foo' in kwargs: 
-        ...
+def example(**tags):
+    ...
 ```
+:white_check_mark:
+```python
+def example(tags: dict):
+    ...
+```
+
 
 ### Avoid exposing stateful objects {#classes}
 
@@ -553,7 +564,6 @@ simplifies the usage of the object.
 
 ```python
 import numpy as np
-import yaml
 
 class Encoder:
     def __init__(self, min_frequency=10, default=-1):    
