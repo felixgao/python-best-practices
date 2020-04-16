@@ -210,7 +210,7 @@ The most common exceptions to using a dictionary as an argument
 is when the dictionary is meant to be iterated over within the function or used
 as a lookup table.
 
-!!! success "Exception"
+!!! attention "Exception"
 
     ```python
     # Iteration usage
@@ -265,7 +265,7 @@ is when the  dictionary is meant to be iterated over by the calling code or used
 as a lookup table.
 
 
-!!! success "Exception"
+!!! attention "Exception"
 
     ```python
     def get_column_types():

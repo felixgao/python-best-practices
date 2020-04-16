@@ -208,38 +208,44 @@ Acceptable Forms:
 Each of the forms can be more appropriate in different scenarios where the 
 meaning is more clear in context.
 
-:white_check_mark:
-```python
-word_lengths = {"hello": 5, "world": 5}
-index_to_word = {1: "hello", 2: "world"}
-word_by_index = {1: "hello", 2: "world"}
-index_word_lookup = {1: "hello", 2: "world"}
-```
-:x:
-```python
-words = {1: "hello", 2: "world"}        # Ambiguous, No key information
-word_lookup = {1: "hello", 2: "world"}  # No key information
-word_dict = {1: "hello", 2: "world"}    # Type included in name
-```
+!!! success "Use"
+
+    ```python
+    word_lengths = {"hello": 5, "world": 5}
+    index_to_word = {1: "hello", 2: "world"}
+    word_by_index = {1: "hello", 2: "world"}
+    index_word_lookup = {1: "hello", 2: "world"}
+    ```
+
+!!! fail "Avoid"
+
+    ```python
+    words = {1: "hello", 2: "world"}        # Ambiguous, No key information
+    word_lookup = {1: "hello", 2: "world"}  # No key information
+    word_dict = {1: "hello", 2: "world"}    # Type included in name
+    ```
 
 In some cases there are well-understood mappings that are meant to be iterated
 over. In these cases it makes sense to just use the pluralized version of the 
 word and name the variable after the contents. Anything that is meant to be 
 iterated over should be pluralized.
 
-:white_check_mark:
-```python
-headers = {"Content-Type": "application/json"}
-cookies = {"tz": "America/Los_Angeles"}
-hyperparameters = {"min_samples_leaf": 50}
-gunicorn_options = {"workers": 8} # Gunicorn uses `options`
-```
-:x:
-```python
-header_name_to_value = {"Content-Type": "application/json"}  # Too verbose
-cookie_name_to_value = {"tz": "America/Los_Angeles"}         # Too verbose
-hyperparameter_name_to_value = {"min_samples_leaf": 50}      # Too verbose
-```
+!!! attention "Exception"
+
+    ```python
+    headers = {"Content-Type": "application/json"}
+    cookies = {"tz": "America/Los_Angeles"}
+    hyperparameters = {"min_samples_leaf": 50}
+    gunicorn_options = {"workers": 8} # Gunicorn uses `options`
+    ```
+    
+!!! fail "Avoid"
+
+    ```python
+    header_name_to_value = {"Content-Type": "application/json"}  # Too verbose
+    cookie_name_to_value = {"tz": "America/Los_Angeles"}         # Too verbose
+    hyperparameter_name_to_value = {"min_samples_leaf": 50}      # Too verbose
+    ```
 
 In other cases, there are libraries that have predefined names for their 
 arguments that do not follow the conventions above. In this case it is 
@@ -247,10 +253,11 @@ acceptable to follow their conventions when interacting with their code. This
 makes the code less ambiguous because the library name and the application-code 
 variable name match.
 
-:white_check_mark:
-```python
-feed_dict = {"name": tensor} # TensorFlow uses this name so it is acceptable
-```
+!!! attention "Exception"
+
+    ```python
+    feed_dict = {"name": tensor} # TensorFlow uses this name so it is acceptable
+    ```
 
 ### Lists/Series/Arrays/Sets
 
@@ -258,19 +265,22 @@ Collections (non-dictionary) should always be the plural version of whatever is
 contained within. In the case where the value type is ambiguous, try to name
 the collection so it is possible to determine what is contained within.
 
-:white_check_mark:
-```python
-zip_codes = [92127, 12345]
-names = {"Johnny", "Lisa", "Mark", "Denny"}
-column_names = ["zip_code", "wages"] # `names` suffix indicates string value
-```
-:x:
-```python
-zip_list = [92127, 12345]        # Do not include type
-list = [92127, 12345]            # Shadows built-in list, Ambiguous
-items = [92127, 12345]           # Ambiguous
-columns = ["zip_code", "wages"]  # Value type is ambiguous
-```
+!!! success "Use"
+
+    ```python
+    zip_codes = [92127, 12345]
+    names = {"Johnny", "Lisa", "Mark", "Denny"}
+    column_names = ["zip_code", "wages"] # `names` suffix indicates string value
+    ```
+    
+!!! fail "Avoid"
+
+    ```python
+    zip_list = [92127, 12345]        # Do not include type
+    list = [92127, 12345]            # Shadows built-in list, Ambiguous
+    items = [92127, 12345]           # Ambiguous
+    columns = ["zip_code", "wages"]  # Value type is ambiguous
+    ```
 
 ### Integers/Floats
 
@@ -278,25 +288,28 @@ When possible, number names should indicate the how the value should be
 used. Contrary to the rules regarding collections, there are a many 
 well-understood values that indicate a number which should be unambiguous.
 
-:white_check_mark:
-```python
-limit = 10
-threshold = 0.7
-size = 10       # Potentially ambiguous
-index = 10      # Potentially ambiguous
-count = 10      # Potentially ambiguous
-n_items = 10    # `n` prefix always indicates a number
-min_items = 10  # `min` prefix always indicates a number
-max_items = 10  # `max` prefix always indicates a number
-buy_price = 10  # Domain specific words always indicate a number 
-```
-:x:
-```python
-items = 10      # Ambiguous, could indicate a collection
-n = 10          # Not Descriptive
-n_value = 10    # `value` suffix is not descriptive
-n_quantity = 10 # `quantity` suffix is not descriptive
-```
+!!! success "Use"
+
+    ```python
+    limit = 10
+    threshold = 0.7
+    size = 10       # Potentially ambiguous
+    index = 10      # Potentially ambiguous
+    count = 10      # Potentially ambiguous
+    n_items = 10    # `n` prefix always indicates a number
+    min_items = 10  # `min` prefix always indicates a number
+    max_items = 10  # `max` prefix always indicates a number
+    buy_price = 10  # Domain specific words always indicate a number 
+    ```
+
+!!! fail "Avoid"
+
+    ```python
+    items = 10      # Ambiguous, could indicate a collection
+    n = 10          # Not Descriptive
+    n_value = 10    # `value` suffix is not descriptive
+    n_quantity = 10 # `quantity` suffix is not descriptive
+    ```
 
 ### Strings
 
@@ -309,18 +322,21 @@ Common Forms:
 - `{descriptor}_key` *May indicate lookup key*
 - `{descriptor}_name` *May indicate lookup key*
 
-:white_check_mark:
-```python
-environment_name = 'cdev'
-environment_key = 'cdev'
-environment = 'cdev'      # Well-known string value, Potentially ambiguous
-env = 'cdev'              # Well-known abbreviation, Potentially ambiguous
-```
-:x:
-```python
-value = 'cdev'  # Ambiguous
-config = 'cdev' # Ambiguous could indicate an object
-```
+!!! success "Use"
+
+    ```python
+    environment_name = 'cdev'
+    environment_key = 'cdev'
+    environment = 'cdev'      # Well-known string value, Potentially ambiguous
+    env = 'cdev'              # Well-known abbreviation, Potentially ambiguous
+    ```
+
+!!! fail "Avoid"
+
+    ```python
+    value = 'cdev'  # Ambiguous
+    config = 'cdev' # Ambiguous could indicate an object
+    ```
 
 ### Classes
 
@@ -333,14 +349,15 @@ Acceptable Forms:
 - `{description}_{noun}` *(Preferred) CamelCase to snake_case conversion*
 - `{noun}` *More succinct, potentially ambiguous*
 
-:white_check_mark:
-```python
-class ExampleContext:
-    pass
+!!! success "Use"
 
-example_context = ExampleContext()
-context = ExampleContext()
-```
+    ```python
+    class ExampleContext:
+        pass
+    
+    example_context = ExampleContext()
+    context = ExampleContext()
+    ```
 
 
 [yapf]: https://github.com/google/yapf/
