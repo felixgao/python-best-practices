@@ -102,22 +102,25 @@ application code namespace with library objects/modules. Furthermore this
 discourages users from aliasing imports since the library only exposes a single 
 namespace.
 
-:white_check_mark:
-```python
-import my_library
-result = my_library.my_function()
-container = my_library.MyClass()
-```
-:x:
-```python
-from my_library.my_submodule import my_function, MyClass
-result = my_function()
-container = MyClass()
+!!! success "Use"
 
-from my_library import my_submodule
-result = my_submodule.my_function()
-container = my_submodule.MyClass()
-```
+    ```python
+    import my_library
+    result = my_library.my_function()
+    container = my_library.MyClass()
+    ```
+
+!!! fail "Avoid"
+
+    ```python
+    from my_library.my_submodule import my_function, MyClass
+    result = my_function()
+    container = MyClass()
+    
+    from my_library import my_submodule
+    result = my_submodule.my_function()
+    container = my_submodule.MyClass()
+    ```
 
 An example of a library that does this extremely well is [numpy].
 
@@ -175,15 +178,16 @@ dictionary cannot be known by inspecting the function arguments. The user of
 the function must look at the documentation or the function body to understand 
 how to use it.
 
-:x:
-```python
-def join_first_and_last(parts, sep=' '):
-    return parts["first"] + sep + parts["last"]
+!!! fail "Avoid"
 
-# Example call
-data = {"first": "hello", "last": "world"}
-result = join_first_and_last(data)
-```
+    ```python
+    def join_first_and_last(parts, sep=' '):
+        return parts["first"] + sep + parts["last"]
+    
+    # Example call
+    data = {"first": "hello", "last": "world"}
+    result = join_first_and_last(data)
+    ```
 
 **Solution**: Force the user to destructure the data prior to passing it in to 
 the function. This is a good practice because it limits the scope of what each 
@@ -191,30 +195,32 @@ function "knows" about. If the function can be written in a way that the
 context in which is it called is unimportant, this makes the code more 
 reusable and easier to test.
 
-:white_check_mark:
-```python
-def join_first_and_last(first, last, sep=' '):
-    return first + sep + last
+!!! success "Use"
 
-# Example call
-data = {"first": "hello", "last": "world"}
-result = join_first_and_last(data["first"], data["last"])
-```
+    ```python
+    def join_first_and_last(first, last, sep=' '):
+        return first + sep + last
+    
+    # Example call
+    data = {"first": "hello", "last": "world"}
+    result = join_first_and_last(data["first"], data["last"])
+    ```
 
-**Exception**: The most common exceptions to using a dictionary as an argument 
+The most common exceptions to using a dictionary as an argument 
 is when the dictionary is meant to be iterated over within the function or used
 as a lookup table.
 
-:white_check_mark:
-```python
-# Iteration usage
-def max_key_length(dictionary: dict):
-    return max(map(len, dictionary.keys()))
+!!! success "Exception"
 
-# Lookup table usage
-def largest_zip_code_population(zip_codes: list, zip_to_population: dict):
-    return max(zip_to_population.get(code, -1) for code in zip_codes)
-```
+    ```python
+    # Iteration usage
+    def max_key_length(dictionary: dict):
+        return max(map(len, dictionary.keys()))
+    
+    # Lookup table usage
+    def largest_zip_code_population(zip_codes: list, zip_to_population: dict):
+        return max(zip_to_population.get(code, -1) for code in zip_codes)
+    ```
 
 ##### Dictionary Returns
 
@@ -224,47 +230,51 @@ determine the structure of the dictionary by inspecting the function signature.
 This also nearly always requires that the user to destructure the return value
 in order to use it.
 
-:x:
-```python
-def precision_recall(model, x_test, y_test):
-    precision = model.precision(x_test, y_test)
-    recall = model.recall(x_test, y_test)
-    return {"precision": precision, "recall": recall}
+!!! fail "Avoid"
 
-# Example call
-result = precision_recall(...)
-precision = result["precision"]
-recall = result["recall"]
-```
+    ```python
+    def precision_recall(model, x_test, y_test):
+        precision = model.precision(x_test, y_test)
+        recall = model.recall(x_test, y_test)
+        return {"precision": precision, "recall": recall}
+    
+    # Example call
+    result = precision_recall(...)
+    precision = result["precision"]
+    recall = result["recall"]
+    ```
 
-**Solution**: Use tuples as returns. This avoids forcing the user to 
+Use tuples as returns. This avoids forcing the user to 
 destructure the return value. Notice that in the above example the dictionary 
 keys needed to be duplicated in the calling code in order to access the data. 
 
-:white_check_mark:
-```python
-def precision_recall(model, x_test, y_test):
-    precision = model.precision(x_test, y_test)
-    recall = model.recall(x_test, y_test)
-    return precision, recall
+!!! success "Use"
 
-# Example call
-precision, recall = precision_recall(...)
-```
+    ```python
+    def precision_recall(model, x_test, y_test):
+        precision = model.precision(x_test, y_test)
+        recall = model.recall(x_test, y_test)
+        return precision, recall
+    
+    # Example call
+    precision, recall = precision_recall(...)
+    ```
 
-**Exception**: The most common exception to using a dictionary as a return type 
+The most common exception to using a dictionary as a return type 
 is when the  dictionary is meant to be iterated over by the calling code or used
 as a lookup table.
 
-:white_check_mark:
-```python
-def get_column_types():
-    return {
-        'zip_code': str,
-        'salaries_and_wages': int,
-        'flag_old_or_blind': bool,
-    }
-```
+
+!!! success "Exception"
+
+    ```python
+    def get_column_types():
+        return {
+            'zip_code': str,
+            'salaries_and_wages': int,
+            'flag_old_or_blind': bool,
+        }
+    ```
 
 
 #### Pandas-Oriented Interfaces {#pandas-types}
@@ -284,14 +294,15 @@ easy to understand.
 This is the *most common* type of function in data science codebases (often 
 significantly more complex).
 
-:x:
-```python
-def typecast_zip_codes(df: pd.DataFrame):
-    df['zip'] = df['zip'].astype(int)
+!!! fail "Avoid"
 
-# Example call
-typecast_zip_codes(df)
-```
+    ```python
+    def typecast_zip_codes(df: pd.DataFrame):
+        df['zip'] = df['zip'].astype(int)
+    
+    # Example call
+    typecast_zip_codes(df)
+    ```
 
 It is a function designed for a specific dataset that assumes that the calling 
 code has a DataFrame with a specific column. It is unclear from the signature
@@ -301,15 +312,15 @@ there is a return that should be used.
 **Solution**: Make the API oriented around a series/array and to leave the 
 deconstruction of the DataFrame to the calling code.
 
-:white_check_mark:
+!!! success "Use"
 
-```python
-def typecast_zip_codes(array: np.ndarray):
-    return array.astype(int)
-
-# Example call
-df['zip'] = typecast_zip_codes(df['zip'].values)
-```
+    ```python
+    def typecast_zip_codes(array: np.ndarray):
+        return array.astype(int)
+    
+    # Example call
+    df['zip'] = typecast_zip_codes(df['zip'].values)
+    ```
 
 The calling code is burdened with the responsibilty of deconstructing/modifying
 the DataFrame but this is a *good thing*. This allows the calling code to fully
@@ -327,18 +338,18 @@ entire datasets as a class member (or within multiple classes). This is
 generally done so that the class can later reference that member variable 
 from a method without including it in the method argument list.
 
-:x:
+!!! fail "Avoid"
 
-```python
-class MyPredictor:
-    def __init__(self, df: pd.DataFrame, config: dict):
-        self.train_df = df
-        self.iterations = config.get('iterations', 0)
-    def train(self):
-        ...
-    def predict(self):
-        ...
-```
+    ```python
+    class MyPredictor:
+        def __init__(self, df: pd.DataFrame, config: dict):
+            self.train_df = df
+            self.iterations = config.get('iterations', 0)
+        def train(self):
+            ...
+        def predict(self):
+            ...
+    ```
 
 In this code it is confusing what the lifetime of the `df` argument is and what
 it is even used for. An object should only track state that must be present 
@@ -359,17 +370,17 @@ available to handle this.
 **Solution**: Colocate the DataFrame with its usage and make the class 
 constructor take explicit arguments.
 
-:white_check_mark:
+!!! success "Use"
 
-```python
-class MyPredictor:
-    def __init__(self, n_iterations: int):
-        self.n_iterations = n_iterations
-    def train(self, X: np.ndarray, y: np.ndarray):
-        ...
-    def predict(self, X: np.ndarray):
-        ...
-```
+    ```python
+    class MyPredictor:
+        def __init__(self, n_iterations: int):
+            self.n_iterations = n_iterations
+        def train(self, X: np.ndarray, y: np.ndarray):
+            ...
+        def predict(self, X: np.ndarray):
+            ...
+    ```
 
 
 ### Avoid variable length keyword arguments (**kwargs) {#kwargs}
@@ -379,25 +390,27 @@ what is actually being done with them. Whenever they are used, the user will
 almost always have to read the documentation to understand how they are being
 used.
 
-:x:
-```python
-def example(arg, **kwargs):
-    if 'foo' in kwargs: 
-        ...
-```
+!!! fail "Avoid"
+
+    ```python
+    def example(arg, **kwargs):
+        if 'foo' in kwargs: 
+            ...
+    ```
 
 The only time when keyword arguments reduce ambiguity is if your library is 
 wrapping a call to another library which is highly configurable. Rather than 
 replicating all of the keyword arguments in the calling function signature, 
 forward the configuration parameters with kwargs.
 
-:white_check_mark:
-```python
-import foo_library
-def example(arg, **foo_params):
-    result = foo_library.example_call(**foo_params)
-    ...
-```
+!!! success "Use"
+
+    ```python
+    import foo_library
+    def example(arg, **foo_params):
+        result = foo_library.example_call(**foo_params)
+        ...
+    ```
 
 Another potential use-case where keyword arguments are useful is if the 
 intention is to iterate over the key-value pairs 
@@ -405,16 +418,19 @@ intention is to iterate over the key-value pairs
 of the function, it is generally more explicit to pass this kind of object in
 as a dictionary instead.
 
-:x:
-```python
-def example(**tags):
-    ...
-```
-:white_check_mark:
-```python
-def example(tags: dict):
-    ...
-```
+!!! fail "Avoid"
+
+    ```python
+    def example(**tags):
+        ...
+    ```
+    
+!!! success "Use"
+
+    ```python
+    def example(tags: dict):
+        ...
+    ```
 
 
 ### Avoid exposing stateful objects {#classes}
@@ -432,21 +448,23 @@ The most common object-oriented anti-pattern is when a class has a constructor
 and only a single public method. This can almost always be replaced with a 
 function call with zero cost.
 
-:x:
-```python
-class Greeter:
-    def __init__(self, name):
-        self.name = name
+!!! fail "Avoid"
 
-    def greet(self):
-        return f'Hello, {self.name}!'
-```
+    ```python
+    class Greeter:
+        def __init__(self, name):
+            self.name = name
+    
+        def greet(self):
+            return f'Hello, {self.name}!'
+    ```
 
-:white_check_mark:
-```python
-def greet(name):
-    return f'Hello, {name}!'
-```
+!!! success "Use"
+
+    ```python
+    def greet(name):
+        return f'Hello, {name}!'
+    ```
 
 
 #### Argument Avoidance
@@ -457,30 +475,31 @@ they are relevant to, all arguments for all methods are passed to the
 constructor and then 0-argument methods called. This design pattern often occurs 
 when developers attempt to define a process with an object.
 
-:x:
-```python
-from sklearn.tree import DecisionTreeRegressor
+!!! fail "Avoid"
 
-class MyModel:
-    def __init__(self, X_train, y_train, X_test, y_test, hyperparams):
-        self.X_train = X_train
-        self.y_train = y_train
-        self.X_test = X_test
-        self.y_test = y_test
-        self.hyperparams = hyperparams
-        self.model = None
+    ```python
+    from sklearn.tree import DecisionTreeRegressor
     
-    def create_model(self):
-        self.model = DecisionTreeRegressor(**self.hyperparams)
-
-    def train(self):
-        if not self.model:
-            self.create_model()
-        self.model.fit(self.X_train, self.y_train)
-
-    def score(self):
-        return self.model.score(self.X_test, self.y_test)
-```
+    class MyModel:
+        def __init__(self, X_train, y_train, X_test, y_test, hyperparams):
+            self.X_train = X_train
+            self.y_train = y_train
+            self.X_test = X_test
+            self.y_test = y_test
+            self.hyperparams = hyperparams
+            self.model = None
+        
+        def create_model(self):
+            self.model = DecisionTreeRegressor(**self.hyperparams)
+    
+        def train(self):
+            if not self.model:
+                self.create_model()
+            self.model.fit(self.X_train, self.y_train)
+    
+        def score(self):
+            return self.model.score(self.X_test, self.y_test)
+    ```
 
 A common problem with this type of design is that the class methods have a 
 required call order that is not explicit in the API. In the example above, this
@@ -489,19 +508,20 @@ logic, adds almost no value, and distracts from the actual logical operations
 being performed.
 
 
-:white_check_mark:
-```python
-from sklearn.tree import DecisionTreeRegressor
+!!! success "Use"
 
-def create_model(hyperparams):
-    return DecisionTreeRegressor(**hyperparams)
-
-def train(model, X_train, y_train):
-    model.fit(X_train, y_train)
-
-def score(model, X_test, y_test):
-    return model.score(X_test, y_test)
-```
+    ```python
+    from sklearn.tree import DecisionTreeRegressor
+    
+    def create_model(hyperparams):
+        return DecisionTreeRegressor(**hyperparams)
+    
+    def train(model, X_train, y_train):
+        model.fit(X_train, y_train)
+    
+    def score(model, X_test, y_test):
+        return model.score(X_test, y_test)
+    ```
 
 
 ### Minimize disk access and serialization. {#serialization}
@@ -519,36 +539,36 @@ logic. The logic and the state management should always be separated.
 The following example may seem like an egregious use of serialization, but 
 these patterns can all be commonly found in code.
 
-:x:
+!!! fail "Avoid"
 
-```python
-import numpy as np
-import yaml
-
-class Encoder:
-    def __init__(self, config_filename: str, categories_filename: str):    
-        config = yaml.load(config_filename, Loader=yaml.FullLoader)
-        self.min_frequency = config.get('min_frequency', 10)
-        self.default = config.get('default', -1)
-
-        self.categories = None
-        if categories_filename is not None:
-            self.categories = np.load(categories_filename)
-
-    def train(self, training_filename: str):
-        values = np.load(training_filename)
-        unique, counts = np.unique(values, return_counts=True)
-        categories = unique[counts >= self.min_frequency]
-        self.categories = categories
+    ```python
+    import numpy as np
+    import yaml
     
-    def predict(self, test_filename):
-        values = np.load(test_filename)
-        lookup_table = dict(zip(self.categories, range(len(self.categories))))
-        return np.array([lookup_table.get(item, self.default) for item in values])
-
-    def save(self, output_filename):
-        np.save(output_filename, self.categories)
-```
+    class Encoder:
+        def __init__(self, config_filename: str, categories_filename: str):    
+            config = yaml.load(config_filename, Loader=yaml.FullLoader)
+            self.min_frequency = config.get('min_frequency', 10)
+            self.default = config.get('default', -1)
+    
+            self.categories = None
+            if categories_filename is not None:
+                self.categories = np.load(categories_filename)
+    
+        def train(self, training_filename: str):
+            values = np.load(training_filename)
+            unique, counts = np.unique(values, return_counts=True)
+            categories = unique[counts >= self.min_frequency]
+            self.categories = categories
+        
+        def predict(self, test_filename):
+            values = np.load(test_filename)
+            lookup_table = dict(zip(self.categories, range(len(self.categories))))
+            return np.array([lookup_table.get(item, self.default) for item in values])
+    
+        def save(self, output_filename):
+            np.save(output_filename, self.categories)
+    ```
 
 The constructor expects two arguments, one for configuration and one for a 
 previously saved state. Unless the function body were read, it would be unclear
@@ -560,25 +580,25 @@ the object far more difficult to use.
 parameters will be in-memory (unless they absolutely cannot be). This vastly
 simplifies the usage of the object.
 
-:white_check_mark:
+!!! success "Use"
 
-```python
-import numpy as np
-
-class Encoder:
-    def __init__(self, min_frequency=10, default=-1):    
-        self.min_frequency = min_frequency
-        self.default = default
-        self.lookup_table = None
-
-    def train(self, values: np.ndarray):
-        unique, counts = np.unique(values, return_counts=True)
-        categories = unique[counts >= self.min_frequency]
-        self.lookup_table = dict(zip(categories, range(len(categories))))
+    ```python
+    import numpy as np
     
-    def predict(self, values):
-        return np.array([self.lookup_table.get(item, self.default) for item in values])
-```
+    class Encoder:
+        def __init__(self, min_frequency=10, default=-1):    
+            self.min_frequency = min_frequency
+            self.default = default
+            self.lookup_table = None
+    
+        def train(self, values: np.ndarray):
+            unique, counts = np.unique(values, return_counts=True)
+            categories = unique[counts >= self.min_frequency]
+            self.lookup_table = dict(zip(categories, range(len(categories))))
+        
+        def predict(self, values):
+            return np.array([self.lookup_table.get(item, self.default) for item in values])
+    ```
 
 This design requires that the `Encoder` object would be serialized by 
 user. This is preferable to implementing custom serialization logic as part of

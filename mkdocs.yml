@@ -4,7 +4,7 @@ nav:
   - Tutorials:
       - Overview: tutorials.md
       - Profiling:
-          - Profiling Tools: tutorials/performance/profiling_tools.md
+          - Profiling Tools & Strategy: tutorials/performance/profiling_tools.md
           - Lookup Tables: tutorials/performance/lookup_tables.md
           - Array Multi-Processing: tutorials/performance/array_multiprocessing.md
       - Packaging:
@@ -27,6 +27,7 @@ theme:
 markdown_extensions:
   - codehilite
   - admonition
+  - pymdownx.superfences
   - toc:
       permalink: true
   - pymdownx.emoji:
