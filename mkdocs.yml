@@ -11,12 +11,13 @@ nav:
           - Structure: tutorials/packaging/structure.md
           - Code Style: tutorials/packaging/code_style.md
           - Logging: tutorials/packaging/logging.md
+          - Anti Patterns: tutorials/packaging/anti_patterns.md
           - API Design: tutorials/packaging/api_design.md
           - Testing: tutorials/packaging/testing.md
   - Libraries & Tools: libraries.md
 
 repo_name: 'best-python-practices'
-repo_url: 'https://github.intuit.com/data-science/best-python-practices'
+repo_url: 'https://github.intuit.com/ggao/best-python-practices'
 
 theme:
   name: material
@@ -37,6 +38,4 @@ markdown_extensions:
 extra:
   social:
     - type: 'github'
-      link: 'https://github.intuit.com/data-science/best-python-practices'
-    - type: 'slack'
-      link: 'https://intuit-teams.slack.com/channels/cmty-cdo-data-science'
+      link: 'https://github.intuit.com/ggao/best-python-practices'

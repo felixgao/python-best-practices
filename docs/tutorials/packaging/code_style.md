@@ -5,10 +5,10 @@
     :white_check_mark: Use [Google-style docstrings]
 
     :white_check_mark: Use either [napoleon] docstring type annotations or [PEP-484] built-in type annotations 
-
-    :white_check_mark: (Optional) Use [mypy] or [pyre-check] for type checking
     
-    :x: Avoid [pylint], [pep8], and [yapf]
+    :white_check_mark: Use [flake8] , [pylint], [pycodestyle] or [yapf] for linting (static code analysis)
+
+    :white_check_mark: (Optional/Strongly Recommended) Use [mypy] or [pyre-check] for type checking
 
 
 # Code Style
@@ -41,8 +41,8 @@ have the following properties:
 - **Minimal Configuration**: Minimize options so that users do not need to make
     decisions about style. More decisions leads to more configuration and more
     inconsistencies in code style.
-- **Permissive Rules**: The tool should not have so many rules that it makes 
-    using it a burden.
+- **Customizable Rules**: The tool should allow leads to set the type of rules
+    going to be enforced and rules can be ignored.
 
 ## Example Tools
 
@@ -59,13 +59,10 @@ The following are the most commonly used tools:
     the reasons that it is so common to see custom `pylint.rc` files in 
     repositories with specific errors turned off.
 
-- [pep8]: A code style checker that follows the official [PEP-8] style.
+- [pycodestyle]: A code style checker that follows the official [PEP-8] style.
 
-    In contrast to pylint, this style provides automation through [autopep8] 
-    which will automatically reformat your code rather than just warning you. 
-    This tools will only reformat code if the code results in a linting error, 
-    otherwise the code will not be touched. Even with automation this still 
-    allows users to ignore specific warnings and set their own styling.
+    pycodestyle is a tool to check your Python code against some of the style 
+    conventions in [PEP-8]
     
 - [yapf]: An automated code formatter that follows [PEP-8] style.
 
@@ -78,22 +75,28 @@ The following are the most commonly used tools:
 
     A huge benefit of black is that unlike the previously mentioned tools this 
     does not have formatting options. Black does not strictly follow 
-    [PEP-8] guidelines but is generally compliant.
+    [PEP-8] guidelines but is generally compliant.  It is also important to 
+    understand that [black] is only an opinionated `formatter`, it does not
+    check all of the styles problem that other `linters` do. 
 
 In a very controlled development environment, each may be useful tools by just
 enabling the default behavior and forbidding custom options.
 
 ## Recommendation
 
+With any styling recommendation it is recommended to pair linters with formatters.
+
 The [black] library is a new code formatter that closely follows the principles 
-of the golang formatter [gofmt]. Unlike the aforementioned tools, it fulfills
-both requirements of having automation and zero configuration. Like gofmt, black
-is opinionated and does not allow you to choose how to format your code. The
-correctness of the code is checked upon formatting to ensure that no mistake was
-made when updating the style.
+of the golang formatter [gofmt]. It only enforces the formatting of the code 
+like gofmt, black is opinionated and does not allow you to choose how to format 
+your code. The correctness of the code is checked upon formatting to ensure that 
+no mistake was made when updating the style.
 
 The only caveat to mention is that black is in beta and will not be perfect 
 until its official release.
+
+The [pylint] is one of the most popular linting library and well supported. However, 
+if you want integration with `pyproject.toml` you can use [flake8]. 
 
 
 ## Style Guides
@@ -122,7 +125,7 @@ Type annotations of some kind are recommended but can be implemented in
 different ways. Some form of type annotation is always recommended so that
 code usage is less ambiguous.
 
-There are two good strategies for annotating the types of your code:
+The recommended strategies for annotating the types of your code:
 
 ### [PEP-484] Style type annotations
 
@@ -151,32 +154,6 @@ def subtract(minuend: int, subtrahend: int) -> int:
     return minuend + subtrahend
 ```
 
-### Restructured Text type annotations
-
-This places type annotations in the docstrings of your code.
-
-Pros:
-
-- Backwards compatible with python 2
-- Type-checked by modern IDE's. Pycharm understands docstring types.
-
-Cons:
-
-- Code cannot be checked using automated code checkers
-
-```python
-def subtract(minuend, subtrahend):
-    """
-    Subtract the subtrahend from the minuend.
-    
-    Args:
-        minuend (int): The basis to subtract from.
-        subtrahend (int): The value to subtract.
-    Result:
-        difference (int): The difference between the numbers.
-    """
-    return minuend + subtrahend
-```
 
 ## Variable Naming
 
@@ -192,6 +169,9 @@ variables should have the following properties:
 - Unambiguous
 - Should not contain the type. This is what type annotations are for
 - Should be short if possible. Long names make code more difficult to read
+
+Abbrivations for names is ok if it is well-known but should be reframed.
+ie. n, sz, cnt, idx, dt, ts, env, cfg, ctx etc. 
 
 ### Dictionaries
 
@@ -271,7 +251,7 @@ the collection so it is possible to determine what is contained within.
     zip_codes = [92127, 12345]
     names = {"Johnny", "Lisa", "Mark", "Denny"}
     column_names = ["zip_code", "wages"] # `names` suffix indicates string value
-    ```
+    ``
     
 !!! fail "Avoid"
 
@@ -286,7 +266,7 @@ the collection so it is possible to determine what is contained within.
 
 When possible, number names should indicate the how the value should be 
 used. Contrary to the rules regarding collections, there are a many 
-well-understood values that indicate a number which should be unambiguous.
+well-understood values that indicate a number which should be unambiguous. 
 
 !!! success "Use"
 
@@ -296,7 +276,7 @@ well-understood values that indicate a number which should be unambiguous.
     size = 10       # Potentially ambiguous
     index = 10      # Potentially ambiguous
     count = 10      # Potentially ambiguous
-    n_items = 10    # `n` prefix always indicates a number
+    n_items = 10    # `n` prefix always indicates a number, preferred `num_items`
     min_items = 10  # `min` prefix always indicates a number
     max_items = 10  # `max` prefix always indicates a number
     buy_price = 10  # Domain specific words always indicate a number 
@@ -359,13 +339,48 @@ Acceptable Forms:
     context = ExampleContext()
     ```
 
+### Functions
+
+Function should always be named in lower case and separated with underscore (`_`). The words that you use to name your function should clearly describe the function’s intent (what the function does).  All functions should clearly indicates the input and output variable types.
+When returning from function avoid generic container types like `List` or `Dict`, use additional
+hints if you must return such types, ie. `List[int]` or `Dict[str, int]`.  
+
+Acceptable Forms:
+
+- `def {verb}_{intent}({nouns}:T) -> U: ` *(Preferred)*
+- `def {verb}({noun}:T}) -> U: ` *More succinct, potentially ambiguous*
+
+!!! success "Use"
+
+    ```python
+    def sum(iterable: Iterable) -> Number:
+    ```
+
+    ```python
+    def remove_underscore(s: str) -> str:
+    ```
+
+!!! fail "Avoid"
+
+    ```python
+    def foo(a):
+    ```
+
+    ```python
+    def process(parameters:Dict) -> Dict:
+    ```
+
+    ```python
+    def calculate(results:Dict[Any, Dict]) -> Dict:
+    ```
+
 
 [yapf]: https://github.com/google/yapf/
 [Google-style docstrings]: http://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings
 [Hitchhiker's Guide to Python]: https://docs.python-guide.org/writing/style/
 [PEP-8]: https://www.python.org/dev/peps/pep-0008/
 [pylint]: https://pypi.org/project/pylint/
-[pep8]: https://pep8.readthedocs.io/en/latest/
+[pycodestyle]: https://github.com/PyCQA/pycodestyle
 [autopep8]: https://github.com/hhatto/autopep8
 [PEP-484]: https://www.python.org/dev/peps/pep-0484/
 [mypy]: http://mypy-lang.org/
