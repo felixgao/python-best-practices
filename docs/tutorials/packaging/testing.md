@@ -4,6 +4,8 @@
 
     :white_check_mark: Use [pytest-mock] for mocking
 
+    :white_check_mark: Use `# pragma: no cover` for lines doesn't need coverage. ie. config lines
+
 # Testing
 
 - Use Fixtures in `conftest.py` to setup your test.  It should be the basic building blocks.
@@ -11,6 +13,7 @@
 - Generate test coverage report
  `pytest tests --cov=${package} --cov-report=term --cov-report xml`
 - Prefer mocker over mock.
+- Ensure a good code coverage.  Preferred to have over 80% coverage.  
 
 ## Fixtures
 
