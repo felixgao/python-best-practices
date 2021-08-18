@@ -36,5 +36,7 @@ If the implementation is easy to explain, it may be a good idea.
 Namespaces are one honking great idea -- let's do more of those!
 ```
 
+One important aspect of improving the developing experience is to keep your Python version and dependencies up-to-date.
+
 The best place to start is by looking at the [Tutorials](tutorials.md)
 
