@@ -46,9 +46,25 @@ have the following properties:
 
 ## Example Tools
 
-The following are the most commonly used tools:
+The following are the most commonly used tools for python code quality and ensure consistency.
 
-- [pylint]: A custom set of code style rules (more restrictive than [PEP-8])
+### Linters
+
+Linters are usually broken into two types: Logical and Stylistic linters.
+
+Logical Linter:
+
+- Code Errors
+- Code with potentially unintended results
+- Dangrous code patterns
+
+Stylistic Liners:
+
+- Code not conforming to defined conventions.
+
+Below are some of the popular tools
+
+- [pylint]: A logical and sytlistic liner (more restrictive than [PEP-8])
 
     The problem with pylint is that there is no automated way to apply the 
     rules to your project. You must run it, look at the errors generated, and
@@ -59,10 +75,16 @@ The following are the most commonly used tools:
     the reasons that it is so common to see custom `pylint.rc` files in 
     repositories with specific errors turned off.
 
-- [pycodestyle]: A code style checker that follows the official [PEP-8] style.
+    The common complaints against Pylint are that it is slow, too verbose by default, and takes a lot of configuration to get it working the way you want.
+
+- [PyFlake]: A logical liner
+
+    Analyzes programs and detect various errors.  It doesn't complain about style and focus on logical code issues and potential errors.  Therefore, it runs faster than [pylint]. 
+
+- [pycodestyle]: A code stylistic checker formally known as the official [PEP-8] style.
 
     pycodestyle is a tool to check your Python code against some of the style 
-    conventions in [PEP-8]
+    conventions in [PEP-8].  
     
 - [yapf]: An automated code formatter that follows [PEP-8] style.
 
@@ -71,6 +93,10 @@ The following are the most commonly used tools:
     Like the previous code stylers, this allows for a huge amount of 
     configuration and even allows you to swap out code style entirely.
 
+### Formatters
+
+Formatters will format the actual python file based on rules.
+
 - [black] An automated code formatter with no configuration options.
 
     A huge benefit of black is that unlike the previously mentioned tools this 
@@ -78,6 +104,10 @@ The following are the most commonly used tools:
     [PEP-8] guidelines but is generally compliant.  It is also important to 
     understand that [black] is only an opinionated `formatter`, it does not
     check all of the styles problem that other `linters` do. 
+
+- [isort] Format imports order.
+
+    Sort imports alphabetically, and automatically separated into sections and by type.
 
 In a very controlled development environment, each may be useful tools by just
 enabling the default behavior and forbidding custom options.
@@ -96,7 +126,9 @@ The only caveat to mention is that black is in beta and will not be perfect
 until its official release.
 
 The [pylint] is one of the most popular linting library and well supported. However, 
-if you want integration with `pyproject.toml` you can use [flake8]. 
+if you want integration with `pyproject.toml` you can use [flake8] which is a combination of tools ([PyFlakes], [pycodestyle] and [McCabe]). 
+
+We should also use [mypy] to check the type hinting is correct. 
 
 
 ## Style Guides
@@ -380,6 +412,8 @@ Acceptable Forms:
 [Hitchhiker's Guide to Python]: https://docs.python-guide.org/writing/style/
 [PEP-8]: https://www.python.org/dev/peps/pep-0008/
 [pylint]: https://pypi.org/project/pylint/
+[flake8]: https://flake8.pycqa.org/en/latest/
+[PyFlakes]: https://github.com/PyCQA/pyflakes
 [pycodestyle]: https://github.com/PyCQA/pycodestyle
 [autopep8]: https://github.com/hhatto/autopep8
 [PEP-484]: https://www.python.org/dev/peps/pep-0484/
@@ -389,4 +423,6 @@ Acceptable Forms:
 [napoleon]: https://sphinxcontrib-napoleon.readthedocs.io/en/latest/#type-annotations
 [Google Style Guide]: http://google.github.io/styleguide/pyguide.html
 [black]: https://github.com/psf/black
+[isort]: https://github.com/timothycrosley/isort
 [gofmt]: https://golang.org/cmd/gofmt/
+[McCabe]: https://github.com/PyCQA/mccabe

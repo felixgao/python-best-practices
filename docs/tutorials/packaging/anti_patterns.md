@@ -507,3 +507,105 @@ if the number of conditions is simple you can use boolean operator to connect
     else:
         do_work()
     ```
+
+
+### String manipulation and formatting
+
+String is very versatille type and often you need to convert the data into string.  Not using f-string can lead to a lot of code that is also error prune.
+
+Using f-string it is usually faster than the `format()`  or string subsitution method with `%`.
+
+Rounding numbers to lesser digit
+
+!!! fail "Avoid"
+
+    ```python
+    pi = 3.1415926
+    pi_3_sifig = str(math.round(pi, 2))
+    ```
+
+!!! success "Use"
+
+    ```python
+    pi = 3.1415926
+    pi_3_sifig = f'{pi:.2f}'
+    ```
+
+!!! success "Use"
+
+    ```python
+    interest_rate = 0.14159
+    interest_rate_percentage = f'{interest_rate:.2%}' # will output '14.16%'
+    ```
+
+Create leading digits
+
+!!! fail "Avoid"
+
+    ```python
+    month = 1
+    month_printable = "0" + str(month) if month < 10 else str(month)
+    ```
+
+!!! success "Use"
+
+    ```python
+    month = 1
+    month_printable = f'{month:02d}'
+    ```
+
+adding separator to stringify your number for presentation
+
+!!! fail "Avoid"
+
+    ```python
+    revenue = 1000000000 
+    revenue_printable = some_function_formatter(revenue, separator=",") # this will return 1,000,000,000
+    ```
+
+!!! success "Use"
+
+    ```python
+    revenue = 1000000000 
+    revenue_printable = f'{revenue:,d}' # you can replace `,` with whatever separate.
+    # If you need to pass dynamic separtor, you can do `f"{N: {sep}d}"` where sep is a variable
+    ```
+
+If you are using `python 3.8` or newer
+You no longer needs to have duplicated logic for constructing text that looks like `name=value`
+
+!!! fail "Avoid"
+
+    ```python
+    cost = "$1,000"
+    print(f"cost={cost}") # or print("cost={cost}".format(cost=cost))
+    # or god forbidden 
+    # print("cost =" + cost)
+    print("cost=" + (10-len(cost)*" " + cost) # to print 'cost=      $1,000'
+    ```
+
+!!! success "Use"
+
+    ```python
+    cost = "$1,000"
+    print(f"{cost=}") # this is a short hand 
+    # if you need to add spaces before the value
+    print(f"{cost= :> 10}") # will print, > is right align 'cost=      $1,000'
+    ```
+
+Converting datetime or part of it to string
+
+!!! fail "Avoid"
+
+    ```python
+    today = datetime.datetime(year=2021, month=8, day=8)
+    today_ISO8601_parts = today.strftime("%Y-%m-%d").split("-")
+    print(f"today in discouraged format: {today_ISO8601_parts[1]}/{today_ISO8601_parts[2]}/{today_ISO8601_parts[0]}")
+    ```
+
+!!! success "Use"
+
+    ```python
+    today = datetime.datetime(year=2021, month=8, day=8)
+    print(f"today in discouraged format: {today:%m/%d/%Y}, ISO8601 format: {today:%Y-%m-%d}")
+    ```

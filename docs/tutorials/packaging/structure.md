@@ -2,7 +2,7 @@
 
     :white_check_mark: Use [pyproject.toml] for project and dependency management
 
-    :white_check_mark: Use [setuptools] & [setuptools-scm] for packaging
+    :white_check_mark: Use [poetry] for packaging and releasing
     
     :white_check_mark: Use [tox] or [nox] for environment automation in testing
 
@@ -12,8 +12,11 @@
 
 
 # Structure
+
+for simple projects.
+
 ```
-repo
+.
 ├── app
 ├── tests
 │   └── unit_tests
@@ -29,6 +32,38 @@ repo
 └── Makefile
 
 ```
+
+If your project is rather large, you may opt for the monorepo pattern
+
+```
+.
+├── README.md
+├── libs
+│   ├── common-lib
+│   ├── lib-one
+│   └── lib-one
+├── poetry.lock
+├── projects
+│   ├── __init__.py
+│   ├── project-one
+│   └── project-two
+└── pyproject.toml
+```
+
+under `/projects`
+
+Project code (Python modules) go here.
+Each project has its own dependencies. 
+Each project is considered to have its own releasable artifact.
+
+under `/libs`
+
+Each lib has its own dependencies.
+Each lib can optionally depends on the `common-lib` if there one.
+
+project under `/projects` will use path import of the lib under `/libs`.
+
+
 
 [tox]: https://tox.readthedocs.io/
 [nox]: https://nox.readthedocs.io/
