@@ -1,14 +1,14 @@
 !!! Summary
 
-    :white_check_mark: Use [black] code formatting
+    :white_check_mark: Use [black] code formatting.
     
-    :white_check_mark: Use [Google-style docstrings]
+    :white_check_mark: Use [Google-style docstrings].
 
-    :white_check_mark: Use either [napoleon] docstring type annotations or [PEP-484] built-in type annotations 
+    :white_check_mark: Use either [napoleon] docstring type annotations or [PEP-484] built-in type annotations.
     
-    :white_check_mark: Use [flake8] , [pylint], [pycodestyle] or [yapf] for linting (static code analysis)
+    :white_check_mark: Use [flake8] for linting (static code analysis).
 
-    :white_check_mark: (Optional/Strongly Recommended) Use [mypy] or [pyre-check] for type checking
+    :white_check_mark: Use [mypy] for type checking.
 
 
 # Code Style

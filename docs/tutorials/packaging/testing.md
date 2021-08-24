@@ -1,10 +1,16 @@
 !!! Summary
 
-    :white_check_mark: Use [tox] & [pytest] for testing
+    :white_check_mark: Use [tox] or [nox] for automation.
 
-    :white_check_mark: Use [pytest-mock] for mocking
+    :white_check_mark: Use [pytest] for testing.
 
-    :white_check_mark: Use `# pragma: no cover` for lines doesn't need coverage. ie. config lines
+    :white_check_mark: Use [pytest-mock] for mocking.
+
+    :white_check_mark: Use pytest markers to limit test set.
+
+    :white_check_mark: Use [mutmut] for mutation testing.
+
+    :white_check_mark: Use `# pragma: no cover` for lines doesn't need coverage. ie. config lines.
 
 # Testing
 
@@ -14,6 +20,8 @@
  `pytest tests --cov=${package} --cov-report=term --cov-report xml`
 - Prefer mocker over mock.
 - Ensure a good code coverage.  Preferred to have over 80% coverage.  
+- Mutation test can help you figure out if your unit test is good enough.
+- Pytest have vast amount of plug-ins to help you make your tests better.
 
 ## Fixtures
 
@@ -262,10 +270,28 @@ Sometimes in testing you need a directory or files that you can work with to tes
             assert process_file(fp) == expected
     ```
 
+### Plugins
+
+- pytest-sugar: shows failures and errors instantly and shows a progress bar.
+- pytest-icdiff: better diff when asserting error happens. (also pytest-clarity)
+- pytest-html: get a html base report of the test.
+- pytest-instafail: shows failures and errors instantly instead of waiting until the end of test session.
+- pytest-timeout: terminate tests after a certain timeout.
+- pytest-parallel: for parallel and concurrent testing.
+- pytest-picked: Run the tests related to the unstaged files or the current branch (according to Git).
+- pytest-benchmark: fixture for benchmarking code.
+- pytest-cov: Code coverage.  (MUST HAVE!)
+- pytest-lazy-fixture: allows you to get values of `fixture` from `paratmertized` method.
+- pytest-freezegun: Freeze time! 
+- pytest-leaks: Find resource leaks.
+- pytest-deadfixtures: find out fixtures that are not used or duplicated.
+- pytest-responses: fixture for `requests` library mocking.
+
 
 
 
 [tox]: https://tox.readthedocs.io/
+[nox]: https://nox.thea.codes/en/stable/
 [pytest]: https://docs.pytest.org/en/latest/
 [pytest-mock]: https://github.com/pytest-dev/pytest-mock/#spy
 [unittest.mock]: https://docs.python.org/3/library/unittest.mock.html
@@ -274,3 +300,4 @@ Sometimes in testing you need a directory or files that you can work with to tes
 [HTTPretty]: https://github.com/gabrielfalcao/HTTPretty
 [respx]: https://github.com/lundberg/respx
 [HTTPX]: https://www.python-httpx.org/
+[mutmut]: https://pypi.org/project/mutmut/

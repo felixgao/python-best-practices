@@ -1,6 +1,8 @@
 !!! Summary
 
     :x: Avoid blanket try/except block.
+    
+    :x: Avoid Repeat Yourself.
 
 # Anti-Patterns
 
