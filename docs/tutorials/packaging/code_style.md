@@ -77,14 +77,14 @@ Below are some of the popular tools
 
     The common complaints against Pylint are that it is slow, too verbose by default, and takes a lot of configuration to get it working the way you want.
 
-- [PyFlake]: A logical liner
+- [PyFlakes]: A logical liner.
 
-    Analyzes programs and detect various errors.  It doesn't complain about style and focus on logical code issues and potential errors.  Therefore, it runs faster than [pylint]. 
+    Analyzes programs and detect various errors.  It doesn't complain about style and focus on logical code issues and potential errors.  Therefore, it runs faster than [pylint].  [flake8] is a tool that wraps around [PyFlakes] and [pycodestyle].
 
 - [pycodestyle]: A code stylistic checker formally known as the official [PEP-8] style.
 
     pycodestyle is a tool to check your Python code against some of the style 
-    conventions in [PEP-8].  
+    conventions in [PEP-8].   If you plan to use [black] for auto formatting and enforcing styles. You should turn off the checks for `E203` and `W503` so they can agree with each other in terms of styling.
     
 - [yapf]: An automated code formatter that follows [PEP-8] style.
 

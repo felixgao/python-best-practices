@@ -1,7 +1,7 @@
 !!! Summary
 
     :x: Avoid blanket try/except block.
-    
+
     :x: Avoid Repeat Yourself.
 
 # Anti-Patterns
@@ -211,13 +211,51 @@ Generic containers is great for simple data types but should be avoided to hold 
 !!! fail "Avoid"
 
     ```python
-    def process(data:Dict) -> bool:
+    def process(data:Dict) -> Dict:
         data_container = data["my_key"][0][-1]
         pretty_data = prettify(data_container)
         data["my_key"][0][-1]["Data"] = pretty_data
+        return data
     ```
 
 You should use a dataclass or pydantic datamodel to model the object you want to operate on.
+
+!!! success "Use"
+
+    ```python
+    @dataclass
+    class LikedLocation:
+        places: List[POI]
+        likes: List[Number]
+
+        def get_nth_places(self, n:int) -> POI:
+            return self.places[n]
+        
+        def get_first_place(self) -> POI:
+            return self.places[0]
+
+    @dataclass
+    class POI:
+        visited_by: List[Person]
+
+        def get_nth_visited(self, n:int) -> Person:
+            return self.visited_by[n]
+
+        def get_last_visited(self) -> Person:
+            return self.get_nth_visited(-1)
+
+    @dataclass
+    class Person:
+        first_name: str
+        last_name: str
+        date_of_birth: Datetime
+
+    def format_last_visited(locations:LikedLocation) -> `DisplayablePerson`:
+        last_visited_by = locations.get_first_place().get_last_visited()
+        # assume prettify returns an object of `DisplayablePerson` type
+        return prettify(last_visited_by) 
+
+    ```
 
 ### Access protected members from outside the class
 
