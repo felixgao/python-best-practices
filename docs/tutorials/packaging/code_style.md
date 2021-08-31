@@ -16,7 +16,7 @@
 A consistent code style makes code easier to read and understand. The main 
 benefit of increased legibility and beautiful code is saving developer time. A 
 consistent code style allows anyone to quickly familiarize themselves with a 
-codebase even if it is being worked on by many people.
+codebase even if it is being worked on by many people. A recommended read is the [clean code python]. 
 
 There are many tools/guidelines which can be used to for code style in python 
 so a common question is which one to use. The reality is that most of the 
@@ -426,3 +426,4 @@ Acceptable Forms:
 [isort]: https://github.com/timothycrosley/isort
 [gofmt]: https://golang.org/cmd/gofmt/
 [McCabe]: https://github.com/PyCQA/mccabe
+[clean code python]: https://github.com/zedr/clean-code-python

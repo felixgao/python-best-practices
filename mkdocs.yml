@@ -9,6 +9,7 @@ nav:
           - Array Multi-Processing: tutorials/performance/array_multiprocessing.md
       - Packaging:
           - Structure: tutorials/packaging/structure.md
+          - Makefile: tutorials/packaging/makefile.md
           - Code Style: tutorials/packaging/code_style.md
           - Logging: tutorials/packaging/logging.md
           - Anti Patterns: tutorials/packaging/anti_patterns.md

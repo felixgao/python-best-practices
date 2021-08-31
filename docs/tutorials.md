@@ -7,6 +7,7 @@ across projects.
 
 - [Structure](tutorials/packaging/structure.md): How to structure a package 
   using [setuptools].
+- [Makefile](tutorials/packaging/makefile.md): Creating Makefile for your project.
 - [Code Style](tutorials/packaging/code_style.md): Recommended code style tools
   and, practices, and reference.
 - [Logging](tutorials/packaging/logging.md): How to configure package-level 
