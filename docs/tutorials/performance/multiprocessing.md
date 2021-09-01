@@ -9,7 +9,7 @@
     :x: Avoid Using multithreading for CPU-bound tasks.
 
 
-# Array Multi-Processing
+# Multi-Processing
 
 Due to the infamous python GIL, when you need more CPU power to crunch some data, multi-processing is the way to go.   Python has a built-in multiprocessing library that make this feature avaiable out of the box. 
 
@@ -125,12 +125,76 @@ with SharedMemoryManager() as smm:
                 pass
 ```
 
+### Huge arrays in numpy
 
+Python is notoriously known as a memory hogger and when you need to work with large amount of data it could result in out of memory error.  One trick we can use in this case is memory mapped file in numpy. 
+
+```python
+from concurrent.futures import ProcessPoolExecutor, as_completed
+from multiprocessing import Process
+
+import numpy as np
+
+worker, nrows, ncols = 10, 1_000_000, 100
+
+def split_size_iter(total_size:int , num_chunks: int) -> Iterator[Tuple[int, int]]:
+    ...
+
+def print_matrix(filename, worker_index_start, worker_index_end):
+    matrix = np.memmap(filename, dtype=np.float32, mode='r+', shape=(worker, nrows, ncols))
+    print matrix[worker_index_start: worker_index_end]
+
+
+def main():
+    matrix = np.memmap('test.dat', dtype=np.float32, mode='w+', shape=(worker, nrows, ncols))
+    # some code to fill this matrix
+
+    with ProcessPoolExecutor(cworker) as exe:
+        fs = [exe.submit(print_matrix, 'test.dat', start, end) 
+                for start,end in split_size_iter(worker, 4)]
+        for _ in as_completed(fs):
+                    pass
+```
+
+
+## Ray
+
+[Ray] is a powerful open source platform that makes it easy to write distributed Python programs and seamlessly scale them from your laptop to a cluster.  Ray comes with support for the `mulitprocessing.Pool` API out of the box when importing `ray.util.multiprocessing`. 
+
+
+### Example
+
+```python
+import math
+import random
+import time
+
+def sample(num_samples):
+    num_inside = 0
+    for _ in range(num_samples):
+        x, y = random.uniform(-1, 1), random.uniform(-1, 1)
+        if math.hypot(x, y) <= 1:
+            num_inside += 1
+    return num_inside
+
+def approximate_pi_distributed(num_samples):
+    from ray.util.multiprocessing.pool import Pool # NOTE: Only the import statement is changed.
+    pool = Pool()
+        
+    start = time.time()
+    num_inside = 0
+    sample_batch_size = 100000
+    for result in pool.map(sample, [sample_batch_size for _ in range(num_samples//sample_batch_size)]):
+        num_inside += result
+        
+    print("pi ~= {}".format((4*num_inside)/num_samples))
+    print("Finished in: {:.2f}s".format(time.time()-start))
+```
 
 [shared_memory]: https://docs.python.org/3/library/multiprocessing.shared_memory.html#module-multiprocessing.shared_memory
 
 [NumPy]: https://numpy.org/
 [SharedArray]: https://pypi.org/project/SharedArray/
 
-[ray]: https://docs.ray.io/en/latest/index.html
+[Ray]: https://docs.ray.io/en/latest/index.html
 [dask]: https://docs.dask.org/

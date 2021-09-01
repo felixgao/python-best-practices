@@ -3,17 +3,17 @@ nav:
   - Home: index.md
   - Tutorials:
       - Overview: tutorials.md
-      - Profiling:
-          - Profiling Tools & Strategy: tutorials/performance/profiling_tools.md
+      - Performance:
           - Lookup Tables: tutorials/performance/lookup_tables.md
-          - Array Multi-Processing: tutorials/performance/array_multiprocessing.md
+          - Profiling Tools & Strategy: tutorials/performance/profiling_tools.md
+          - Multi-Processing: tutorials/performance/multiprocessing.md
       - Packaging:
           - Structure: tutorials/packaging/structure.md
           - Makefile: tutorials/packaging/makefile.md
-          - Code Style: tutorials/packaging/code_style.md
           - Logging: tutorials/packaging/logging.md
-          - Anti Patterns: tutorials/packaging/anti_patterns.md
+          - Code Style: tutorials/packaging/code_style.md
           - API Design: tutorials/packaging/api_design.md
+          - Anti Patterns: tutorials/packaging/anti_patterns.md
           - Testing: tutorials/packaging/testing.md
   - Libraries & Tools: libraries.md
 

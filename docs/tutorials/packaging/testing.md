@@ -272,20 +272,20 @@ Sometimes in testing you need a directory or files that you can work with to tes
 
 ### Plugins
 
-- pytest-sugar: shows failures and errors instantly and shows a progress bar.
-- pytest-icdiff: better diff when asserting error happens. (also pytest-clarity)
-- pytest-html: get a html base report of the test.
-- pytest-instafail: shows failures and errors instantly instead of waiting until the end of test session.
-- pytest-timeout: terminate tests after a certain timeout.
-- pytest-parallel: for parallel and concurrent testing.
-- pytest-picked: Run the tests related to the unstaged files or the current branch (according to Git).
-- pytest-benchmark: fixture for benchmarking code.
-- pytest-cov: Code coverage.  (MUST HAVE!)
-- pytest-lazy-fixture: allows you to get values of `fixture` from `paratmertized` method.
-- pytest-freezegun: Freeze time! 
-- pytest-leaks: Find resource leaks.
-- pytest-deadfixtures: find out fixtures that are not used or duplicated.
-- pytest-responses: fixture for `requests` library mocking.
+- ***pytest-sugar***: shows failures and errors instantly and shows a progress bar.
+- ***pytest-icdiff***: better diff when asserting error happens. (also pytest-clarity)
+- ***pytest-html***: get a html base report of the test.
+- ***pytest-instafail***: shows failures and errors instantly instead of waiting until the end of test session.
+- ***pytest-timeout***: terminate tests after a certain timeout.
+- ***pytest-parallel***: for parallel and concurrent testing.
+- ***pytest-picked***: Run the tests related to the unstaged files or the current branch (according to Git).
+- ***pytest-benchmark***: fixture for benchmarking code.
+- ***pytest-cov***: Code coverage.  (MUST HAVE!)
+- ***pytest-lazy-fixture***: allows you to get values of `fixture` from `paratmertized` method.
+- ***pytest-freezegun***: Freeze time! 
+- ***pytest-leaks***: Find resource leaks.
+- ***pytest-deadfixtures***: find out fixtures that are not used or duplicated.
+- ***pytest-responses***: fixture for `requests` library mocking.
 
 
 
