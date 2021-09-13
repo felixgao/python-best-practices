@@ -1,5 +1,9 @@
 !!! Summary
 
+    :white_check_mark: Use as much of built-ins as possible.
+
+    :white_check_mark: Use what the language has to offer.
+
     :x: Avoid blanket try/except block.
 
     :x: Avoid Repeat Yourself.
@@ -648,4 +652,43 @@ Converting datetime or part of it to string
     ```python
     today = datetime.datetime(year=2021, month=8, day=8)
     print(f"today in discouraged format: {today:%m/%d/%Y}, ISO8601 format: {today:%Y-%m-%d}")
+    ```
+
+### Not using `defaultdict` or `Counter` instead of `dict`
+
+Python's `dict` is a very versatile container, but it shouldn't be used in certain cases.
+
+- You are trying to count things
+- You are manually adding default values
+
+
+!!! fail "Avoid"
+
+    ```python
+    text = "some long text you are trying to count the frequency of words."
+
+    word_count_dict = {}
+    for w in text.split(" "):
+        if w in word_count_dict:
+            word_count_dict[w]+=1
+        else:
+            word_count_dict[w]=1
+    ```
+
+!!! success "Use"
+
+    ```python
+    from collections import defaultdict
+    word_count_dict = defaultdict(int)
+    for w in text.split(" "):
+        word_count_dict[w]+=1
+    ```
+
+Or even better to use `Counter`
+
+!!! success "Use"
+
+    ```python
+    from collections import Counter
+    word_counts = Counter(text.split(" "))
     ```

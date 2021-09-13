@@ -1,12 +1,16 @@
 !!! Summary
 
-    :white_check_mark: Use a flat namespace for packages/modules
+    :white_check_mark: Use a flat namespace for packages/modules.
     
-    :white_check_mark: Use primitive-typed functions/methods
+    :white_check_mark: Use primitive-typed functions/methods.
+
+    :white_check_mark: High cohesion & low coupling.
     
-    :x: Avoid pandas objects as arguments and returns
+    :x: Avoid Low cohension & high coupling.
+
+    :x: Avoid pandas objects as arguments and returns.
     
-    :x: Avoid exposing classes from packages/modules
+    :x: Avoid exposing classes from packages/modules.
 
 
 # API Design
@@ -605,6 +609,27 @@ user. This is preferable to implementing custom serialization logic as part of
 the class since the user can use common shared serialization facilities 
 (e.g. pickle) to manage disk access.
 
+### Cohesion & Coupling
+
+>
+> High cohesion is when you have a class that does a well defined job. 
+> Low cohesion is when a class does a lot of jobs that does't have much in common.
+
+>
+> High coupling is when modules are tightly interconnected via many complex interfaces and information flows.
+> Low coupling is when modules are loosely interconnected and isolated from the implementation details of each other.  One module can be changed or replaced without impacting other modules. 
+
+Coupling and cohension goes in pairs like the two faces of a coin.  
+
+Cohension is like an onion -- it requires layers to keep things separate and distinct.  It is not just about the size of your functions but also the relationships with each other. 
+
+Coupling is like a knife -- it cuts through the layers and connects multiple facets. It is not just about the number of objects but also the degree of mutual interdependence.
+
+A good book for this is described in Chapter 10 of [code like a pro] book.
+
+
+
 [python standard library]: https://docs.python.org/3/library/
 [numpy]: https://docs.scipy.org/doc/numpy/
 [sklearn]: https://scikit-learn.org/stable/modules/classes.html
+[code like a pro]: https://livebook.manning.com/book/code-like-a-pro/chapter-10
