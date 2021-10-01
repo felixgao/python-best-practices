@@ -692,3 +692,74 @@ Or even better to use `Counter`
     from collections import Counter
     word_counts = Counter(text.split(" "))
     ```
+
+### Using `dict` or mutable type for immutable data
+
+Often `dict` is used as general container of data like config values and etc.  However, if the data is suppose to be immutable, then you really should use the correct immutable types to avoid accidental data overwrite. 
+
+!!! fail "Avoid"
+
+    ```python
+    config = {}
+
+    config["service"] = "https://www.intuit.com/prod/service_name"
+    config["rate"] = 25
+    config["country"] = "US"
+    ```
+
+!!! success "Use"
+
+    ```python
+    from dataclasses import dataclass
+
+    @dataclass(frozen=True)
+    class Config:
+        service: str
+        rate: int
+        country: str
+    ```
+
+
+### Using string instead of enum
+
+String types are a poor choice when the list of possibility is fairly small and finite.   Using string type also could leads to risk of misspelling, escaping exhaustive checks with linters or pattern matching and code duplications.
+
+!!! fail "Avoid"
+
+    ```python
+    def train(classifier="tree"):
+
+        if classifier == "tree":
+            pass
+        elif classifier == "forest":
+            pass
+        elif classifier == "cnn":
+            pass
+        else:
+            raise ValueError
+    ```
+
+!!! success "Use"
+
+    ```python
+    from enum import Enum
+
+    class Classifier(Enum):
+        TREE = 0
+        FOREST = 1
+        CNN = 2
+        
+    def train(classifer: Classifier = Classifier.LBFGS):
+        
+        if classifer == Classifier.TREE:
+            pass
+        elif classifer == Classifier.FOREST:
+            pass
+        elif classifer == Classifier.CNN:
+            pass
+        else:
+            raise ValueError
+    ```
+
+with python3.10, you can do pattern matching.
+

@@ -272,6 +272,8 @@ Sometimes in testing you need a directory or files that you can work with to tes
 
 ### Plugins
 
+- ***pytest-xdist***: run tests in parallel.
+- ***pytest-randomly***: run tests randomly (useful to catch weird bugs that runs sequentially).
 - ***pytest-sugar***: shows failures and errors instantly and shows a progress bar.
 - ***pytest-icdiff***: better diff when asserting error happens. (also pytest-clarity)
 - ***pytest-html***: get a html base report of the test.

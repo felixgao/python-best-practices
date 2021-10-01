@@ -193,10 +193,52 @@ def approximate_pi_distributed(num_samples):
     print("Finished in: {:.2f}s".format(time.time()-start))
 ```
 
+## Dask
+
+[Dask] is a Python parallel computing library geared towards scaling analytics and scientific computing workloads.
+
+Dask is composed of two parts: Dynamic task scheduling for optimized computation and Big Data collections such as like parallel arrays, dataframes, and lists that extend common interfaces like NumPy, Pandas, or Python iterators to larger-than-memory or distributed environments, which run on top of dynamic task schedulers.
+
+
+### Example
+
+```python
+# Setup the cluster and client for Dask
+from dask.distributed import Client, LocalCluster
+
+n_workers = 3
+cluster = LocalCluster(n_workers=n_workers, threads_per_worker=1, memory_limit='4GB')
+client = Client(cluster)
+client.wait_for_workers(n_workers)
+
+# Load dataset
+from dask_ml.datasets import make_classification as make_classification_dask
+
+X_dask, y_dask = make_classification_dask(n_samples=10000, n_features=10, n_informative=5, n_redundant=5, random_state=1, chunks=10)
+
+# Build a model
+import dask_lightgbm.core as dlgbm
+
+dmodel = dlgbm.LGBMClassifier(n_estimators=400)
+dmodel.fit(X_dask, y_dask)
+
+# make a single prediction
+row = [[2.56999479, -0.13019997, 3.16075093, -4.35936352, -1.61271951, -1.39352057, -2.48924933, -1.93094078, 3.26130366, 2.05692145]]
+yhat = dmodel.predict(da.from_array(np.array(row)))
+print('Prediction: %d' % yhat[0])
+
+y_pred = dmodel.predict(X_dask, client=client)
+
+acc_score = (y_dask == y_pred).sum() / len(y_dask)
+acc_score = acc_score.compute()
+print(acc_score)
+```
+
+
 [shared_memory]: https://docs.python.org/3/library/multiprocessing.shared_memory.html#module-multiprocessing.shared_memory
 
 [NumPy]: https://numpy.org/
 [SharedArray]: https://pypi.org/project/SharedArray/
 
 [Ray]: https://docs.ray.io/en/latest/index.html
-[dask]: https://docs.dask.org/
+[Dask]: https://docs.dask.org/

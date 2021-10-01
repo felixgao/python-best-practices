@@ -63,3 +63,7 @@ general use in python projects
 [thumbor]: https://github.com/thumbor/thumbor
 [loguru]: https://github.com/Delgan/loguru
 [boltons]: https://github.com/mahmoud/boltons
+
+[LazyPredict]: https://github.com/shankarpandala/lazypredict
+[lux]: https://github.com/lux-org/lux
+[clean-text]: https://github.com/jfilter/clean-text

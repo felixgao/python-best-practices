@@ -407,6 +407,18 @@ Acceptable Forms:
     ```
 
 
+### Flake-8 plugins
+
+below is a set of useful plugins for flake8 to make it more useful for CI in your projects
+
+- ***flake8-bugbear***: check generic bug and design problem.
+- ***flake8-cognitive-complexity***: check complex and unreadable code.
+- ***flake8-expression-complexity***: check complex and unreadable code.
+- ***flake8-pytest-style***: check style for pytest.
+- ***flake8-simplify***: check style that could be simplified.
+- ***pep8-naming***: strict naming convention.
+
+
 [yapf]: https://github.com/google/yapf/
 [Google-style docstrings]: http://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings
 [Hitchhiker's Guide to Python]: https://docs.python-guide.org/writing/style/
