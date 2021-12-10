@@ -16,6 +16,7 @@ nav:
           - Anti Patterns: tutorials/packaging/anti_patterns.md
           - Testing: tutorials/packaging/testing.md
   - Libraries & Tools: libraries.md
+  - Pull Requests Etiquette: pullrequests.md
 
 repo_name: 'best-python-practices'
 repo_url: 'https://github.intuit.com/ggao/best-python-practices'
