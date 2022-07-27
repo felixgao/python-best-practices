@@ -4,18 +4,8 @@ bu: cdo
 build:
   properties:
     image: aws/codebuild/python
-    image_tag: 3.6.5
+    image_tag: 3.8
     full_clone: true
     branches:
       - master
 
-target_accounts:
-  -
-    id: cgds-prd-us-west-2
-    account_id: 320832428716 # CG Data Science Labs Prod
-    region: us-west-2
-
-notifications:
-  -
-    type: slack
-    endpoint: "cdo-models-alerts"

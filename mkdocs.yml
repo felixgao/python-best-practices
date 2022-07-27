@@ -1,6 +1,7 @@
 site_name: Best Python Practices
 nav:
   - Home: index.md
+  - Design Patterns: design_patterns.md
   - Tutorials:
       - Overview: tutorials.md
       - Performance:
@@ -23,9 +24,18 @@ repo_url: 'https://github.intuit.com/ggao/best-python-practices'
 
 theme:
   name: material
-  logo: images/python.svg
-  primary: indigo
-  accent: yello
+  logo: assets/python.svg
+  favicon: assets/python.svg
+
+  # features:
+  #   - header.autohide
+
+  custom_dir: overrides
+  
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: yello
 
 markdown_extensions:
   - codehilite
@@ -39,5 +49,5 @@ markdown_extensions:
 
 extra:
   social:
-    - type: 'github'
+    - icon: 'octicons/mark-github-16'
       link: 'https://github.intuit.com/ggao/best-python-practices/'
