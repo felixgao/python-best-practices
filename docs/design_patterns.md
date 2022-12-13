@@ -181,3 +181,64 @@ for doc_content, doc_type in all_documents:
 
 ```
 
+
+### Chain of responsiblity
+
+#### Intent
+When an object needs to be processed by a potential chain of successive handlers.   Each handler may process it, pass it over, or break the chain and stop the task from proagating to the next handler. 
+
+
+#### Problem
+The need of decoupling the sender of a request and its receiver.  
+It is unknown until runtime, what kind of request the object is, therefore, it needs a different processing handler to handle the request. 
+Sometimes, more than one handler needs a pass over the data. 
+
+
+#### Solution
+
+```python
+
+class NamedEntityHandler(ABC):
+    def __init__(self, successor: Optional["Handler"] = None):
+        self._successor = successor
+
+    @abstractmethod
+    def handle(self, text:str, *args, **kwargs) -> None:
+        pass
+
+class PersonNameHandler(NamedEntityHandler):
+    def handle(self, text:str) -> Entity:
+        return PersonNameEntityParser.parse(text)
+
+class CompanyNameHandler(NamedEntityHandler):
+    def handle(self, text:str) -> Entity:
+        return CompanyNameEntityParser.parse(text)
+
+class DateHandler(NamedEntityHandler): 
+    def handle(self, text:str) -> Entity:
+        return DateParser.parse(text)
+
+class AmountHandler(NamedEntityHandler):
+    def handle(self, text:str) -> Entity:
+        return AmountParser.parse(text)
+
+class NamedEntityExtractor:
+    def __init__(self):
+        self._person_name_handler = PersonNameHandler()
+        self._company_name_handler = CompanyNameHandler()
+        self._address_handler = AddressHandler()
+        self._date_handler = DateHandler()
+        self._amount_handler = AmountHandler()
+        self._doc_handler = {
+            DocTypeEnum.F_1040: [self._person_name_handler, self._address_handler, self._date_handler, self._amount_handler],
+            DocTypeEnum.F_W2: [self._person_name_handler, self._address_handler, self._amount_handler],
+            DocTypeEnum.F_BILL: [self._compnay_name_handler, self._date_handler, self.amount_handler]
+        }
+
+    def parse_entity(self, text:str, doc_type: DocTypeEnum) -> List[Entity]:
+        parse_chain = self._doc_handler.get(doc_type)
+        entity_list = [parser.handle(text) for parser in parse_chain]
+        return list(filter(lambda x: x is not None, entity_list))
+
+```
+
