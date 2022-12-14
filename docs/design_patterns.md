@@ -198,17 +198,25 @@ Sometimes, more than one handler needs a pass over the data.
 
 ```python
 
+
 class NamedEntityHandler(ABC):
     def __init__(self, successor: Optional["Handler"] = None):
         self._successor = successor
 
     @abstractmethod
-    def handle(self, text:str, *args, **kwargs) -> None:
+    def handle(self, text:str | Entity, *args, **kwargs) -> None:
         pass
 
 class PersonNameHandler(NamedEntityHandler):
     def handle(self, text:str) -> Entity:
-        return PersonNameEntityParser.parse(text)
+        name = PersonNameEntityParser.parse(text)
+        if self._successor is not None:
+            name = self._successor.handle(name)
+        return name
+
+class NameConfidenceCalibrationHandler(NamedEntityHandler):
+    def handle(self, name_entity: Entity) -> Entity:
+        return NameConfidenceCalibrator.calibrate(name_entity)
 
 class CompanyNameHandler(NamedEntityHandler):
     def handle(self, text:str) -> Entity:
@@ -222,9 +230,11 @@ class AmountHandler(NamedEntityHandler):
     def handle(self, text:str) -> Entity:
         return AmountParser.parse(text)
 
+class 
+
 class NamedEntityExtractor:
     def __init__(self):
-        self._person_name_handler = PersonNameHandler()
+        self._person_name_handler = PersonNameHandler(NameConfidenceCalilbrationHandler)
         self._company_name_handler = CompanyNameHandler()
         self._address_handler = AddressHandler()
         self._date_handler = DateHandler()
