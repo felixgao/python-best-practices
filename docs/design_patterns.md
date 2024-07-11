@@ -252,3 +252,12 @@ class NamedEntityExtractor:
 
 ```
 
+### Strategy
+
+#### Intent
+Define a family of interchangable algorithms by a client (client decide which algorithm to use either dynamically or statistically) 
+
+#### Problem
+There are multiple ways of solving the same problems and each of which have its own advantages/disadvantages. To be able to quickly change the behavior of the program. 
+
+
