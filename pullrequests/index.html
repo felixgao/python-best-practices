@@ -1,0 +1,1011 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/python.svg">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>Pull Requests Etiquette - Best Python Practices</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="yello">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#pull-request-etiquette" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Best Python Practices" class="md-header__button md-logo" aria-label="Best Python Practices" data-md-component="logo">
+      
+  <img src="../assets/python.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Best Python Practices
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Pull Requests Etiquette
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="yello"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/felixgao/python-best-practices" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    best-python-practices
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Best Python Practices" class="md-nav__button md-logo" aria-label="Best Python Practices" data-md-component="logo">
+      
+  <img src="../assets/python.svg" alt="logo">
+
+    </a>
+    Best Python Practices
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/felixgao/python-best-practices" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    best-python-practices
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design_patterns/" class="md-nav__link">
+        Design Patterns
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_2">
+          Performance
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Performance" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Performance
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/performance/lookup_tables/" class="md-nav__link">
+        Lookup Tables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/performance/profiling_tools/" class="md-nav__link">
+        Profiling Tools & Strategy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/performance/multiprocessing/" class="md-nav__link">
+        Multi-Processing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_3">
+          Packaging
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Packaging" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          Packaging
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/packaging/structure/" class="md-nav__link">
+        Structure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/packaging/makefile/" class="md-nav__link">
+        Makefile
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/packaging/logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/packaging/code_style/" class="md-nav__link">
+        Code Style
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/packaging/api_design/" class="md-nav__link">
+        API Design
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/packaging/anti_patterns/" class="md-nav__link">
+        Anti Patterns
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/packaging/testing/" class="md-nav__link">
+        Testing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../libraries/" class="md-nav__link">
+        Libraries & Tools
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Pull Requests Etiquette
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Pull Requests Etiquette
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-do-we-use-a-pull-request-workflow" class="md-nav__link">
+    Why do we use a Pull Request workflow?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-constitutes-a-good-pr" class="md-nav__link">
+    What constitutes a good PR?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#submitting-pull-requests" class="md-nav__link">
+    Submitting Pull Requests
+  </a>
+  
+    <nav class="md-nav" aria-label="Submitting Pull Requests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ensure-there-is-a-solid-title-and-summary" class="md-nav__link">
+    Ensure there is a solid title and summary
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rebase-before-you-make-the-pr-if-needed" class="md-nav__link">
+    Rebase before you make the PR, if needed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aim-for-one-succinct-commit" class="md-nav__link">
+    Aim for one succinct commit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#describe-your-changes-well-in-each-commit" class="md-nav__link">
+    Describe your changes well in each commit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keep-it-small" class="md-nav__link">
+    Keep it small
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reviewing-pull-requests" class="md-nav__link">
+    Reviewing Pull Requests
+  </a>
+  
+    <nav class="md-nav" aria-label="Reviewing Pull Requests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reviewers-are-the-guardians-of-the-commit-history" class="md-nav__link">
+    Reviewers are the guardians of the commit history
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keep-the-flow-going" class="md-nav__link">
+    Keep the flow going
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#we-are-all-reviewers" class="md-nav__link">
+    We are all reviewers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dont-add-to-the-pr-yourself" class="md-nav__link">
+    Don't add to the PR yourself.
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#it-is-not-the-reviewers-responsibility-to-test-the-code" class="md-nav__link">
+    It is not the reviewers responsibility to test the code
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#some-interesting-links" class="md-nav__link">
+    Some interesting links
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-do-we-use-a-pull-request-workflow" class="md-nav__link">
+    Why do we use a Pull Request workflow?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-constitutes-a-good-pr" class="md-nav__link">
+    What constitutes a good PR?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#submitting-pull-requests" class="md-nav__link">
+    Submitting Pull Requests
+  </a>
+  
+    <nav class="md-nav" aria-label="Submitting Pull Requests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ensure-there-is-a-solid-title-and-summary" class="md-nav__link">
+    Ensure there is a solid title and summary
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rebase-before-you-make-the-pr-if-needed" class="md-nav__link">
+    Rebase before you make the PR, if needed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aim-for-one-succinct-commit" class="md-nav__link">
+    Aim for one succinct commit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#describe-your-changes-well-in-each-commit" class="md-nav__link">
+    Describe your changes well in each commit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keep-it-small" class="md-nav__link">
+    Keep it small
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reviewing-pull-requests" class="md-nav__link">
+    Reviewing Pull Requests
+  </a>
+  
+    <nav class="md-nav" aria-label="Reviewing Pull Requests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reviewers-are-the-guardians-of-the-commit-history" class="md-nav__link">
+    Reviewers are the guardians of the commit history
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keep-the-flow-going" class="md-nav__link">
+    Keep the flow going
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#we-are-all-reviewers" class="md-nav__link">
+    We are all reviewers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dont-add-to-the-pr-yourself" class="md-nav__link">
+    Don't add to the PR yourself.
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#it-is-not-the-reviewers-responsibility-to-test-the-code" class="md-nav__link">
+    It is not the reviewers responsibility to test the code
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#some-interesting-links" class="md-nav__link">
+    Some interesting links
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/felixgao/python-best-practices/edit/master/docs/pullrequests.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+<h1 id="pull-request-etiquette">Pull Request Etiquette<a class="headerlink" href="#pull-request-etiquette" title="Permanent link">&para;</a></h1>
+<h3 id="why-do-we-use-a-pull-request-workflow">Why do we use a Pull Request workflow?<a class="headerlink" href="#why-do-we-use-a-pull-request-workflow" title="Permanent link">&para;</a></h3>
+<p>PRs are a great way of sharing information and informs us of the changes that are occuring in our codebase. They are also an excellent way of getting your work reviewed by a peer.</p>
+<p><strong>The primary reason we use PRs is to encourage quality in the commits that are made to our code repositories</strong></p>
+<p>When PRs done well, the commits (and their attached messages) contained within tell a story to people examining the code at a later date. If we are not careful to ensure the quality of these commits, we silently lose this ability.</p>
+<p><strong>Poor quality code can be refactored. A terrible commit lasts forever.</strong></p>
+<h3 id="what-constitutes-a-good-pr">What constitutes a good PR?<a class="headerlink" href="#what-constitutes-a-good-pr" title="Permanent link">&para;</a></h3>
+<p>A good quality PR will have the following characteristics:</p>
+<ul>
+<li>It will be a <code>complete piece of work</code> that adds value in some way.</li>
+<li>It will have a title that reflects the work within, and a summary that helps to understand the context of the change.</li>
+<li>There will be well written commit messages, with well crafted commits that tell the story of the development of this work.</li>
+<li>Ideally it will be small and easy to understand. Single commit PRs are usually easy to submit, review, and merge.</li>
+<li>The code contained within will meet the best practises set by the team wherever possible.</li>
+</ul>
+<p>A PR does not end at submission though. A code change is not made until it is merged and used in production.</p>
+<p>A good PR should be able to flow through a peer review system easily and quickly.</p>
+<h2 id="submitting-pull-requests">Submitting Pull Requests<a class="headerlink" href="#submitting-pull-requests" title="Permanent link">&para;</a></h2>
+<h3 id="ensure-there-is-a-solid-title-and-summary">Ensure there is a solid title and summary<a class="headerlink" href="#ensure-there-is-a-solid-title-and-summary" title="Permanent link">&para;</a></h3>
+<p>PRs are a Github workflow tool, so it's important to understand that the PR title, summary and eventual discussion are not as trackable as the the commit history. If we ever move away from Github, we'll likely lose this infomation.</p>
+<p>That said however, they are a very useful aid in ensuring that PRs are handled quickly and effectively.</p>
+<p>Ensure that your PR title is scannable. People will read through the list of PRs attached to a repo, and must be able to distinguish between them based on title. Include a story/issue reference if possible, so the reviewer can get any extra context. Include a reference to the subsystem affected, if this is a large codebase.</p>
+<p>Use keywords in the title to help people understand your intention with the PR, eg [WIP] to indicate that it's still in progress, so should not be merged.  When using Github and have [WIP] tagged with your title, you should reframe from adding reviewers until you are ready to get it reviewed. You can directly shared your PR link to a reviewer after they agreed to look at your [WIP] PR.</p>
+<h3 id="rebase-before-you-make-the-pr-if-needed">Rebase before you make the PR, if needed<a class="headerlink" href="#rebase-before-you-make-the-pr-if-needed" title="Permanent link">&para;</a></h3>
+<p>Unless there is a good reason not to rebase - typically because more than one person has been working on the branch - it is often a good idea to rebase your branch to tidy up before submitting the PR. </p>
+<p>Use <code>git rebase -i master # or other reference, eg HEAD~5</code></p>
+<p>For example:</p>
+<ul>
+<li>Squash 'oops, fix typo/bug' into their parent commit. There is no reason to create and solve bugs within a PR, <strong>unless there is educational value in highlighting them</strong>.</li>
+<li>Reword your commit messages for clarity. Once a PR is submitted, any rewording of commits will involve a rebase, which can then mess up the conversation in the PR.</li>
+</ul>
+<h3 id="aim-for-one-succinct-commit">Aim for one succinct commit<a class="headerlink" href="#aim-for-one-succinct-commit" title="Permanent link">&para;</a></h3>
+<p>In an ideal world, your PR will be one small(ish) commit, <strong>doing one thing</strong> - in which case your life will be made easier, since the commit message and PR title/summary are equivalent.</p>
+<p>If your change contains more work than can be sensibly covered in a single commit though, <strong>do not</strong> try to squash it down into one. Commit history should tell a story, and if that story is long then it may require multiple commits to walk the reviewer through it.</p>
+<h3 id="describe-your-changes-well-in-each-commit">Describe your changes well in each commit<a class="headerlink" href="#describe-your-changes-well-in-each-commit" title="Permanent link">&para;</a></h3>
+<p>Commit messages are invaluable to someone reading the history of the code base, and are critical for understanding why a change was made.</p>
+<p>Try to ensure that there is enough information in there for a person with no context or understanding of the code to make sense of the change.</p>
+<p>Where external information references are available - such as Issue/Story IDs, PR numbers - ensure that they are included in the commit message.</p>
+<p>Remember that your commit message must survive the ravages of time. Try to link to something that will be preserved equally well -- JIRA for example.</p>
+<p><strong> Each commit message should include the reason why this commit was made. Usually by adding a sentence completing the form 'So that we...' will give an amazing amount of context to the history that the code change itself cannot </strong></p>
+<h3 id="keep-it-small">Keep it small<a class="headerlink" href="#keep-it-small" title="Permanent link">&para;</a></h3>
+<p>Try to <strong>only fix one issue</strong> or <strong>add one feature</strong> within a single pull request. The larger it is, the more complex it is to review and the more likely it will be delayed. Remember that reviewing PRs is taking time from someone else's day.</p>
+<p>If you must submit a large PR, try to at least make someone else aware of this fact, and arrange for their time to review and get the PR merged. It's not fair to the team to dump large pieces of work on their laps without warning.</p>
+<p>If you can rebase up a large PR into multiple smaller PRs, then do so.</p>
+<h2 id="reviewing-pull-requests">Reviewing Pull Requests<a class="headerlink" href="#reviewing-pull-requests" title="Permanent link">&para;</a></h2>
+<p>It's a reviewers responsibility to ensure:</p>
+<ul>
+<li>Commit history is excellent</li>
+<li>Good changes are propagated quickly</li>
+<li>Code review is performed -- ideally with reasons and suggestions for changes requested.</li>
+<li>They understand what is being changed, from the perspective of someone examining the code in the future.</li>
+<li>Apply the same standards to all PRs.</li>
+<li>Provide the final action - ship it! or not</li>
+</ul>
+<p>It is a requester responsibility to ensure:</p>
+<ul>
+<li>Your PR is small.</li>
+<li>Your PR foucsing on one story or one bug only.</li>
+<li>Reviewed your changes before creating the PR.</li>
+<li>Done the necessary pre-checks -- Prettier to reformatted the code, Linter checks, Ran all of the necessary tests.</li>
+<li>Reply or react to every comment the reviewer have requested. </li>
+</ul>
+<h3 id="reviewers-are-the-guardians-of-the-commit-history">Reviewers are the guardians of the commit history<a class="headerlink" href="#reviewers-are-the-guardians-of-the-commit-history" title="Permanent link">&para;</a></h3>
+<p>The importance of ensuring a quality commit history cannot be stressed enough. It is the historical context of all of the work that we do, and is vital for understanding the reasons why changes were made in the past. What is obvious now, will not be obvious in the future.</p>
+<p>Without a decent commit history, we may as well be storing all our code in files ending yyyy-mm-dd. The commit history of a code base is what allows people to understand <strong>why</strong> a change was made - the when, what, and where are automatically evident.</p>
+<p>When looking at a commit message, ask yourself the question - from the perspective of someone looking at this change without any knowledge of the codebase - 'do I understand <em>why</em> this change was made?' </p>
+<p><strong>If any commit within the PR does not meet this standard, the PR should be rebased until it does. We cannot fix a commit history once it is in place, unlike our ability to refactor crappy code or fix bugs.</strong></p>
+<p>A useful tip is simply asking the submitter to add a sentence to the commit message completing the sentence 'So that we...'.</p>
+<h3 id="keep-the-flow-going">Keep the flow going<a class="headerlink" href="#keep-the-flow-going" title="Permanent link">&para;</a></h3>
+<p>Pull Requests are the fundamental unit of how we progress change. If PRs are getting clogged up in the system, either unreviewed or unmanaged, they are preventing a piece of work from being completed.</p>
+<p>As PRs clog up in the system, merges become more difficult, as other features and fixes are applied to the same codebase. This in turn slows them down further, and often completely blocks progress on a given codebase.</p>
+<p>There is a balance between flow and ensuring the quality of our PRs. As a reviewer you should make a call as to whether a code quality issue is sufficient enough to block the PR whilst the code is improved. Possibly it is more prudent to simply flag that the code needs rework, and raise an issue.</p>
+<p>Any quality issue that will obviously result in a bug should be fixed.</p>
+<h3 id="we-are-all-reviewers">We are all reviewers<a class="headerlink" href="#we-are-all-reviewers" title="Permanent link">&para;</a></h3>
+<p>To make sure PRs flow through the system speedily, we must scale the PR review process. It is not sufficient (or fair!) to expect one or two people to review all PRs to our code. For starters, it creates a blocker every time those people are busy.</p>
+<p>Hopefully with the above guidelines, we can all start sharing the responsibility of being a reviewer.</p>
+<p>NB: With this in mind - if you are the first to comment on a PR, you are that PRs reviewer. If you feel that you can no longer be responsible for the subsequent merge or closure of the PR, then flag this up in the PR conversation, so someone else can take up the role.</p>
+<p>There's no reason why multiple people cannot comment on a PR and review it, and this is to be encouraged.</p>
+<h3 id="dont-add-to-the-pr-yourself">Don't add to the PR yourself.<a class="headerlink" href="#dont-add-to-the-pr-yourself" title="Permanent link">&para;</a></h3>
+<p>It's sometimes tempting to fix a bug in a PR yourself, or to rework a section to meet coding standards, or just to make a feature better fit your needs.</p>
+<p>If you do this, you are no longer the reviewer of the PR. You are a collaborator, and so should not merge the PR.</p>
+<p>It is of course possible to find a new reviewer, but generally change will be speedier if you require the original submitter to fix the code themselves. Alternatively, if the original PR is 'good enough', raise the changes you'd like to see as separate stories/issues, and rework in your own PR.</p>
+<h3 id="it-is-not-the-reviewers-responsibility-to-test-the-code">It is not the reviewers responsibility to test the code<a class="headerlink" href="#it-is-not-the-reviewers-responsibility-to-test-the-code" title="Permanent link">&para;</a></h3>
+<p>We are all busy people, and in the case of many PRs against our codebase we are not able or time-permitted to test the new code.</p>
+<p>We need to assume that the submitter has tested and formatted their code to the point of being happy with the work to be merged to master and subsequently released.</p>
+<p>If you, as a reviewer, are suspicious that the work in the PR has not been tested, raise this with the submitter. Find out how they have tested it, and refuse the work if they have not. They may not have a mechanism to test it, in which case you may need to help.</p>
+<p>If, as a submitter, you know that this change is not fully tested, highlight this in the PR text, and talk to the reviewer.  As a submitter, it is highly encouraged to add a screenshot of successful tests along with other screenshots to show you have done your diligence before requesting for a PR to be reviewed.</p>
+<h2 id="some-interesting-links">Some interesting links<a class="headerlink" href="#some-interesting-links" title="Permanent link">&para;</a></h2>
+<p>Amazing article on how to effectively use the commit history as an incredible documentation source:</p>
+<ul>
+<li><a href="https://mislav.net/2014/02/hidden-documentation/">https://mislav.net/2014/02/hidden-documentation/</a></li>
+</ul>
+<p>Github's recommendations for PRs, which has some useful tips on notifying teams and collegues via the github @-syntax.</p>
+<ul>
+<li><a href="https://github.com/blog/1943-how-to-write-the-perfect-pull-request">https://github.com/blog/1943-how-to-write-the-perfect-pull-request</a> </li>
+</ul>
+<p>The GOV.UK git styleguide:</p>
+<ul>
+<li><a href="https://github.com/alphagov/styleguides/blob/master/git.md">https://github.com/alphagov/styleguides/blob/master/git.md</a></li>
+</ul>
+<p>An example of an extremely good commit message, for a change that would be highly confusing otherwise:</p>
+<ul>
+<li><a href="https://github.com/gds-operations/vcloud-edge_gateway/pull/111">https://github.com/gds-operations/vcloud-edge_gateway/pull/111</a></li>
+</ul>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../libraries/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Libraries &amp; Tools" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Libraries & Tools
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://github.com/felixgao/python-best-practices/" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

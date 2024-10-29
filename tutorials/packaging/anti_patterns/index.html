@@ -1,0 +1,1627 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../assets/python.svg">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>Anti Patterns - Best Python Practices</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="yello">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#anti-patterns" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Best Python Practices" class="md-header__button md-logo" aria-label="Best Python Practices" data-md-component="logo">
+      
+  <img src="../../../assets/python.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Best Python Practices
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Anti Patterns
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="yello"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/felixgao/python-best-practices" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    best-python-practices
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Best Python Practices" class="md-nav__button md-logo" aria-label="Best Python Practices" data-md-component="logo">
+      
+  <img src="../../../assets/python.svg" alt="logo">
+
+    </a>
+    Best Python Practices
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/felixgao/python-best-practices" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    best-python-practices
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../design_patterns/" class="md-nav__link">
+        Design Patterns
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_2">
+          Performance
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Performance" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Performance
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../performance/lookup_tables/" class="md-nav__link">
+        Lookup Tables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../performance/profiling_tools/" class="md-nav__link">
+        Profiling Tools & Strategy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../performance/multiprocessing/" class="md-nav__link">
+        Multi-Processing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_3">
+          Packaging
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Packaging" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          Packaging
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../structure/" class="md-nav__link">
+        Structure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../makefile/" class="md-nav__link">
+        Makefile
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../code_style/" class="md-nav__link">
+        Code Style
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api_design/" class="md-nav__link">
+        API Design
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Anti Patterns
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Anti Patterns
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#maintanance" class="md-nav__link">
+    Maintanance
+  </a>
+  
+    <nav class="md-nav" aria-label="Maintanance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#blanket-tryexcept-block" class="md-nav__link">
+    Blanket Try/Except Block
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#business-logic-in-__init__py" class="md-nav__link">
+    Business logic in __init__.py
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avoid-wildcard-imports-import-the-world" class="md-nav__link">
+    Avoid wildcard imports (import the world)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#not-using-contextmanager-with-stateful-code" class="md-nav__link">
+    Not using ContextManager with stateful code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returning-multiple-variable-types" class="md-nav__link">
+    Returning multiple variable types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-single-letter-or-abbeviations-in-your-variable-name" class="md-nav__link">
+    Using single letter or abbeviations in your variable name
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#passing-implicity-data-shapes-arounds" class="md-nav__link">
+    Passing implicity data shapes arounds
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#access-protected-members-from-outside-the-class" class="md-nav__link">
+    Access protected members from outside the class
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assigning-to-built-in-reserved-keywards" class="md-nav__link">
+    Assigning to built-in (reserved) keywards
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-is-not-java" class="md-nav__link">
+    Python is not Java
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mixing-positional-and-keyword-arguments-in-function" class="md-nav__link">
+    Mixing positional and keyword arguments in function.
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#redundant-context" class="md-nav__link">
+    Redundant Context
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mixing-configs-and-constants" class="md-nav__link">
+    Mixing Configs and Constants
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-in-to-check-containment-in-a-large-list" class="md-nav__link">
+    Using in to check containment in a (large) list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flattening-arrow-code" class="md-nav__link">
+    Flattening Arrow Code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#string-manipulation-and-formatting" class="md-nav__link">
+    String manipulation and formatting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#not-using-defaultdict-or-counter-instead-of-dict" class="md-nav__link">
+    Not using defaultdict or Counter instead of dict
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-dict-or-mutable-type-for-immutable-data" class="md-nav__link">
+    Using dict or mutable type for immutable data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-string-instead-of-enum" class="md-nav__link">
+    Using string instead of enum
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing/" class="md-nav__link">
+        Testing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libraries/" class="md-nav__link">
+        Libraries & Tools
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pullrequests/" class="md-nav__link">
+        Pull Requests Etiquette
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#maintanance" class="md-nav__link">
+    Maintanance
+  </a>
+  
+    <nav class="md-nav" aria-label="Maintanance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#blanket-tryexcept-block" class="md-nav__link">
+    Blanket Try/Except Block
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#business-logic-in-__init__py" class="md-nav__link">
+    Business logic in __init__.py
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avoid-wildcard-imports-import-the-world" class="md-nav__link">
+    Avoid wildcard imports (import the world)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#not-using-contextmanager-with-stateful-code" class="md-nav__link">
+    Not using ContextManager with stateful code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returning-multiple-variable-types" class="md-nav__link">
+    Returning multiple variable types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-single-letter-or-abbeviations-in-your-variable-name" class="md-nav__link">
+    Using single letter or abbeviations in your variable name
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#passing-implicity-data-shapes-arounds" class="md-nav__link">
+    Passing implicity data shapes arounds
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#access-protected-members-from-outside-the-class" class="md-nav__link">
+    Access protected members from outside the class
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assigning-to-built-in-reserved-keywards" class="md-nav__link">
+    Assigning to built-in (reserved) keywards
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-is-not-java" class="md-nav__link">
+    Python is not Java
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mixing-positional-and-keyword-arguments-in-function" class="md-nav__link">
+    Mixing positional and keyword arguments in function.
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#redundant-context" class="md-nav__link">
+    Redundant Context
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mixing-configs-and-constants" class="md-nav__link">
+    Mixing Configs and Constants
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-in-to-check-containment-in-a-large-list" class="md-nav__link">
+    Using in to check containment in a (large) list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flattening-arrow-code" class="md-nav__link">
+    Flattening Arrow Code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#string-manipulation-and-formatting" class="md-nav__link">
+    String manipulation and formatting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#not-using-defaultdict-or-counter-instead-of-dict" class="md-nav__link">
+    Not using defaultdict or Counter instead of dict
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-dict-or-mutable-type-for-immutable-data" class="md-nav__link">
+    Using dict or mutable type for immutable data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-string-instead-of-enum" class="md-nav__link">
+    Using string instead of enum
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/felixgao/python-best-practices/edit/master/docs/tutorials/packaging/anti_patterns.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+<div class="admonition summary">
+<p class="admonition-title">Summary</p>
+<p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use as much of built-ins as possible.</p>
+<p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use what the language has to offer.</p>
+<p><img alt="❌" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/274c.svg" title=":x:" /> Avoid blanket try/except block.</p>
+<p><img alt="❌" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/274c.svg" title=":x:" /> Avoid Repeat Yourself.</p>
+</div>
+<h1 id="anti-patterns">Anti-Patterns<a class="headerlink" href="#anti-patterns" title="Permanent link">&para;</a></h1>
+<p>Below is a list of anti-patterns that we should avoid in our code bases.</p>
+<h2 id="maintanance">Maintanance<a class="headerlink" href="#maintanance" title="Permanent link">&para;</a></h2>
+<p>A program is said to be maintainable if it is easy to understand and modify as per the requirement.</p>
+<h3 id="blanket-tryexcept-block">Blanket Try/Except Block<a class="headerlink" href="#blanket-tryexcept-block" title="Permanent link">&para;</a></h3>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="k">try</span><span class="p">:</span>
+    <span class="n">some_function</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">pass</span>
+</code></pre></div>
+</div>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="k">try</span><span class="p">:</span>
+    <span class="n">some_function</span><span class="p">()</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">log</span><span class="p">()</span>
+</code></pre></div>
+</div>
+<p>Don't catch exceptions unless there is something you can do the fix it.
+It is usually a sign of badly designed API that uses exceptions to control flow. </p>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="k">try</span><span class="p">:</span>
+    <span class="n">some_function</span><span class="p">(</span><span class="n">my_input</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">FixableException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span> <span class="c1"># Catch specific exception</span>
+    <span class="n">fix_the_problem</span><span class="p">()</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;fixing the problem encountered by </span><span class="si">{</span><span class="n">my_input</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="k">try</span><span class="p">:</span>
+    <span class="n">some_function</span><span class="p">(</span><span class="n">my_input</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">NotFixableException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;I can&#39;t do anything with </span><span class="si">{</span><span class="n">my_input</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="n">e</span> <span class="c1"># it is also good idea to wrap your own exception `raise MyNewException(e)`</span>
+</code></pre></div>
+</div>
+<h3 id="business-logic-in-__init__py">Business logic in <code>__init__.py</code><a class="headerlink" href="#business-logic-in-__init__py" title="Permanent link">&para;</a></h3>
+<p><code>__init__.py</code> just like any files, it can contains any legal python code.  The primary use of <code>__init__.py</code> is for python to understand the package structure of your code.  A good use of 
+<code>__init__.py</code> is to use it to expose objects and types that others could use.  Do not have custom logics in this file.</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># inside __init__.py</span>
+<span class="kn">import</span> <span class="nn">my_module</span>
+
+<span class="k">def</span> <span class="nf">some_function</span><span class="p">(</span><span class="n">lst</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">MyObject</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="o">...</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># inside __init__.py</span>
+<span class="kn">from</span> <span class="nn">my_module</span> <span class="kn">import</span> <span class="n">myfunc</span><span class="p">,</span> <span class="n">MyClass</span>
+<span class="kn">from</span> <span class="nn">my_second_module</span> <span class="kn">import</span> <span class="n">myfunc</span> <span class="k">as</span> <span class="n">my_second_func</span><span class="p">,</span> <span class="n">MyClass</span> <span class="k">as</span> <span class="n">MySecondClass</span>
+<span class="kn">from</span> <span class="nn">some_other_module</span> <span class="kn">import</span> <span class="n">create_singleton</span>
+
+<span class="n">my_singleton_obj</span> <span class="o">=</span> <span class="n">create_singleton</span><span class="p">()</span>
+</code></pre></div>
+</div>
+<h3 id="avoid-wildcard-imports-import-the-world">Avoid wildcard imports (import the world)<a class="headerlink" href="#avoid-wildcard-imports-import-the-world" title="Permanent link">&para;</a></h3>
+<p>During python's import mechanism any code in the module's import will be executed.</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">my_module</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">my_module</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">my_func</span><span class="p">,</span>
+    <span class="n">MyClass</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<h3 id="not-using-contextmanager-with-stateful-code">Not using ContextManager with stateful code<a class="headerlink" href="#not-using-contextmanager-with-stateful-code" title="Permanent link">&para;</a></h3>
+<p>Whenever you have code that is stateful with system resources like openning a file or create a network socket, you should use context manager to handle the context.  </p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">do_something</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">do_something</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<p>Another important thing to note is that context manager is created for handling potential failures of system resources. Do not abuse it by using the context manager for things that doesn't require entering a context and exiting the context when done. </p>
+<h3 id="returning-multiple-variable-types">Returning multiple variable types<a class="headerlink" href="#returning-multiple-variable-types" title="Permanent link">&para;</a></h3>
+<p>If a function is suppose to return a given type (e.g. List, Tuple, Dict, MyObject) suddenly returns something else (e.g. <code>None</code>)</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_meaning_of_life</span><span class="p">(</span><span class="n">question</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">question</span> <span class="o">!=</span> <span class="s2">&quot;The Hitchhiker&#39;s Guide to the Galaxy&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;42&quot;</span>
+</code></pre></div>
+</div>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">parse_value</span><span class="p">(</span><span class="n">try_value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">try_value</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span> 
+        <span class="k">pass</span>  <span class="c1"># this is also anti-pattern, using exception as flow control</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">try_value</span><span class="o">.</span><span class="n">isalpha</span><span class="p">():</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">try_value</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_meaning_of_life</span><span class="p">(</span><span class="n">question</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">question</span> <span class="o">!=</span> <span class="s2">&quot;The Hitchhiker&#39;s Guide to the Galaxy&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">UnknownQuestionException</span><span class="p">(</span><span class="s2">&quot;Marvin!&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;42&quot;</span>
+</code></pre></div>
+</div>
+<h3 id="using-single-letter-or-abbeviations-in-your-variable-name">Using single letter or abbeviations in your variable name<a class="headerlink" href="#using-single-letter-or-abbeviations-in-your-variable-name" title="Permanent link">&para;</a></h3>
+<p>variable names should follow the principle of least astonishment.  One-character names should generally be avoided, because they contain little to no information about what they refer to. However, there are a couple of exceptions that make some sense in their given contexts.</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="n">passwd</span> <span class="o">=</span> <span class="s2">&quot;abc&quot;</span>
+<span class="n">cust</span> <span class="o">=</span> <span class="n">fname</span> <span class="o">=</span> <span class="s2">&quot;John&quot;</span>
+<span class="n">comp</span> <span class="o">=</span> <span class="s2">&quot;Intuit&quot;</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;val&quot;</span><span class="p">}</span>
+<span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;abc&quot;</span>
+<span class="n">customer</span> <span class="o">=</span> <span class="s2">&quot;John&quot;</span>
+<span class="n">company</span> <span class="o">=</span> <span class="s2">&quot;Intuit&quot;</span>
+
+<span class="n">lookup</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span><span class="p">}</span>
+<span class="n">short_ints</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">temp_slice</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">lookup</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;data&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">value</span><span class="si">=}</span><span class="s2">&quot;</span>
+</code></pre></div>
+</div>
+<h3 id="passing-implicity-data-shapes-arounds">Passing implicity data shapes arounds<a class="headerlink" href="#passing-implicity-data-shapes-arounds" title="Permanent link">&para;</a></h3>
+<p>Generic containers is great for simple data types but should be avoided to hold nested values.</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+    <span class="n">data_container</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;my_key&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">pretty_data</span> <span class="o">=</span> <span class="n">prettify</span><span class="p">(</span><span class="n">data_container</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;my_key&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;Data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pretty_data</span>
+    <span class="k">return</span> <span class="n">data</span>
+</code></pre></div>
+</div>
+<p>You should use a dataclass or pydantic datamodel to model the object you want to operate on.</p>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">LikedLocation</span><span class="p">:</span>
+    <span class="n">places</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">POI</span><span class="p">]</span>
+    <span class="n">likes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Number</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">get_nth_places</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">POI</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">places</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">get_first_place</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">POI</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">places</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">POI</span><span class="p">:</span>
+    <span class="n">visited_by</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Person</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">get_nth_visited</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Person</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">visited_by</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">get_last_visited</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Person</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nth_visited</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">last_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">date_of_birth</span><span class="p">:</span> <span class="n">Datetime</span>
+
+<span class="k">def</span> <span class="nf">format_last_visited</span><span class="p">(</span><span class="n">locations</span><span class="p">:</span><span class="n">LikedLocation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="err">`</span><span class="n">DisplayablePerson</span><span class="err">`</span><span class="p">:</span>
+    <span class="n">last_visited_by</span> <span class="o">=</span> <span class="n">locations</span><span class="o">.</span><span class="n">get_first_place</span><span class="p">()</span><span class="o">.</span><span class="n">get_last_visited</span><span class="p">()</span>
+    <span class="c1"># assume prettify returns an object of `DisplayablePerson` type</span>
+    <span class="k">return</span> <span class="n">prettify</span><span class="p">(</span><span class="n">last_visited_by</span><span class="p">)</span> 
+</code></pre></div>
+</div>
+<h3 id="access-protected-members-from-outside-the-class">Access protected members from outside the class<a class="headerlink" href="#access-protected-members-from-outside-the-class" title="Permanent link">&para;</a></h3>
+<p>Variables with leading <code>_</code> are considered protected members. Access to this variable directly from outside of the class is dangerous and potential to run time errors.</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Rectangle</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_width</span> <span class="o">=</span> <span class="n">width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_height</span> <span class="o">=</span> <span class="n">height</span>
+
+<span class="n">rectangle</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">calculate</span><span class="p">(</span><span class="n">rectangle</span><span class="o">.</span><span class="n">_width</span><span class="p">,</span> <span class="n">rectangle</span><span class="o">.</span><span class="n">_height</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<p>This is also an example of over-engineering.  If all you need is some data that stores values. you can simple create dataclasses.</p>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Rectangle</span><span class="p">:</span>
+    <span class="n">width</span><span class="p">:</span> <span class="n">Number</span>
+    <span class="n">height</span><span class="p">:</span> <span class="n">Number</span>
+
+    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
+</code></pre></div>
+</div>
+<h3 id="assigning-to-built-in-reserved-keywards">Assigning to built-in (reserved) keywards<a class="headerlink" href="#assigning-to-built-in-reserved-keywards" title="Permanent link">&para;</a></h3>
+<p>Python has a number of built-in functions that are always accessible in the interpreter. Unless you have a special reason, you should neither overwrite these functions nor assign a value to a variable that has the same name as a built-in function. Overwriting a built-in might have undesired side effects or can cause runtime errors. Python developers usually use built-ins ‘as-is’. If their behaviour is changed, it can be very tricky to trace back the actual error.</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">my_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span> <span class="c1"># Error: TypeError: &#39;list&#39; object is not callable</span>
+
+<span class="nb">sum</span> <span class="o">=</span> <span class="nb">len</span> <span class="c1"># reassigned sum to be len operator</span>
+<span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span> <span class="c1"># instead of 45, you get 10</span>
+</code></pre></div>
+</div>
+<h3 id="python-is-not-java">Python is not Java<a class="headerlink" href="#python-is-not-java" title="Permanent link">&para;</a></h3>
+<p>Both Python and Java is object oriented programming langauge. However, there is Java way of doing things and Pythonic way of doing things.  Do not translate directly from Java to Python.</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">AreaCalculator</span><span class="p">:</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">calc_rectangle</span><span class="p">(</span><span class="n">width</span><span class="p">:</span><span class="n">Number</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="n">Number</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">width</span><span class="o">*</span><span class="n">height</span>
+</code></pre></div>
+</div>
+<p>the the above example the method <code>calc_rectangle</code> can just be a simple function since it does not require any internal states of the <code>AreaCalculator</code>.</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Rectangle</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">set_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span><span class="n">Number</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_width</span> <span class="o">=</span> <span class="n">width</span>
+    <span class="k">def</span> <span class="nf">set_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span><span class="n">Number</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_width</span> <span class="o">=</span> <span class="n">width</span>
+    <span class="k">def</span> <span class="nf">get_width</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_width</span>
+    <span class="k">def</span> <span class="nf">set_heigh</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_height</span>
+</code></pre></div>
+</div>
+<h3 id="mixing-positional-and-keyword-arguments-in-function">Mixing positional and keyword arguments in function.<a class="headerlink" href="#mixing-positional-and-keyword-arguments-in-function" title="Permanent link">&para;</a></h3>
+<p>prior to Python3.8 mixing positional argument with keyword arguments can lead to confusing results.</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">calculate_compound_interest</span><span class="p">(</span><span class="n">principle</span><span class="p">:</span> <span class="n">Number</span><span class="p">,</span> 
+                                <span class="n">rate</span><span class="p">:</span> <span class="n">Number</span><span class="p">,</span> 
+                                <span class="n">terms</span><span class="p">:</span> <span class="n">Number</span><span class="p">,</span> 
+                                <span class="n">compounded_monthly</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+                                <span class="n">to_string</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="o">...</span>
+<span class="n">interest</span> <span class="o">=</span> <span class="n">calculate_compound_interest</span><span class="p">(</span><span class="mi">1_000_000</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">interest2</span> <span class="o">=</span> <span class="n">calculate_compound_interest</span><span class="p">(</span><span class="mi">1_000_000</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">to_string</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">compounded_monthly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<p>the caller of the function have to be aware of the keyword argument's order because it can be ambigous on which one is first or second.</p>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">calculate_compound_interest</span><span class="p">(</span><span class="n">principle</span><span class="p">:</span> <span class="n">Number</span><span class="p">,</span> 
+                                <span class="n">rate</span><span class="p">:</span> <span class="n">Number</span><span class="p">,</span> 
+                                <span class="n">terms</span><span class="p">:</span> <span class="n">Number</span><span class="p">,</span> 
+                                 <span class="o">/</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="c1"># Changed to indicate positional arguments ends</span>
+                                <span class="n">compounded_monthly</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+                                <span class="n">to_string</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="o">...</span>
+<span class="c1"># interest = calculate_compound_interest(1_000_000, 2.5, 10, True, False) # this will fail</span>
+<span class="n">interest2</span> <span class="o">=</span> <span class="n">calculate_compound_interest</span><span class="p">(</span><span class="mi">1_000_000</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">to_string</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">compounded_monthly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<h3 id="redundant-context">Redundant Context<a class="headerlink" href="#redundant-context" title="Permanent link">&para;</a></h3>
+<p>Do not add unnecessary data to variable names, especially if the context is already clear</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">person_first_name</span><span class="p">,</span> <span class="n">person_last_name</span><span class="p">,</span> <span class="n">person_age</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">person_first_name</span> <span class="o">=</span> <span class="n">person_first_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">person_last_name</span> <span class="o">=</span> <span class="n">person_last_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">person_age_name</span> <span class="o">=</span> <span class="n">person_age_name</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="n">first_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_name</span> <span class="o">=</span> <span class="n">last_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">age_name</span> <span class="o">=</span> <span class="n">age_name</span>
+</code></pre></div>
+</div>
+<h3 id="mixing-configs-and-constants">Mixing Configs and Constants<a class="headerlink" href="#mixing-configs-and-constants" title="Permanent link">&para;</a></h3>
+<p>Do not mix stuff that can change vs the values that doesn't change in one file.  If your configs is getting longer than one page, you should consider externalize the config into a file. </p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># inside config.py</span>
+<span class="n">MY_CONST</span> <span class="o">=</span> <span class="mi">123</span>
+<span class="n">MY_DICT</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;my_key&quot;</span><span class="p">:</span> <span class="s2">&quot;myvalue&quot;</span><span class="p">,</span>
+    <span class="o">...</span>
+    <span class="s2">&quot;last_key&quot;</span><span class="p">:</span> <span class="s2">&quot;lastvalue&quot;</span>
+<span class="p">}</span>
+<span class="o">...</span>
+<span class="c1"># more stuff</span>
+<span class="n">some_variable</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">enviorn</span><span class="p">[</span><span class="s2">&quot;ENV_VAR_NAME&quot;</span><span class="p">]</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># inside constant.py</span>
+<span class="n">MY_CONST</span> <span class="o">=</span> <span class="mi">123</span>
+<span class="n">MY_DICT</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;my_key&quot;</span><span class="p">:</span> <span class="s2">&quot;myvalue&quot;</span><span class="p">,</span>
+    <span class="o">...</span>
+    <span class="s2">&quot;last_key&quot;</span><span class="p">:</span> <span class="s2">&quot;lastvalue&quot;</span>
+<span class="p">}</span>
+<span class="o">...</span>
+<span class="c1"># more stuff</span>
+
+<span class="c1"># inside config.py</span>
+<span class="c1"># If you only have a few options here</span>
+<span class="n">some_variable</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">enviorn</span><span class="p">[</span><span class="s2">&quot;ENV_VAR_NAME&quot;</span><span class="p">]</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># inside constant.py</span>
+<span class="n">MY_CONST</span> <span class="o">=</span> <span class="mi">123</span>
+<span class="n">MY_DICT</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;my_key&quot;</span><span class="p">:</span> <span class="s2">&quot;myvalue&quot;</span><span class="p">,</span>
+    <span class="o">...</span>
+    <span class="s2">&quot;last_key&quot;</span><span class="p">:</span> <span class="s2">&quot;lastvalue&quot;</span>
+<span class="p">}</span>
+<span class="o">...</span>
+<span class="c1"># more stuff</span>
+
+<span class="c1"># inside config.py</span>
+<span class="c1"># if you have business logic or longer than 5 options</span>
+<span class="k">class</span> <span class="nc">FeatureIsNoneError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">TorchModelSetting</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">version</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">device_count</span><span class="p">:</span> 
+
+<span class="k">class</span> <span class="nc">InterpolationSetting</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">enable_gpu</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">model_settings</span><span class="p">:</span> <span class="n">TorchModelSetting</span>
+    <span class="n">interpolation_factor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">conint</span><span class="p">(</span><span class="n">gt</span><span class="o">=</span><span class="mi">2</span><span class="p">)]</span>
+    <span class="n">interpolation_method</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">interpolate_on_integral</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+
+    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+        <span class="n">extra</span> <span class="o">=</span> <span class="s2">&quot;forbid&quot;</span>
+</code></pre></div>
+</div>
+<h3 id="using-in-to-check-containment-in-a-large-list">Using in to check containment in a (large) list<a class="headerlink" href="#using-in-to-check-containment-in-a-large-list" title="Permanent link">&para;</a></h3>
+<p>lack of understanding of the internals usually results in unexpected performance impacts.
+Checking if an element is contained in a list using the <code>in</code> operator might be slow for large lists.  If you must check this often, consider to change the list to a set or use <code>bisect</code>.</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="n">list_of_large_items</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">some_other_iterable</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">list_of_large_items</span><span class="p">:</span>
+        <span class="n">do_something</span><span class="p">()</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="n">list_of_large_items</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="n">large_items</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">list_of_large_items</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">some_other_relatively_large_iterable</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">large_items</span><span class="p">:</span>
+        <span class="n">do_something</span><span class="p">()</span>
+</code></pre></div>
+</div>
+<p>if you only need a few checks, it is better to use <code>bisect</code></p>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="n">list_of_a_handful_items</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="n">list_of_large_items</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">contains</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="s1">&#39;Locate the leftmost value exactly equal to x&#39;</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">bisect_left</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="ow">and</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">x</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">list_of_a_handful_items</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">contains</span><span class="p">(</span><span class="n">list_of_large_items</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">do_something</span><span class="p">()</span>
+</code></pre></div>
+</div>
+<h3 id="flattening-arrow-code">Flattening Arrow Code<a class="headerlink" href="#flattening-arrow-code" title="Permanent link">&para;</a></h3>
+<p>Stacked and nested if (conditional) statements make it hard to follow the code logic.
+Instead of nesting conditions you can combine them with boolean operators </p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="n">user</span> <span class="o">=</span> <span class="s2">&quot;Snorlax&quot;</span>
+<span class="n">age</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">job</span> <span class="o">=</span> <span class="s2">&quot;data scientist&quot;</span>
+
+<span class="k">if</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">user</span> <span class="o">==</span> <span class="s2">&quot;Snorlax&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">job</span> <span class="o">==</span> <span class="s2">&quot;data scientist&quot;</span><span class="p">:</span>
+            <span class="n">do_science_work</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">do_work</span><span class="p">()</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">is_data_scienstist</span><span class="p">(</span><span class="n">age</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">user</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">job</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="o">...</span>
+
+<span class="k">if</span> <span class="n">is_data_scienstist</span><span class="p">():</span>
+    <span class="n">do_science_work</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">do_work</span><span class="p">()</span>
+</code></pre></div>
+</div>
+<p>if the number of conditions is simple you can use boolean operator to connect</p>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span>  <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">30</span> <span class="ow">and</span> <span class="n">user</span> <span class="o">==</span> <span class="s2">&quot;Snorlax&quot;</span> <span class="ow">and</span> <span class="n">job</span> <span class="o">==</span> <span class="s2">&quot;data scientist&quot;</span><span class="p">:</span>
+    <span class="n">do_science_work</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">do_work</span><span class="p">()</span>
+</code></pre></div>
+</div>
+<h3 id="string-manipulation-and-formatting">String manipulation and formatting<a class="headerlink" href="#string-manipulation-and-formatting" title="Permanent link">&para;</a></h3>
+<p>String is very versatille type and often you need to convert the data into string.  Not using f-string can lead to a lot of code that is also error prune.</p>
+<p>Using f-string it is usually faster than the <code>format()</code>  or string subsitution method with <code>%</code>.</p>
+<p>Rounding numbers to lesser digit</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="n">pi</span> <span class="o">=</span> <span class="mf">3.1415926</span>
+<span class="n">pi_3_sifig</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pi</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="n">pi</span> <span class="o">=</span> <span class="mf">3.1415926</span>
+<span class="n">pi_3_sifig</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pi</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="n">interest_rate</span> <span class="o">=</span> <span class="mf">0.14159</span>
+<span class="n">interest_rate_percentage</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">interest_rate</span><span class="si">:</span><span class="s1">.2%</span><span class="si">}</span><span class="s1">&#39;</span> <span class="c1"># will output &#39;14.16%&#39;</span>
+</code></pre></div>
+</div>
+<p>Create leading digits</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="n">month</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">month_printable</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">month</span><span class="p">)</span> <span class="k">if</span> <span class="n">month</span> <span class="o">&lt;</span> <span class="mi">10</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">month</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="n">month</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">month_printable</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">month</span><span class="si">:</span><span class="s1">02d</span><span class="si">}</span><span class="s1">&#39;</span>
+</code></pre></div>
+</div>
+<p>adding separator to stringify your number for presentation</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="n">revenue</span> <span class="o">=</span> <span class="mi">1000000000</span> 
+<span class="n">revenue_printable</span> <span class="o">=</span> <span class="n">some_function_formatter</span><span class="p">(</span><span class="n">revenue</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span> <span class="c1"># this will return 1,000,000,000</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="n">revenue</span> <span class="o">=</span> <span class="mi">1000000000</span> 
+<span class="n">revenue_printable</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">revenue</span><span class="si">:</span><span class="s1">,d</span><span class="si">}</span><span class="s1">&#39;</span> <span class="c1"># you can replace `,` with whatever separate.</span>
+<span class="c1"># If you need to pass dynamic separtor, you can do `f&quot;{N: {sep}d}&quot;` where sep is a variable</span>
+</code></pre></div>
+</div>
+<p>If you are using <code>python 3.8</code> or newer
+You no longer needs to have duplicated logic for constructing text that looks like <code>name=value</code></p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="n">cost</span> <span class="o">=</span> <span class="s2">&quot;$1,000&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cost=</span><span class="si">{</span><span class="n">cost</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># or print(&quot;cost={cost}&quot;.format(cost=cost))</span>
+<span class="c1"># or god forbidden </span>
+<span class="c1"># print(&quot;cost =&quot; + cost)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cost=&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="mi">10</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span><span class="o">*</span><span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">cost</span><span class="p">)</span> <span class="c1"># to print &#39;cost=      $1,000&#39;</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="n">cost</span> <span class="o">=</span> <span class="s2">&quot;$1,000&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cost</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># this is a short hand </span>
+<span class="c1"># if you need to add spaces before the value</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cost</span><span class="si">= :</span><span class="s2">&gt; 10</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># will print, &gt; is right align &#39;cost=      $1,000&#39;</span>
+</code></pre></div>
+</div>
+<p>Converting datetime or part of it to string</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">2021</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">today_ISO8601_parts</span> <span class="o">=</span> <span class="n">today</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;today in discouraged format: </span><span class="si">{</span><span class="n">today_ISO8601_parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">today_ISO8601_parts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">today_ISO8601_parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">2021</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;today in discouraged format: </span><span class="si">{</span><span class="n">today</span><span class="si">:</span><span class="s2">%m/%d/%Y</span><span class="si">}</span><span class="s2">, ISO8601 format: </span><span class="si">{</span><span class="n">today</span><span class="si">:</span><span class="s2">%Y-%m-%d</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<h3 id="not-using-defaultdict-or-counter-instead-of-dict">Not using <code>defaultdict</code> or <code>Counter</code> instead of <code>dict</code><a class="headerlink" href="#not-using-defaultdict-or-counter-instead-of-dict" title="Permanent link">&para;</a></h3>
+<p>Python's <code>dict</code> is a very versatile container, but it shouldn't be used in certain cases.</p>
+<ul>
+<li>You are trying to count things</li>
+<li>You are manually adding default values</li>
+</ul>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;some long text you are trying to count the frequency of words.&quot;</span>
+
+<span class="n">word_count_dict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">word_count_dict</span><span class="p">:</span>
+        <span class="n">word_count_dict</span><span class="p">[</span><span class="n">w</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">word_count_dict</span><span class="p">[</span><span class="n">w</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="n">word_count_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">):</span>
+    <span class="n">word_count_dict</span><span class="p">[</span><span class="n">w</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+</code></pre></div>
+</div>
+<p>Or even better to use <code>Counter</code></p>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="n">word_counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">))</span>
+</code></pre></div>
+</div>
+<h3 id="using-dict-or-mutable-type-for-immutable-data">Using <code>dict</code> or mutable type for immutable data<a class="headerlink" href="#using-dict-or-mutable-type-for-immutable-data" title="Permanent link">&para;</a></h3>
+<p>Often <code>dict</code> is used as general container of data like config values and etc.  However, if the data is suppose to be immutable, then you really should use the correct immutable types to avoid accidental data overwrite. </p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="n">config</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">config</span><span class="p">[</span><span class="s2">&quot;service&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;https://www.intuit.com/prod/service_name&quot;</span>
+<span class="n">config</span><span class="p">[</span><span class="s2">&quot;rate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">config</span><span class="p">[</span><span class="s2">&quot;country&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+    <span class="n">service</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">rate</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">country</span><span class="p">:</span> <span class="nb">str</span>
+</code></pre></div>
+</div>
+<h3 id="using-string-instead-of-enum">Using string instead of enum<a class="headerlink" href="#using-string-instead-of-enum" title="Permanent link">&para;</a></h3>
+<p>String types are a poor choice when the list of possibility is fairly small and finite.   Using string type also could leads to risk of misspelling, escaping exhaustive checks with linters or pattern matching and code duplications.</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">classifier</span><span class="o">=</span><span class="s2">&quot;tree&quot;</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">classifier</span> <span class="o">==</span> <span class="s2">&quot;tree&quot;</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">elif</span> <span class="n">classifier</span> <span class="o">==</span> <span class="s2">&quot;forest&quot;</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">elif</span> <span class="n">classifier</span> <span class="o">==</span> <span class="s2">&quot;cnn&quot;</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="k">class</span> <span class="nc">Classifier</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">TREE</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">FOREST</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">CNN</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">classifer</span><span class="p">:</span> <span class="n">Classifier</span> <span class="o">=</span> <span class="n">Classifier</span><span class="o">.</span><span class="n">LBFGS</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">classifer</span> <span class="o">==</span> <span class="n">Classifier</span><span class="o">.</span><span class="n">TREE</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">elif</span> <span class="n">classifer</span> <span class="o">==</span> <span class="n">Classifier</span><span class="o">.</span><span class="n">FOREST</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">elif</span> <span class="n">classifer</span> <span class="o">==</span> <span class="n">Classifier</span><span class="o">.</span><span class="n">CNN</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span>
+</code></pre></div>
+</div>
+<p>with python3.10, you can do pattern matching.</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../api_design/" class="md-footer__link md-footer__link--prev" aria-label="Previous: API Design" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              API Design
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../testing/" class="md-footer__link md-footer__link--next" aria-label="Next: Testing" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Testing
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://github.com/felixgao/python-best-practices/" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

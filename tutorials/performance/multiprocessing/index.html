@@ -1,0 +1,1045 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../assets/python.svg">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>Multi-Processing - Best Python Practices</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="yello">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#multi-processing" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Best Python Practices" class="md-header__button md-logo" aria-label="Best Python Practices" data-md-component="logo">
+      
+  <img src="../../../assets/python.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Best Python Practices
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Multi-Processing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="yello"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/felixgao/python-best-practices" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    best-python-practices
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Best Python Practices" class="md-nav__button md-logo" aria-label="Best Python Practices" data-md-component="logo">
+      
+  <img src="../../../assets/python.svg" alt="logo">
+
+    </a>
+    Best Python Practices
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/felixgao/python-best-practices" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    best-python-practices
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../design_patterns/" class="md-nav__link">
+        Design Patterns
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_2">
+          Performance
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Performance" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Performance
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lookup_tables/" class="md-nav__link">
+        Lookup Tables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../profiling_tools/" class="md-nav__link">
+        Profiling Tools & Strategy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Multi-Processing
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Multi-Processing
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#multiprocessing-library" class="md-nav__link">
+    Multiprocessing library
+  </a>
+  
+    <nav class="md-nav" aria-label="Multiprocessing library">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shared-memory" class="md-nav__link">
+    Shared Memory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#numpy-multiprocessing" class="md-nav__link">
+    Numpy multiprocessing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#huge-arrays-in-numpy" class="md-nav__link">
+    Huge arrays in numpy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ray" class="md-nav__link">
+    Ray
+  </a>
+  
+    <nav class="md-nav" aria-label="Ray">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example_1" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dask" class="md-nav__link">
+    Dask
+  </a>
+  
+    <nav class="md-nav" aria-label="Dask">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example_2" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_3">
+          Packaging
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Packaging" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          Packaging
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packaging/structure/" class="md-nav__link">
+        Structure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packaging/makefile/" class="md-nav__link">
+        Makefile
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packaging/logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packaging/code_style/" class="md-nav__link">
+        Code Style
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packaging/api_design/" class="md-nav__link">
+        API Design
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packaging/anti_patterns/" class="md-nav__link">
+        Anti Patterns
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packaging/testing/" class="md-nav__link">
+        Testing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libraries/" class="md-nav__link">
+        Libraries & Tools
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pullrequests/" class="md-nav__link">
+        Pull Requests Etiquette
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#multiprocessing-library" class="md-nav__link">
+    Multiprocessing library
+  </a>
+  
+    <nav class="md-nav" aria-label="Multiprocessing library">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shared-memory" class="md-nav__link">
+    Shared Memory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#numpy-multiprocessing" class="md-nav__link">
+    Numpy multiprocessing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#huge-arrays-in-numpy" class="md-nav__link">
+    Huge arrays in numpy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ray" class="md-nav__link">
+    Ray
+  </a>
+  
+    <nav class="md-nav" aria-label="Ray">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example_1" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dask" class="md-nav__link">
+    Dask
+  </a>
+  
+    <nav class="md-nav" aria-label="Dask">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example_2" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/felixgao/python-best-practices/edit/master/docs/tutorials/performance/multiprocessing.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+<div class="admonition summary">
+<p class="admonition-title">Summary</p>
+<p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Partition data into independent batches/chunks.</p>
+<p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use shared memory for large data.</p>
+<p><img alt="❌" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/274c.svg" title=":x:" /> Avoid naive element-wise processing.</p>
+<p><img alt="❌" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/274c.svg" title=":x:" /> Avoid Using multithreading for CPU-bound tasks.</p>
+<p><img alt="❌" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/274c.svg" title=":x:" /> Avoid Using multiprocessing for IO-bound tasks.</p>
+</div>
+<h1 id="multi-processing">Multi-Processing<a class="headerlink" href="#multi-processing" title="Permanent link">&para;</a></h1>
+<p>Due to the infamous python GIL, when you need more CPU power to crunch some data, multi-processing is the way to go.   Python has a built-in multiprocessing library that make this feature avaiable out of the box. </p>
+<h2 id="multiprocessing-library">Multiprocessing library<a class="headerlink" href="#multiprocessing-library" title="Permanent link">&para;</a></h2>
+<p>Let's take a look of the basic example of using multiprocessing in python.</p>
+<p><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="k">def</span> <span class="nf">cpu_bound_processing</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="n">process</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">cpu_bound_processing</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">))</span>
+<span class="n">process</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">process</span><span class="o">.</span><span class="n">join</span><span class="p">()</span> <span class="c1"># any process finishes but not been joined becomes zombie process.</span>
+</code></pre></div>
+with this example you can now utitlize more CPU cores to do CPU bound tasks.</p>
+<h3 id="shared-memory">Shared Memory<a class="headerlink" href="#shared-memory" title="Permanent link">&para;</a></h3>
+<p>when the input size is large, it is in-efficient to make copies of the object to be passed to each sub-process.  In this case, we should create one shared memory block of the original large object. </p>
+<p>Python have some capabilities build-in for this.  You can use <a href="https://docs.python.org/3/library/multiprocessing.shared_memory.html#module-multiprocessing.shared_memory">shared_memory</a> module to do that.</p>
+<blockquote>
+<p>As mentioned above, when doing concurrent programming it is usually best to avoid using shared state as far as possible. This is particularly true when using multiple processes.</p>
+<p>However, if you really do need to use some shared data then multiprocessing provides a couple of ways of doing so.</p>
+</blockquote>
+<h3 id="numpy-multiprocessing">Numpy multiprocessing<a class="headerlink" href="#numpy-multiprocessing" title="Permanent link">&para;</a></h3>
+<p>Often we uses <a href="https://numpy.org/">NumPy</a> arrays to represent image or video data.  This is a great candidate for multiprocessing.  Everything can be done with the build-in <a href="https://docs.python.org/3/library/multiprocessing.shared_memory.html#module-multiprocessing.shared_memory">shared_memory</a> module above, but the <a href="https://pypi.org/project/SharedArray/">SharedArray</a> library it is a wrapper around <code>shm_open</code>, <code>mmap</code> and friends function in C with python binding to makes this more user friendly when working with numpy. </p>
+<p>SharedArray has a few key functions:</p>
+<ul>
+<li><code>SharedArray.create(name, shape, dtype=float)</code> creates a shared memory array</li>
+<li><code>SharedArray.attach(name)</code> attaches a previously created shared memory array to a variable</li>
+<li><code>SharedArray.delete(name)</code> deletes a shared memory array, however, existing attachments remain valid</li>
+</ul>
+<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
+<p>With SharedArray. </p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">SharedArray</span>
+
+<span class="k">def</span> <span class="nf">multiprocess_load_images</span><span class="p">(</span><span class="n">num_workers</span> <span class="o">=</span> <span class="mi">12</span><span class="p">):</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;train_images&quot;</span><span class="p">)</span>
+
+    <span class="c1"># this assumes each file with 1400x1200 resolution with 3 (RBG) channels</span>
+    <span class="n">number_of_files</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">SharedArray</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">number_of_files</span><span class="p">,</span> <span class="mi">1400</span><span class="p">,</span> <span class="mi">2100</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+    <span class="n">worker_amount</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">number_of_files</span><span class="o">/</span><span class="n">num_workers</span><span class="p">)</span>
+    <span class="n">residual</span> <span class="o">=</span> <span class="n">number_of_files</span> <span class="o">-</span> <span class="p">(</span><span class="n">num_works</span> <span class="o">*</span> <span class="n">worker_amount</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">load_images</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="c1"># Chucking the potential inputs. this could be optmized</span>
+        <span class="n">to_load</span> <span class="o">=</span> <span class="n">files</span><span class="p">[</span><span class="n">i</span><span class="p">:</span> <span class="n">i</span><span class="o">+</span><span class="n">n</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">file</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">to_load</span><span class="p">):</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;train_images/&quot;</span> <span class="o">+</span> <span class="n">file</span><span class="p">)</span>
+
+    <span class="n">processes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">worker_num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_workers</span><span class="p">):</span>
+        <span class="n">run_worker_amount</span> <span class="o">=</span> <span class="n">worker_amount</span>
+        <span class="k">if</span> <span class="n">worker_num</span> <span class="o">==</span> <span class="n">num_workers</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">residual</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">run_worker_amount</span> <span class="o">+=</span> <span class="n">residual</span>
+        <span class="n">process</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">load_images</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">worker_amount</span><span class="o">*</span><span class="n">worker_num</span><span class="p">,</span> <span class="n">run_worker_amount</span><span class="p">))</span>
+        <span class="n">processes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">process</span><span class="p">)</span>
+        <span class="n">process</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">process</span> <span class="ow">in</span> <span class="n">processes</span><span class="p">:</span>
+        <span class="n">process</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">data</span>
+</code></pre></div>
+<p>An example with SharedMemory directly</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">multiprocessing.shared_memory</span> <span class="kn">import</span> <span class="n">SharedMemory</span>
+<span class="kn">from</span> <span class="nn">multiprocessing.managers</span> <span class="kn">import</span> <span class="n">SharedMemoryManager</span>
+<span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ProcessPoolExecutor</span><span class="p">,</span> <span class="n">as_completed</span>
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">current_process</span><span class="p">,</span> <span class="n">cpu_count</span><span class="p">,</span> <span class="n">Process</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">work_with_shared_memory</span><span class="p">(</span><span class="n">shm_name</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;With SharedMemory: </span><span class="si">{</span><span class="n">current_process</span><span class="p">()</span><span class="si">=}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="c1"># Locate the shared memory by its name</span>
+    <span class="n">shm</span> <span class="o">=</span> <span class="n">SharedMemory</span><span class="p">(</span><span class="n">shm_name</span><span class="p">)</span>
+    <span class="c1"># Create the np.recarray from the buffer of the shared memory</span>
+    <span class="n">np_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">recarray</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">buf</span><span class="o">=</span><span class="n">shm</span><span class="o">.</span><span class="n">buf</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">np_array</span><span class="o">.</span><span class="n">val</span><span class="p">)</span>
+
+<span class="c1"># Some way to create that numpy array.</span>
+<span class="n">np_array</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np_array</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">np_array</span><span class="o">.</span><span class="n">dtype</span>
+<span class="k">with</span> <span class="n">SharedMemoryManager</span><span class="p">()</span> <span class="k">as</span> <span class="n">smm</span><span class="p">:</span>
+        <span class="c1"># Create a shared memory of size np_arry.nbytes</span>
+        <span class="n">shm</span> <span class="o">=</span> <span class="n">smm</span><span class="o">.</span><span class="n">SharedMemory</span><span class="p">(</span><span class="n">np_array</span><span class="o">.</span><span class="n">nbytes</span><span class="p">)</span>
+        <span class="c1"># Create a np.recarray using the buffer of shm</span>
+        <span class="n">shm_np_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">recarray</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">buf</span><span class="o">=</span><span class="n">shm</span><span class="o">.</span><span class="n">buf</span><span class="p">)</span>
+        <span class="c1"># Copy the data into the shared memory</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">copyto</span><span class="p">(</span><span class="n">shm_np_array</span><span class="p">,</span> <span class="n">np_array</span><span class="p">)</span>
+        <span class="c1"># Spawn some processes to do some work</span>
+        <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">cpu_count</span><span class="p">())</span> <span class="k">as</span> <span class="n">exe</span><span class="p">:</span>
+            <span class="n">fs</span> <span class="o">=</span> <span class="p">[</span><span class="n">exe</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">work_with_shared_memory</span><span class="p">,</span> <span class="n">shm</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
+                  <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cpu_count</span><span class="p">())]</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">as_completed</span><span class="p">(</span><span class="n">fs</span><span class="p">):</span>
+                <span class="k">pass</span>
+</code></pre></div>
+<h3 id="huge-arrays-in-numpy">Huge arrays in numpy<a class="headerlink" href="#huge-arrays-in-numpy" title="Permanent link">&para;</a></h3>
+<p>Python is notoriously known as a memory hogger and when you need to work with large amount of data it could result in out of memory error.  One trick we can use in this case is memory mapped file in numpy. </p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ProcessPoolExecutor</span><span class="p">,</span> <span class="n">as_completed</span>
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">worker</span><span class="p">,</span> <span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1_000_000</span><span class="p">,</span> <span class="mi">100</span>
+
+<span class="k">def</span> <span class="nf">split_size_iter</span><span class="p">(</span><span class="n">total_size</span><span class="p">:</span><span class="nb">int</span> <span class="p">,</span> <span class="n">num_chunks</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+    <span class="o">...</span>
+
+<span class="k">def</span> <span class="nf">print_matrix</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">worker_index_start</span><span class="p">,</span> <span class="n">worker_index_end</span><span class="p">):</span>
+    <span class="n">matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">memmap</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r+&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">worker</span><span class="p">,</span> <span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span><span class="p">))</span>
+    <span class="nb">print</span> <span class="n">matrix</span><span class="p">[</span><span class="n">worker_index_start</span><span class="p">:</span> <span class="n">worker_index_end</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">memmap</span><span class="p">(</span><span class="s1">&#39;test.dat&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w+&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">worker</span><span class="p">,</span> <span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span><span class="p">))</span>
+    <span class="c1"># some code to fill this matrix</span>
+
+    <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">cworker</span><span class="p">)</span> <span class="k">as</span> <span class="n">exe</span><span class="p">:</span>
+        <span class="n">fs</span> <span class="o">=</span> <span class="p">[</span><span class="n">exe</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">print_matrix</span><span class="p">,</span> <span class="s1">&#39;test.dat&#39;</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span> 
+                <span class="k">for</span> <span class="n">start</span><span class="p">,</span><span class="n">end</span> <span class="ow">in</span> <span class="n">split_size_iter</span><span class="p">(</span><span class="n">worker</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">as_completed</span><span class="p">(</span><span class="n">fs</span><span class="p">):</span>
+                    <span class="k">pass</span>
+</code></pre></div>
+<h2 id="ray">Ray<a class="headerlink" href="#ray" title="Permanent link">&para;</a></h2>
+<p><a href="https://docs.ray.io/en/latest/index.html">Ray</a> is a powerful open source platform that makes it easy to write distributed Python programs and seamlessly scale them from your laptop to a cluster.  Ray comes with support for the <code>mulitprocessing.Pool</code> API out of the box when importing <code>ray.util.multiprocessing</code>. </p>
+<h3 id="example_1">Example<a class="headerlink" href="#example_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="n">num_samples</span><span class="p">):</span>
+    <span class="n">num_inside</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_samples</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">hypot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">num_inside</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">num_inside</span>
+
+<span class="k">def</span> <span class="nf">approximate_pi_distributed</span><span class="p">(</span><span class="n">num_samples</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">ray.util.multiprocessing.pool</span> <span class="kn">import</span> <span class="n">Pool</span> <span class="c1"># NOTE: Only the import statement is changed.</span>
+    <span class="n">pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
+
+    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">num_inside</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">sample_batch_size</span> <span class="o">=</span> <span class="mi">100000</span>
+    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="p">[</span><span class="n">sample_batch_size</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_samples</span><span class="o">//</span><span class="n">sample_batch_size</span><span class="p">)]):</span>
+        <span class="n">num_inside</span> <span class="o">+=</span> <span class="n">result</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;pi ~= </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="mi">4</span><span class="o">*</span><span class="n">num_inside</span><span class="p">)</span><span class="o">/</span><span class="n">num_samples</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Finished in: </span><span class="si">{:.2f}</span><span class="s2">s&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start</span><span class="p">))</span>
+</code></pre></div>
+<h2 id="dask">Dask<a class="headerlink" href="#dask" title="Permanent link">&para;</a></h2>
+<p><a href="https://docs.dask.org/">Dask</a> is a Python parallel computing library geared towards scaling analytics and scientific computing workloads.</p>
+<p>Dask is composed of two parts: Dynamic task scheduling for optimized computation and Big Data collections such as like parallel arrays, dataframes, and lists that extend common interfaces like NumPy, Pandas, or Python iterators to larger-than-memory or distributed environments, which run on top of dynamic task schedulers.</p>
+<h3 id="example_2">Example<a class="headerlink" href="#example_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Setup the cluster and client for Dask</span>
+<span class="kn">from</span> <span class="nn">dask.distributed</span> <span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">LocalCluster</span>
+
+<span class="n">n_workers</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">LocalCluster</span><span class="p">(</span><span class="n">n_workers</span><span class="o">=</span><span class="n">n_workers</span><span class="p">,</span> <span class="n">threads_per_worker</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">memory_limit</span><span class="o">=</span><span class="s1">&#39;4GB&#39;</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+<span class="n">client</span><span class="o">.</span><span class="n">wait_for_workers</span><span class="p">(</span><span class="n">n_workers</span><span class="p">)</span>
+
+<span class="c1"># Load dataset</span>
+<span class="kn">from</span> <span class="nn">dask_ml.datasets</span> <span class="kn">import</span> <span class="n">make_classification</span> <span class="k">as</span> <span class="n">make_classification_dask</span>
+
+<span class="n">X_dask</span><span class="p">,</span> <span class="n">y_dask</span> <span class="o">=</span> <span class="n">make_classification_dask</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_informative</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_redundant</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Build a model</span>
+<span class="kn">import</span> <span class="nn">dask_lightgbm.core</span> <span class="k">as</span> <span class="nn">dlgbm</span>
+
+<span class="n">dmodel</span> <span class="o">=</span> <span class="n">dlgbm</span><span class="o">.</span><span class="n">LGBMClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+<span class="n">dmodel</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_dask</span><span class="p">,</span> <span class="n">y_dask</span><span class="p">)</span>
+
+<span class="c1"># make a single prediction</span>
+<span class="n">row</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">2.56999479</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.13019997</span><span class="p">,</span> <span class="mf">3.16075093</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.35936352</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.61271951</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.39352057</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.48924933</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.93094078</span><span class="p">,</span> <span class="mf">3.26130366</span><span class="p">,</span> <span class="mf">2.05692145</span><span class="p">]]</span>
+<span class="n">yhat</span> <span class="o">=</span> <span class="n">dmodel</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">row</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Prediction: </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">yhat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">dmodel</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_dask</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">)</span>
+
+<span class="n">acc_score</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_dask</span> <span class="o">==</span> <span class="n">y_pred</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_dask</span><span class="p">)</span>
+<span class="n">acc_score</span> <span class="o">=</span> <span class="n">acc_score</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">acc_score</span><span class="p">)</span>
+</code></pre></div>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../profiling_tools/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Profiling Tools &amp; Strategy" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Profiling Tools & Strategy
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../packaging/structure/" class="md-footer__link md-footer__link--next" aria-label="Next: Structure" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Structure
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://github.com/felixgao/python-best-practices/" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

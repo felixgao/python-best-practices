@@ -1,0 +1,1298 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../assets/python.svg">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>Code Style - Best Python Practices</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="yello">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#code-style" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Best Python Practices" class="md-header__button md-logo" aria-label="Best Python Practices" data-md-component="logo">
+      
+  <img src="../../../assets/python.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Best Python Practices
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Code Style
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="yello"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/felixgao/python-best-practices" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    best-python-practices
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Best Python Practices" class="md-nav__button md-logo" aria-label="Best Python Practices" data-md-component="logo">
+      
+  <img src="../../../assets/python.svg" alt="logo">
+
+    </a>
+    Best Python Practices
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/felixgao/python-best-practices" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    best-python-practices
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../design_patterns/" class="md-nav__link">
+        Design Patterns
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_2">
+          Performance
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Performance" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Performance
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../performance/lookup_tables/" class="md-nav__link">
+        Lookup Tables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../performance/profiling_tools/" class="md-nav__link">
+        Profiling Tools & Strategy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../performance/multiprocessing/" class="md-nav__link">
+        Multi-Processing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_3">
+          Packaging
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Packaging" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          Packaging
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../structure/" class="md-nav__link">
+        Structure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../makefile/" class="md-nav__link">
+        Makefile
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Code Style
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Code Style
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#goals" class="md-nav__link">
+    Goals
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-tools" class="md-nav__link">
+    Example Tools
+  </a>
+  
+    <nav class="md-nav" aria-label="Example Tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linters" class="md-nav__link">
+    Linters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#formatters" class="md-nav__link">
+    Formatters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommendation" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#style-guides" class="md-nav__link">
+    Style Guides
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#type-annotations" class="md-nav__link">
+    Type Annotations
+  </a>
+  
+    <nav class="md-nav" aria-label="Type Annotations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pep-484-style-type-annotations" class="md-nav__link">
+    PEP-484 Style type annotations
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variable-naming" class="md-nav__link">
+    Variable Naming
+  </a>
+  
+    <nav class="md-nav" aria-label="Variable Naming">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dictionaries" class="md-nav__link">
+    Dictionaries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listsseriesarrayssets" class="md-nav__link">
+    Lists/Series/Arrays/Sets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integersfloats" class="md-nav__link">
+    Integers/Floats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strings" class="md-nav__link">
+    Strings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    Classes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    Functions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flake-8-plugins" class="md-nav__link">
+    Flake-8 plugins
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api_design/" class="md-nav__link">
+        API Design
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anti_patterns/" class="md-nav__link">
+        Anti Patterns
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing/" class="md-nav__link">
+        Testing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libraries/" class="md-nav__link">
+        Libraries & Tools
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pullrequests/" class="md-nav__link">
+        Pull Requests Etiquette
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#goals" class="md-nav__link">
+    Goals
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-tools" class="md-nav__link">
+    Example Tools
+  </a>
+  
+    <nav class="md-nav" aria-label="Example Tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linters" class="md-nav__link">
+    Linters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#formatters" class="md-nav__link">
+    Formatters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommendation" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#style-guides" class="md-nav__link">
+    Style Guides
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#type-annotations" class="md-nav__link">
+    Type Annotations
+  </a>
+  
+    <nav class="md-nav" aria-label="Type Annotations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pep-484-style-type-annotations" class="md-nav__link">
+    PEP-484 Style type annotations
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variable-naming" class="md-nav__link">
+    Variable Naming
+  </a>
+  
+    <nav class="md-nav" aria-label="Variable Naming">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dictionaries" class="md-nav__link">
+    Dictionaries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listsseriesarrayssets" class="md-nav__link">
+    Lists/Series/Arrays/Sets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integersfloats" class="md-nav__link">
+    Integers/Floats
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strings" class="md-nav__link">
+    Strings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    Classes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    Functions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flake-8-plugins" class="md-nav__link">
+    Flake-8 plugins
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/felixgao/python-best-practices/edit/master/docs/tutorials/packaging/code_style.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+<div class="admonition summary">
+<p class="admonition-title">Summary</p>
+<p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use <a href="https://github.com/psf/black">black</a> code formatting.</p>
+<p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use <a href="http://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings">Google-style docstrings</a>.</p>
+<p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use either <a href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/#type-annotations">napoleon</a> docstring type annotations or <a href="https://www.python.org/dev/peps/pep-0484/">PEP-484</a> built-in type annotations.</p>
+<p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use <a href="https://flake8.pycqa.org/en/latest/">flake8</a> for linting (static code analysis).</p>
+<p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use <a href="http://mypy-lang.org/">mypy</a> for type checking.</p>
+</div>
+<h1 id="code-style">Code Style<a class="headerlink" href="#code-style" title="Permanent link">&para;</a></h1>
+<p>A consistent code style makes code easier to read and understand. The main 
+benefit of increased legibility and beautiful code is saving developer time. A 
+consistent code style allows anyone to quickly familiarize themselves with a 
+codebase even if it is being worked on by many people. A recommended read is the <a href="https://github.com/zedr/clean-code-python">clean code python</a>. </p>
+<p>There are many tools/guidelines which can be used to for code style in python 
+so a common question is which one to use. The reality is that most of the 
+tools/guidelines are fairly good and have generally useful default behavior. </p>
+<p>In practice, for most tools, warnings end up being ignored or specific 
+linting options are turned off because they are too restrictive. If a developer 
+of a repository disagrees with an option, then they will just remove it 
+entirely so that it does not bother them anymore.</p>
+<p>When using a set of guidelines which does not have a tool associated with it, 
+rules are often forgotten or implemented differently by different developers.</p>
+<h2 id="goals">Goals<a class="headerlink" href="#goals" title="Permanent link">&para;</a></h2>
+<p>Due to the reasons above, the goal of a styling specification would be to 
+have the following properties:</p>
+<ul>
+<li><strong>Automation</strong>: The code style must have a tool. It must have automated 
+    formatting so that users do not need to worry about styling the code 
+    manually.</li>
+<li><strong>Minimal Configuration</strong>: Minimize options so that users do not need to make
+    decisions about style. More decisions leads to more configuration and more
+    inconsistencies in code style.</li>
+<li><strong>Customizable Rules</strong>: The tool should allow leads to set the type of rules
+    going to be enforced and rules can be ignored.</li>
+</ul>
+<h2 id="example-tools">Example Tools<a class="headerlink" href="#example-tools" title="Permanent link">&para;</a></h2>
+<p>The following are the most commonly used tools for python code quality and ensure consistency.</p>
+<h3 id="linters">Linters<a class="headerlink" href="#linters" title="Permanent link">&para;</a></h3>
+<p>Linters are usually broken into two types: Logical and Stylistic linters.</p>
+<p>Logical Linter:</p>
+<ul>
+<li>Code Errors</li>
+<li>Code with potentially unintended results</li>
+<li>Dangrous code patterns</li>
+</ul>
+<p>Stylistic Liners:</p>
+<ul>
+<li>Code not conforming to defined conventions.</li>
+</ul>
+<p>Below are some of the popular tools</p>
+<ul>
+<li>
+<p><a href="https://pypi.org/project/pylint/">pylint</a>: A logical and sytlistic liner (more restrictive than <a href="https://www.python.org/dev/peps/pep-0008/">PEP-8</a>)</p>
+<p>The problem with pylint is that there is no automated way to apply the 
+rules to your project. You must run it, look at the errors generated, and
+then update your code manually. This makes it very easy to either ignore 
+the warnings or place unnecessary burden on developers to modify their code 
+until it passes linting. Pylint is opinionated about nearly all aspects of 
+code style including variable naming and number of arguments. This one of 
+the reasons that it is so common to see custom <code>pylint.rc</code> files in 
+repositories with specific errors turned off.</p>
+<p>The common complaints against Pylint are that it is slow, too verbose by default, and takes a lot of configuration to get it working the way you want.</p>
+</li>
+<li>
+<p><a href="https://github.com/PyCQA/pyflakes">PyFlakes</a>: A logical liner.</p>
+<p>Analyzes programs and detect various errors.  It doesn't complain about style and focus on logical code issues and potential errors.  Therefore, it runs faster than <a href="https://pypi.org/project/pylint/">pylint</a>.  <a href="https://flake8.pycqa.org/en/latest/">flake8</a> is a tool that wraps around <a href="https://github.com/PyCQA/pyflakes">PyFlakes</a> and <a href="https://github.com/PyCQA/pycodestyle">pycodestyle</a>.</p>
+</li>
+<li>
+<p><a href="https://github.com/PyCQA/pycodestyle">pycodestyle</a>: A code stylistic checker formally known as the official <a href="https://www.python.org/dev/peps/pep-0008/">PEP-8</a> style.</p>
+<p>pycodestyle is a tool to check your Python code against some of the style 
+conventions in <a href="https://www.python.org/dev/peps/pep-0008/">PEP-8</a>.   If you plan to use <a href="https://github.com/psf/black">black</a> for auto formatting and enforcing styles. You should turn off the checks for <code>E203</code> and <code>W503</code> so they can agree with each other in terms of styling.</p>
+</li>
+<li>
+<p><a href="https://github.com/google/yapf/">yapf</a>: An automated code formatter that follows <a href="https://www.python.org/dev/peps/pep-0008/">PEP-8</a> style.</p>
+<p>Unlike <a href="https://github.com/hhatto/autopep8">autopep8</a> this does not not only remove linting errors, but rather
+reformats all code in an opinionated style (which is <a href="https://www.python.org/dev/peps/pep-0008/">PEP-8</a> compliant). 
+Like the previous code stylers, this allows for a huge amount of 
+configuration and even allows you to swap out code style entirely.</p>
+</li>
+</ul>
+<h3 id="formatters">Formatters<a class="headerlink" href="#formatters" title="Permanent link">&para;</a></h3>
+<p>Formatters will format the actual python file based on rules.</p>
+<ul>
+<li>
+<p><a href="https://github.com/psf/black">black</a> An automated code formatter with no configuration options.</p>
+<p>A huge benefit of black is that unlike the previously mentioned tools this 
+does not have formatting options. Black does not strictly follow 
+<a href="https://www.python.org/dev/peps/pep-0008/">PEP-8</a> guidelines but is generally compliant.  It is also important to 
+understand that <a href="https://github.com/psf/black">black</a> is only an opinionated <code>formatter</code>, it does not
+check all of the styles problem that other <code>linters</code> do. </p>
+</li>
+<li>
+<p><a href="https://github.com/timothycrosley/isort">isort</a> Format imports order.</p>
+<p>Sort imports alphabetically, and automatically separated into sections and by type.</p>
+</li>
+</ul>
+<p>In a very controlled development environment, each may be useful tools by just
+enabling the default behavior and forbidding custom options.</p>
+<h2 id="recommendation">Recommendation<a class="headerlink" href="#recommendation" title="Permanent link">&para;</a></h2>
+<p>With any styling recommendation it is recommended to pair linters with formatters.</p>
+<p>The <a href="https://github.com/psf/black">black</a> library is a new code formatter that closely follows the principles 
+of the golang formatter <a href="https://golang.org/cmd/gofmt/">gofmt</a>. It only enforces the formatting of the code 
+like gofmt, black is opinionated and does not allow you to choose how to format 
+your code. The correctness of the code is checked upon formatting to ensure that 
+no mistake was made when updating the style.</p>
+<p>The only caveat to mention is that black is in beta and will not be perfect 
+until its official release.</p>
+<p>The <a href="https://pypi.org/project/pylint/">pylint</a> is one of the most popular linting library and well supported. However, 
+if you want integration with <code>pyproject.toml</code> you can use <a href="https://flake8.pycqa.org/en/latest/">flake8</a> which is a combination of tools (<a href="https://github.com/PyCQA/pyflakes">PyFlakes</a>, <a href="https://github.com/PyCQA/pycodestyle">pycodestyle</a> and <a href="https://github.com/PyCQA/mccabe">McCabe</a>). </p>
+<p>We should also use <a href="http://mypy-lang.org/">mypy</a> to check the type hinting is correct. </p>
+<h2 id="style-guides">Style Guides<a class="headerlink" href="#style-guides" title="Permanent link">&para;</a></h2>
+<p>Beyond automated checks and warnings for code, style guides provide good 
+recommendations for how you should write code.</p>
+<p>Three style guides in particular provide almost universally useful advice:</p>
+<ul>
+<li><a href="https://www.python.org/dev/peps/pep-0008/">PEP-8</a>: The official python style guide provides the basis for almost all 
+  formatters and other style guides. This provides the broadest and most 
+  foundational rules for writing legible python code.  </li>
+<li><a href="http://google.github.io/styleguide/pyguide.html">Google Style Guide</a>: This has a lot of useful recommendations, however many of 
+  their guidelines were chosen to maximize compatibility between python 2 and 
+  python 3. Since python 2 is officially deprecated, all of the compatibility
+  guidelines should be ignored. For these reasons the main</li>
+<li><a href="https://docs.python-guide.org/writing/style/">Hitchhiker's Guide to Python</a>: This provides its own style guide which
+  is universally regarded as good practice.</li>
+</ul>
+<p>Though none of these style guides can programmatically format code for you, they
+are essential reference for how to write clean, simple python code.</p>
+<h2 id="type-annotations">Type Annotations<a class="headerlink" href="#type-annotations" title="Permanent link">&para;</a></h2>
+<p>Type annotations of some kind are recommended but can be implemented in 
+different ways. Some form of type annotation is always recommended so that
+code usage is less ambiguous.</p>
+<p>The recommended strategies for annotating the types of your code:</p>
+<h3 id="pep-484-style-type-annotations"><a href="https://www.python.org/dev/peps/pep-0484/">PEP-484</a> Style type annotations<a class="headerlink" href="#pep-484-style-type-annotations" title="Permanent link">&para;</a></h3>
+<p>This places the type annotation directly in code. </p>
+<p>Pros:</p>
+<ul>
+<li>Code can be checked using automated code checkers (See: <a href="http://mypy-lang.org/">mypy</a> &amp; <a href="https://pyre-check.org/">pyre-check</a>)</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>Tends to make function declarations verbose</li>
+<li>Can be difficult to document data structures (Requires importing <a href="https://docs.python.org/3/library/typing.html">typing</a>)</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">subtract</span><span class="p">(</span><span class="n">minuend</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">subtrahend</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Subtract the subtrahend from the minuend.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        minuend: The basis to subtract from.</span>
+<span class="sd">        subtrahend: The value to subtract.</span>
+<span class="sd">    Result:</span>
+<span class="sd">        difference: The difference between the numbers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">minuend</span> <span class="o">+</span> <span class="n">subtrahend</span>
+</code></pre></div>
+<h2 id="variable-naming">Variable Naming<a class="headerlink" href="#variable-naming" title="Permanent link">&para;</a></h2>
+<p>In the style guides mentioned above, the naming conventions are primarily
+concerned with the case used (snake_case vs CamelCase, etc.) However, this
+section is in regards to the actual words which should be used in a name.</p>
+<p>Naming is one of the hardest problems in programming. Good naming can 
+drastically increase the readability of your code. To name things well, 
+variables should have the following properties:</p>
+<ul>
+<li>Descriptive</li>
+<li>Unambiguous</li>
+<li>Should not contain the type. This is what type annotations are for</li>
+<li>Should be short if possible. Long names make code more difficult to read</li>
+</ul>
+<p>Abbrivations for names is ok if it is well-known but should be reframed.
+ie. n, sz, cnt, idx, dt, ts, env, cfg, ctx etc. </p>
+<h3 id="dictionaries">Dictionaries<a class="headerlink" href="#dictionaries" title="Permanent link">&para;</a></h3>
+<p>Dictionaries should have information about both the <strong>key and value</strong> in 
+the name. </p>
+<p>Acceptable Forms:</p>
+<ul>
+<li><code>{singular-key}_{plural-values}</code> <em>(Preferred) Somewhat ambiguous, but succinct</em></li>
+<li><code>{key}_to_{value}</code> <em>Somewhat verbose</em></li>
+<li><code>{value}_by_{key}</code> <em>Somewhat verbose, less direct than <code>{key}_to_{value}</code></em></li>
+<li><code>{key}_{value}_lookup</code> <em>Somewhat verbose, but describes how it should be used</em></li>
+</ul>
+<p>Each of the forms can be more appropriate in different scenarios where the 
+meaning is more clear in context.</p>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="n">word_lengths</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;hello&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;world&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
+<span class="n">index_to_word</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;world&quot;</span><span class="p">}</span>
+<span class="n">word_by_index</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;world&quot;</span><span class="p">}</span>
+<span class="n">index_word_lookup</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;world&quot;</span><span class="p">}</span>
+</code></pre></div>
+</div>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="n">words</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;world&quot;</span><span class="p">}</span>        <span class="c1"># Ambiguous, No key information</span>
+<span class="n">word_lookup</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;world&quot;</span><span class="p">}</span>  <span class="c1"># No key information</span>
+<span class="n">word_dict</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;world&quot;</span><span class="p">}</span>    <span class="c1"># Type included in name</span>
+</code></pre></div>
+</div>
+<p>In some cases there are well-understood mappings that are meant to be iterated
+over. In these cases it makes sense to just use the pluralized version of the 
+word and name the variable after the contents. Anything that is meant to be 
+iterated over should be pluralized.</p>
+<div class="admonition attention">
+<p class="admonition-title">Exception</p>
+<div class="highlight"><pre><span></span><code><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">}</span>
+<span class="n">cookies</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;tz&quot;</span><span class="p">:</span> <span class="s2">&quot;America/Los_Angeles&quot;</span><span class="p">}</span>
+<span class="n">hyperparameters</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">}</span>
+<span class="n">gunicorn_options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;workers&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">}</span> <span class="c1"># Gunicorn uses `options`</span>
+</code></pre></div>
+</div>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="n">header_name_to_value</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">}</span>  <span class="c1"># Too verbose</span>
+<span class="n">cookie_name_to_value</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;tz&quot;</span><span class="p">:</span> <span class="s2">&quot;America/Los_Angeles&quot;</span><span class="p">}</span>         <span class="c1"># Too verbose</span>
+<span class="n">hyperparameter_name_to_value</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">}</span>      <span class="c1"># Too verbose</span>
+</code></pre></div>
+</div>
+<p>In other cases, there are libraries that have predefined names for their 
+arguments that do not follow the conventions above. In this case it is 
+acceptable to follow their conventions when interacting with their code. This
+makes the code less ambiguous because the library name and the application-code 
+variable name match.</p>
+<div class="admonition attention">
+<p class="admonition-title">Exception</p>
+<div class="highlight"><pre><span></span><code><span class="n">feed_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">tensor</span><span class="p">}</span> <span class="c1"># TensorFlow uses this name so it is acceptable</span>
+</code></pre></div>
+</div>
+<h3 id="listsseriesarrayssets">Lists/Series/Arrays/Sets<a class="headerlink" href="#listsseriesarrayssets" title="Permanent link">&para;</a></h3>
+<p>Collections (non-dictionary) should always be the plural version of whatever is 
+contained within. In the case where the value type is ambiguous, try to name
+the collection so it is possible to determine what is contained within.</p>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<p><code>`python
+zip_codes = [92127, 12345]
+names = {"Johnny", "Lisa", "Mark", "Denny"}
+column_names = ["zip_code", "wages"] # `names` suffix indicates string value</code></p>
+</div>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="n">zip_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">92127</span><span class="p">,</span> <span class="mi">12345</span><span class="p">]</span>        <span class="c1"># Do not include type</span>
+<span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">92127</span><span class="p">,</span> <span class="mi">12345</span><span class="p">]</span>            <span class="c1"># Shadows built-in list, Ambiguous</span>
+<span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="mi">92127</span><span class="p">,</span> <span class="mi">12345</span><span class="p">]</span>           <span class="c1"># Ambiguous</span>
+<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;zip_code&quot;</span><span class="p">,</span> <span class="s2">&quot;wages&quot;</span><span class="p">]</span>  <span class="c1"># Value type is ambiguous</span>
+</code></pre></div>
+</div>
+<h3 id="integersfloats">Integers/Floats<a class="headerlink" href="#integersfloats" title="Permanent link">&para;</a></h3>
+<p>When possible, number names should indicate the how the value should be 
+used. Contrary to the rules regarding collections, there are a many 
+well-understood values that indicate a number which should be unambiguous. </p>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="n">limit</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.7</span>
+<span class="n">size</span> <span class="o">=</span> <span class="mi">10</span>       <span class="c1"># Potentially ambiguous</span>
+<span class="n">index</span> <span class="o">=</span> <span class="mi">10</span>      <span class="c1"># Potentially ambiguous</span>
+<span class="n">count</span> <span class="o">=</span> <span class="mi">10</span>      <span class="c1"># Potentially ambiguous</span>
+<span class="n">n_items</span> <span class="o">=</span> <span class="mi">10</span>    <span class="c1"># `n` prefix always indicates a number, preferred `num_items`</span>
+<span class="n">min_items</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># `min` prefix always indicates a number</span>
+<span class="n">max_items</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># `max` prefix always indicates a number</span>
+<span class="n">buy_price</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># Domain specific words always indicate a number </span>
+</code></pre></div>
+</div>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="n">items</span> <span class="o">=</span> <span class="mi">10</span>      <span class="c1"># Ambiguous, could indicate a collection</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>          <span class="c1"># Not Descriptive</span>
+<span class="n">n_value</span> <span class="o">=</span> <span class="mi">10</span>    <span class="c1"># `value` suffix is not descriptive</span>
+<span class="n">n_quantity</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># `quantity` suffix is not descriptive</span>
+</code></pre></div>
+</div>
+<h3 id="strings">Strings<a class="headerlink" href="#strings" title="Permanent link">&para;</a></h3>
+<p>When possible, string names should indicate how the value should be used. The
+naming conventions of strings are similar to the conventions of numbers. There 
+are many well-understood names that could indicate a string type.</p>
+<p>Common Forms:</p>
+<ul>
+<li><code>{descriptor}_key</code> <em>May indicate lookup key</em></li>
+<li><code>{descriptor}_name</code> <em>May indicate lookup key</em></li>
+</ul>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="n">environment_name</span> <span class="o">=</span> <span class="s1">&#39;cdev&#39;</span>
+<span class="n">environment_key</span> <span class="o">=</span> <span class="s1">&#39;cdev&#39;</span>
+<span class="n">environment</span> <span class="o">=</span> <span class="s1">&#39;cdev&#39;</span>      <span class="c1"># Well-known string value, Potentially ambiguous</span>
+<span class="n">env</span> <span class="o">=</span> <span class="s1">&#39;cdev&#39;</span>              <span class="c1"># Well-known abbreviation, Potentially ambiguous</span>
+</code></pre></div>
+</div>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;cdev&#39;</span>  <span class="c1"># Ambiguous</span>
+<span class="n">config</span> <span class="o">=</span> <span class="s1">&#39;cdev&#39;</span> <span class="c1"># Ambiguous could indicate an object</span>
+</code></pre></div>
+</div>
+<h3 id="classes">Classes<a class="headerlink" href="#classes" title="Permanent link">&para;</a></h3>
+<p>Class instances should always be named after the class itself. For the purposes
+of describing the forms which a variable should be named the following class
+name will be used <code>DescriptionNoun</code>.</p>
+<p>Acceptable Forms:</p>
+<ul>
+<li><code>{description}_{noun}</code> <em>(Preferred) CamelCase to snake_case conversion</em></li>
+<li><code>{noun}</code> <em>More succinct, potentially ambiguous</em></li>
+</ul>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ExampleContext</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="n">example_context</span> <span class="o">=</span> <span class="n">ExampleContext</span><span class="p">()</span>
+<span class="n">context</span> <span class="o">=</span> <span class="n">ExampleContext</span><span class="p">()</span>
+</code></pre></div>
+</div>
+<h3 id="functions">Functions<a class="headerlink" href="#functions" title="Permanent link">&para;</a></h3>
+<p>Function should always be named in lower case and separated with underscore (<code>_</code>). The words that you use to name your function should clearly describe the function’s intent (what the function does).  All functions should clearly indicates the input and output variable types.
+When returning from function avoid generic container types like <code>List</code> or <code>Dict</code>, use additional
+hints if you must return such types, ie. <code>List[int]</code> or <code>Dict[str, int]</code>.  </p>
+<p>Acceptable Forms:</p>
+<ul>
+<li><code>def {verb}_{intent}({nouns}:T) -&gt; U:</code> <em>(Preferred)</em></li>
+<li><code>def {verb}({noun}:T}) -&gt; U:</code> <em>More succinct, potentially ambiguous</em></li>
+</ul>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="n">iterable</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">remove_underscore</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</code></pre></div>
+</div>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="n">parameters</span><span class="p">:</span><span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="n">results</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+</code></pre></div>
+</div>
+<h3 id="flake-8-plugins">Flake-8 plugins<a class="headerlink" href="#flake-8-plugins" title="Permanent link">&para;</a></h3>
+<p>below is a set of useful plugins for flake8 to make it more useful for CI in your projects</p>
+<ul>
+<li><strong><em>flake8-bugbear</em></strong>: check generic bug and design problem.</li>
+<li><strong><em>flake8-cognitive-complexity</em></strong>: check complex and unreadable code.</li>
+<li><strong><em>flake8-expression-complexity</em></strong>: check complex and unreadable code.</li>
+<li><strong><em>flake8-pytest-style</em></strong>: check style for pytest.</li>
+<li><strong><em>flake8-simplify</em></strong>: check style that could be simplified.</li>
+<li><strong><em>pep8-naming</em></strong>: strict naming convention.</li>
+</ul>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../logging/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Logging" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Logging
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../api_design/" class="md-footer__link md-footer__link--next" aria-label="Next: API Design" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              API Design
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://github.com/felixgao/python-best-practices/" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1514 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../assets/python.svg">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>API Design - Best Python Practices</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="yello">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#api-design" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Best Python Practices" class="md-header__button md-logo" aria-label="Best Python Practices" data-md-component="logo">
+      
+  <img src="../../../assets/python.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Best Python Practices
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API Design
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="yello"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/felixgao/python-best-practices" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    best-python-practices
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Best Python Practices" class="md-nav__button md-logo" aria-label="Best Python Practices" data-md-component="logo">
+      
+  <img src="../../../assets/python.svg" alt="logo">
+
+    </a>
+    Best Python Practices
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/felixgao/python-best-practices" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    best-python-practices
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../design_patterns/" class="md-nav__link">
+        Design Patterns
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_2">
+          Performance
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Performance" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Performance
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../performance/lookup_tables/" class="md-nav__link">
+        Lookup Tables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../performance/profiling_tools/" class="md-nav__link">
+        Profiling Tools & Strategy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../performance/multiprocessing/" class="md-nav__link">
+        Multi-Processing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3" type="checkbox" id="__nav_3_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_3">
+          Packaging
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Packaging" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          Packaging
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../structure/" class="md-nav__link">
+        Structure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../makefile/" class="md-nav__link">
+        Makefile
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../code_style/" class="md-nav__link">
+        Code Style
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          API Design
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        API Design
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#goals" class="md-nav__link">
+    Goals
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-libraries" class="md-nav__link">
+    Example Libraries
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#guidelines" class="md-nav__link">
+    Guidelines
+  </a>
+  
+    <nav class="md-nav" aria-label="Guidelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#namespace" class="md-nav__link">
+    Use a flat namespace for packages/modules
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#types" class="md-nav__link">
+    Use primitive types in function/method interfaces
+  </a>
+  
+    <nav class="md-nav" aria-label="Use primitive types in function/method interfaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dictionary-types" class="md-nav__link">
+    Dictionary-Oriented Interfaces
+  </a>
+  
+    <nav class="md-nav" aria-label="Dictionary-Oriented Interfaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dictionary-arguments" class="md-nav__link">
+    Dictionary Arguments
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dictionary-returns" class="md-nav__link">
+    Dictionary Returns
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pandas-types" class="md-nav__link">
+    Pandas-Oriented Interfaces
+  </a>
+  
+    <nav class="md-nav" aria-label="Pandas-Oriented Interfaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pandas-arguments" class="md-nav__link">
+    Pandas Arguments
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pandas-class-arguments" class="md-nav__link">
+    Pandas Class Arguments
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kwargs" class="md-nav__link">
+    Avoid variable length keyword arguments (**kwargs)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    Avoid exposing stateful objects
+  </a>
+  
+    <nav class="md-nav" aria-label="Avoid exposing stateful objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#single-method-classes" class="md-nav__link">
+    Single Method Classes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#argument-avoidance" class="md-nav__link">
+    Argument Avoidance
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serialization" class="md-nav__link">
+    Minimize disk access and serialization.
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cohesion-coupling" class="md-nav__link">
+    Cohesion &amp; Coupling
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anti_patterns/" class="md-nav__link">
+        Anti Patterns
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing/" class="md-nav__link">
+        Testing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../libraries/" class="md-nav__link">
+        Libraries & Tools
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../pullrequests/" class="md-nav__link">
+        Pull Requests Etiquette
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#goals" class="md-nav__link">
+    Goals
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-libraries" class="md-nav__link">
+    Example Libraries
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#guidelines" class="md-nav__link">
+    Guidelines
+  </a>
+  
+    <nav class="md-nav" aria-label="Guidelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#namespace" class="md-nav__link">
+    Use a flat namespace for packages/modules
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#types" class="md-nav__link">
+    Use primitive types in function/method interfaces
+  </a>
+  
+    <nav class="md-nav" aria-label="Use primitive types in function/method interfaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dictionary-types" class="md-nav__link">
+    Dictionary-Oriented Interfaces
+  </a>
+  
+    <nav class="md-nav" aria-label="Dictionary-Oriented Interfaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dictionary-arguments" class="md-nav__link">
+    Dictionary Arguments
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dictionary-returns" class="md-nav__link">
+    Dictionary Returns
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pandas-types" class="md-nav__link">
+    Pandas-Oriented Interfaces
+  </a>
+  
+    <nav class="md-nav" aria-label="Pandas-Oriented Interfaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pandas-arguments" class="md-nav__link">
+    Pandas Arguments
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pandas-class-arguments" class="md-nav__link">
+    Pandas Class Arguments
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kwargs" class="md-nav__link">
+    Avoid variable length keyword arguments (**kwargs)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    Avoid exposing stateful objects
+  </a>
+  
+    <nav class="md-nav" aria-label="Avoid exposing stateful objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#single-method-classes" class="md-nav__link">
+    Single Method Classes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#argument-avoidance" class="md-nav__link">
+    Argument Avoidance
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serialization" class="md-nav__link">
+    Minimize disk access and serialization.
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cohesion-coupling" class="md-nav__link">
+    Cohesion &amp; Coupling
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/felixgao/python-best-practices/edit/master/docs/tutorials/packaging/api_design.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+<div class="admonition summary">
+<p class="admonition-title">Summary</p>
+<p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use a flat namespace for packages/modules.</p>
+<p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use primitive-typed functions/methods.</p>
+<p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> High cohesion &amp; low coupling.</p>
+<p><img alt="❌" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/274c.svg" title=":x:" /> Avoid Low cohension &amp; high coupling.</p>
+<p><img alt="❌" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/274c.svg" title=":x:" /> Avoid pandas objects as arguments and returns.</p>
+<p><img alt="❌" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/274c.svg" title=":x:" /> Avoid exposing classes from packages/modules.</p>
+</div>
+<h1 id="api-design">API Design<a class="headerlink" href="#api-design" title="Permanent link">&para;</a></h1>
+<p>This guide uses the term "API" to refer to the interface of a package, module, 
+class or function. There are specific recommendations for each type of API but 
+the general rules apply to all.</p>
+<p>API design is arguably the most important part of writing clean reusable code.
+A good API should not not stand out to the end-user because it's so easy and
+natural to use.</p>
+<p>This topic is particularly relevant to data science code because API design is 
+often left as an afterthought to the actual functionality and data modeling. 
+This creates a problem where code is often used only once even when the core 
+functionality is fairly general. Duplicate functionality is implemented in
+completely separate repositories by different developers who decide that it is
+not worth the time to adapt hardcoded/specialized logic to their own projects.</p>
+<p>The problem exists even within a single project/respository. Modules can be
+tailored so specifically to a dataset or model architecture that it becomes
+impossible to use outside of that context.</p>
+<h2 id="goals">Goals<a class="headerlink" href="#goals" title="Permanent link">&para;</a></h2>
+<p>The goal of any API should be to have the following properties:</p>
+<ul>
+<li><strong>Legibility</strong>: The user should immediately understand how to use an API. 
+  The documentation should be largely unnecessary. The meaning of arguments
+  should be obvious. The return values of function/methods should be obvious.</li>
+<li><strong>State Simplicity</strong>: The user should immediately understand the state 
+  lifetime of an API. There should be no hidden caching behavior. A user should
+  be able to deallocate state on demand.</li>
+<li><strong>Interoperability</strong>: The user should immediately understand how to use 
+  library function/class with other functions/classes even outside of the given
+  library.</li>
+</ul>
+<h2 id="example-libraries">Example Libraries<a class="headerlink" href="#example-libraries" title="Permanent link">&para;</a></h2>
+<p>The gold standard for a good python library is the <a href="https://docs.python.org/3/library/">python standard library</a>. 
+This is a library that follows a consistent style and uses patterns that make it 
+extremely easy to use.</p>
+<p>The third party libraries <a href="https://docs.scipy.org/doc/numpy/">numpy</a> and <a href="https://scikit-learn.org/stable/modules/classes.html">sklearn</a> have vastly different design 
+patterns but they both manage to make their APIs very easy to understand. Their 
+consistent interfaces allow users to quickly understand the full scope of the 
+library.</p>
+<ul>
+<li>
+<p><a href="https://docs.scipy.org/doc/numpy/">numpy</a>: A function-oriented library which exposes one primary class and many 
+    functions.</p>
+<p>For <code>numpy</code>, each function exposed through the API almost always takes a
+<code>np.ndarray</code> as the first argument and returns an <code>np.ndarray</code> as its 
+output. This means that to use the vast array of functions in the library, 
+only one object type is necessary to understand.</p>
+</li>
+<li>
+<p><a href="https://scikit-learn.org/stable/modules/classes.html">sklearn</a>: An object-oriented library which exposes many model classes.</p>
+<p>For <code>sklearn</code> each object exposed through the API inherits from a small 
+subset of base classes with well-defined methods. Almost all <code>sklearn</code> 
+objects have a <code>fit(X, y)</code> method and a <code>predict(X)</code> method. This makes 
+most <code>sklearn</code> objects interchangeable within the user application code 
+since their APIs are the same.</p>
+</li>
+</ul>
+<p>The libraries mentioned above are all heavily used within data science code
+and they follow design patterns that we can learn from. We can derive a base 
+set of guidelines from the patterns we see in these interfaces.</p>
+<h2 id="guidelines">Guidelines<a class="headerlink" href="#guidelines" title="Permanent link">&para;</a></h2>
+<p>The following guidelines are principals which you should try to adhere to
+when designing an API but not absolute strict rules. There are always exceptions
+to the following cases:</p>
+<ol>
+<li><a href="#namespace">Use a flat namespace for packages/modules.</a></li>
+<li><a href="#types">Use primitive types in function/method interfaces.</a><ul>
+<li><a href="#dictionary-types">Avoid dictionary-oriented interfaces.</a></li>
+<li><a href="#pandas-types">Avoid pandas-oriented interfaces.</a></li>
+</ul>
+</li>
+<li><a href="#kwargs">Avoid variable length keyword arguments (**kwargs)</a></li>
+<li><a href="#classes">Avoid exposing stateful objects. Use mostly functions.</a></li>
+<li><a href="#serialization">Minimize disk access and serialization.</a></li>
+</ol>
+<h3 id="namespace">Use a flat namespace for packages/modules<a class="headerlink" href="#namespace" title="Permanent link">&para;</a></h3>
+<p>This makes it so that a developer coming into your code will always know what 
+publicly accessible identifiers are available at the library level. This
+also avoids having to make multiple imports from the same library and polluting
+application code namespace with library objects/modules. Furthermore this 
+discourages users from aliasing imports since the library only exposes a single 
+namespace.</p>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">my_library</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">my_library</span><span class="o">.</span><span class="n">my_function</span><span class="p">()</span>
+<span class="n">container</span> <span class="o">=</span> <span class="n">my_library</span><span class="o">.</span><span class="n">MyClass</span><span class="p">()</span>
+</code></pre></div>
+</div>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">my_library.my_submodule</span> <span class="kn">import</span> <span class="n">my_function</span><span class="p">,</span> <span class="n">MyClass</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">my_function</span><span class="p">()</span>
+<span class="n">container</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">my_library</span> <span class="kn">import</span> <span class="n">my_submodule</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">my_submodule</span><span class="o">.</span><span class="n">my_function</span><span class="p">()</span>
+<span class="n">container</span> <span class="o">=</span> <span class="n">my_submodule</span><span class="o">.</span><span class="n">MyClass</span><span class="p">()</span>
+</code></pre></div>
+</div>
+<p>An example of a library that does this extremely well is <a href="https://docs.scipy.org/doc/numpy/">numpy</a>.</p>
+<h3 id="types">Use primitive types in function/method interfaces<a class="headerlink" href="#types" title="Permanent link">&para;</a></h3>
+<p>The following section describes how to best write the interface of a function or
+class. The interface of a function/method refers to the types of the arguments 
+and return values.</p>
+<p>To model ourselves after the standard library, attempt to always use functions
+which consume primitive types on the arguments and as return types (<code>str</code>, 
+<code>float</code>, <code>int</code>, <code>bool</code>). The common case where this is not done is in library 
+oriented code (e.g. <code>numpy</code>, <code>pandas</code>, <code>sklearn</code>, <code>tensorflow</code>, <code>pytorch</code>). In
+many cases this is unavoidable when the logic requires a certain object type.
+Most of the time library-oriented code is avoidable. The use of external library 
+objects becomes a problem in data science codebases because it complicates 
+interfaces of functions/classes and makes them entirely dependent on library
+objects. Unit-testing becomes more difficult when a function/class uses a 
+specialized type (e.g. <code>pd.DataFrame</code>, <code>tf.Tensor</code>). in the interface.</p>
+<p>The approach to writing a function/class method for data science code
+should be as follows:</p>
+<ol>
+<li>Implement the function/method with primitive python types when 
+   possible (<code>str</code>, <code>float</code>, <code>int</code>, <code>bool</code>).</li>
+<li>If the function requires collections, implement the function/method with 
+   native python data structures (<code>dict</code>, <code>list</code>, <code>tuple</code>)</li>
+<li>If the native python data structures are not performant enough, implement
+   the function/method with a <code>numpy</code> oriented interface. For performance and
+   simplicity, avoid <code>pd.Series</code> oriented APIs.</li>
+<li>Finally, if no simpler interface is feasible, use a library-object oriented
+   API (e.g. <code>pd.DataFrame</code>, <code>tf.Tensor</code>). This should always be a last resort.</li>
+</ol>
+<p>The cases where these rules are most often broken are where either dictionaries 
+or DataFrames are present in the interface. The following sections
+describe mechanisms to avoid the use of these when possible.</p>
+<h4 id="dictionary-types">Dictionary-Oriented Interfaces<a class="headerlink" href="#dictionary-types" title="Permanent link">&para;</a></h4>
+<p>A common pattern is to use dictionary arguments and return values. The problem 
+with this kind of design is it often creates an implicit API which is not 
+immediately obvious from the function signature. A function that can be 
+understood from inspecting the name and arguments is generally better than one
+that requires reading the docstring.</p>
+<h5 id="dictionary-arguments">Dictionary Arguments<a class="headerlink" href="#dictionary-arguments" title="Permanent link">&para;</a></h5>
+<p>Often times deeply nested structures are required as input 
+arguments. These structures are nearly always unnecessary to perform the core 
+logic/utility provided by the code. The structural requirements of the 
+dictionary cannot be known by inspecting the function arguments. The user of 
+the function must look at the documentation or the function body to understand 
+how to use it.</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">join_first_and_last</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">parts</span><span class="p">[</span><span class="s2">&quot;first&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">sep</span> <span class="o">+</span> <span class="n">parts</span><span class="p">[</span><span class="s2">&quot;last&quot;</span><span class="p">]</span>
+
+<span class="c1"># Example call</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;first&quot;</span><span class="p">:</span> <span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="s2">&quot;last&quot;</span><span class="p">:</span> <span class="s2">&quot;world&quot;</span><span class="p">}</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">join_first_and_last</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<p><strong>Solution</strong>: Force the user to destructure the data prior to passing it in to 
+the function. This is a good practice because it limits the scope of what each 
+function "knows" about. If the function can be written in a way that the 
+context in which is it called is unimportant, this makes the code more 
+reusable and easier to test.</p>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">join_first_and_last</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">first</span> <span class="o">+</span> <span class="n">sep</span> <span class="o">+</span> <span class="n">last</span>
+
+<span class="c1"># Example call</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;first&quot;</span><span class="p">:</span> <span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="s2">&quot;last&quot;</span><span class="p">:</span> <span class="s2">&quot;world&quot;</span><span class="p">}</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">join_first_and_last</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;first&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;last&quot;</span><span class="p">])</span>
+</code></pre></div>
+</div>
+<p>The most common exceptions to using a dictionary as an argument 
+is when the dictionary is meant to be iterated over within the function or used
+as a lookup table.</p>
+<div class="admonition attention">
+<p class="admonition-title">Exception</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Iteration usage</span>
+<span class="k">def</span> <span class="nf">max_key_length</span><span class="p">(</span><span class="n">dictionary</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+<span class="c1"># Lookup table usage</span>
+<span class="k">def</span> <span class="nf">largest_zip_code_population</span><span class="p">(</span><span class="n">zip_codes</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">zip_to_population</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">zip_to_population</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">zip_codes</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<h5 id="dictionary-returns">Dictionary Returns<a class="headerlink" href="#dictionary-returns" title="Permanent link">&para;</a></h5>
+<p>When dictionaries are used as return values, this causes a 
+similar problem to using them as an arguments. The user of the function cannot
+determine the structure of the dictionary by inspecting the function signature. 
+This also nearly always requires that the user to destructure the return value
+in order to use it.</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">precision_recall</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
+    <span class="n">precision</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">precision</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+    <span class="n">recall</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">recall</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;precision&quot;</span><span class="p">:</span> <span class="n">precision</span><span class="p">,</span> <span class="s2">&quot;recall&quot;</span><span class="p">:</span> <span class="n">recall</span><span class="p">}</span>
+
+<span class="c1"># Example call</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">precision_recall</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">precision</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;precision&quot;</span><span class="p">]</span>
+<span class="n">recall</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;recall&quot;</span><span class="p">]</span>
+</code></pre></div>
+</div>
+<p>Use tuples as returns. This avoids forcing the user to 
+destructure the return value. Notice that in the above example the dictionary 
+keys needed to be duplicated in the calling code in order to access the data. </p>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">precision_recall</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
+    <span class="n">precision</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">precision</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+    <span class="n">recall</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">recall</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">precision</span><span class="p">,</span> <span class="n">recall</span>
+
+<span class="c1"># Example call</span>
+<span class="n">precision</span><span class="p">,</span> <span class="n">recall</span> <span class="o">=</span> <span class="n">precision_recall</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<p>The most common exception to using a dictionary as a return type 
+is when the  dictionary is meant to be iterated over by the calling code or used
+as a lookup table.</p>
+<div class="admonition attention">
+<p class="admonition-title">Exception</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_column_types</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;zip_code&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="s1">&#39;salaries_and_wages&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="s1">&#39;flag_old_or_blind&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="p">}</span>
+</code></pre></div>
+</div>
+<h4 id="pandas-types">Pandas-Oriented Interfaces<a class="headerlink" href="#pandas-types" title="Permanent link">&para;</a></h4>
+<p>The worst functions are those that consume DataFrames as arguments and have very 
+specific requirements on what columns are present. This is one of the most
+common anti-patterns found in data science python code. This creates an implicit 
+API that in the worst case (and most common case) requires that the developer 
+read the entire function body to understand how to use it. Imagine if you needed
+to read the body of every function included in the python standard library in 
+order to understand it. We take it for granted that the API is so simple and
+easy to understand.</p>
+<h5 id="pandas-arguments">Pandas Arguments<a class="headerlink" href="#pandas-arguments" title="Permanent link">&para;</a></h5>
+<p>This is the <em>most common</em> type of function in data science codebases (often 
+significantly more complex).</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">typecast_zip_codes</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;zip&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;zip&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="c1"># Example call</span>
+<span class="n">typecast_zip_codes</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<p>It is a function designed for a specific dataset that assumes that the calling 
+code has a DataFrame with a specific column. It is unclear from the signature
+that the DataFrame is modified in-place. It is unclear from the signature if
+there is a return that should be used.</p>
+<p><strong>Solution</strong>: Make the API oriented around a series/array and to leave the 
+deconstruction of the DataFrame to the calling code.</p>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">typecast_zip_codes</span><span class="p">(</span><span class="n">array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">array</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="c1"># Example call</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;zip&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">typecast_zip_codes</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;zip&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<p>The calling code is burdened with the responsibilty of deconstructing/modifying
+the DataFrame but this is a <em>good thing</em>. This allows the calling code to fully
+understand the side-effects of the call without having to look at the 
+implementation. This is easier to test and much more maintainable. If this kind 
+of API is used throughout the codebase, then there will be very few places that 
+have assumptions about DataFrame structure. </p>
+<h5 id="pandas-class-arguments">Pandas Class Arguments<a class="headerlink" href="#pandas-class-arguments" title="Permanent link">&para;</a></h5>
+<p>A similar problem occurs in object-oriented library design but to a worse 
+degree. A common anti-pattern in data science code is to unnecessarily save 
+entire datasets as a class member (or within multiple classes). This is 
+generally done so that the class can later reference that member variable 
+from a method without including it in the method argument list.</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">MyPredictor</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_df</span> <span class="o">=</span> <span class="n">df</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iterations</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;iterations&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="o">...</span>
+</code></pre></div>
+</div>
+<p>In this code it is confusing what the lifetime of the <code>df</code> argument is and what
+it is even used for. An object should only track state that must be present 
+during the entire lifetime of the object. If the <code>df</code> is only used in the 
+<code>train</code> method then it should not be passed to the constructor.</p>
+<p>A second issue here is that the config dictionary argument creates an implicit 
+API. The user of the class cannot tell what the contents of the config 
+dictionary should be without looking at the implementation of the constructor. 
+This is why frameworks like <code>sklearn</code> make all of their hyperparameters explicit 
+in their constructors. It allows you to be able to tell at the call-site if you 
+are configuring the estimator correctly. Imagine if the caller had made a typo 
+in a dictionary key for the example above. The mistake would be silently 
+ignored unless an explict check was implemented. An explicit check would 
+introduce unnecessary complexity when a language feature (arguments) is already
+available to handle this.</p>
+<p><strong>Solution</strong>: Colocate the DataFrame with its usage and make the class 
+constructor take explicit arguments.</p>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">MyPredictor</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_iterations</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_iterations</span> <span class="o">=</span> <span class="n">n_iterations</span>
+    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="o">...</span>
+</code></pre></div>
+</div>
+<h3 id="kwargs">Avoid variable length keyword arguments (**kwargs)<a class="headerlink" href="#kwargs" title="Permanent link">&para;</a></h3>
+<p>Variable length keyword arguments should almost never be used because they hide 
+what is actually being done with them. Whenever they are used, the user will
+almost always have to read the documentation to understand how they are being
+used.</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">example</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s1">&#39;foo&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span> 
+        <span class="o">...</span>
+</code></pre></div>
+</div>
+<p>The only time when keyword arguments reduce ambiguity is if your library is 
+wrapping a call to another library which is highly configurable. Rather than 
+replicating all of the keyword arguments in the calling function signature, 
+forward the configuration parameters with kwargs.</p>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">foo_library</span>
+<span class="k">def</span> <span class="nf">example</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="o">**</span><span class="n">foo_params</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">foo_library</span><span class="o">.</span><span class="n">example_call</span><span class="p">(</span><span class="o">**</span><span class="n">foo_params</span><span class="p">)</span>
+    <span class="o">...</span>
+</code></pre></div>
+</div>
+<p>Another potential use-case where keyword arguments are useful is if the 
+intention is to iterate over the key-value pairs 
+(for example to use as metadata). Because this actually changes the call syntax
+of the function, it is generally more explicit to pass this kind of object in
+as a dictionary instead.</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">example</span><span class="p">(</span><span class="o">**</span><span class="n">tags</span><span class="p">):</span>
+    <span class="o">...</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">example</span><span class="p">(</span><span class="n">tags</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="o">...</span>
+</code></pre></div>
+</div>
+<h3 id="classes">Avoid exposing stateful objects<a class="headerlink" href="#classes" title="Permanent link">&para;</a></h3>
+<p>Only expose classes when a library/module <strong>must</strong> manage state. Object-oriented
+data science code is very useful when complex state cannot be abstracted into
+procedures without exposing many different internal state variables to the end
+user. However, nearly all object-oriented code can be written in a 
+procedure-oriented style. The benefit of procedure-oriented code is that it 
+makes the lifetime and usage of in-memory state well-understood.</p>
+<h4 id="single-method-classes">Single Method Classes<a class="headerlink" href="#single-method-classes" title="Permanent link">&para;</a></h4>
+<p>The most common object-oriented anti-pattern is when a class has a constructor
+and only a single public method. This can almost always be replaced with a 
+function call with zero cost.</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Greeter</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">def</span> <span class="nf">greet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;Hello, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">!&#39;</span>
+</code></pre></div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;Hello, </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">!&#39;</span>
+</code></pre></div>
+</div>
+<h4 id="argument-avoidance">Argument Avoidance<a class="headerlink" href="#argument-avoidance" title="Permanent link">&para;</a></h4>
+<p>Another common anti-pattern is the use of classes to reduce the number of 
+arguments on each method call. Rather than scoping arguments to the functions 
+they are relevant to, all arguments for all methods are passed to the 
+constructor and then 0-argument methods called. This design pattern often occurs 
+when developers attempt to define a process with an object.</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+
+<span class="k">class</span> <span class="nc">MyModel</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">hyperparams</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span> <span class="o">=</span> <span class="n">y_train</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_test</span> <span class="o">=</span> <span class="n">y_test</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hyperparams</span> <span class="o">=</span> <span class="n">hyperparams</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">create_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">hyperparams</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">create_model</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_test</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_test</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<p>A common problem with this type of design is that the class methods have a 
+required call order that is not explicit in the API. In the example above, this
+is remedied by checking if member variables have been set. This complicates the 
+logic, adds almost no value, and distracts from the actual logical operations
+being performed.</p>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+
+<span class="k">def</span> <span class="nf">create_model</span><span class="p">(</span><span class="n">hyperparams</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="o">**</span><span class="n">hyperparams</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<h3 id="serialization">Minimize disk access and serialization.<a class="headerlink" href="#serialization" title="Permanent link">&para;</a></h3>
+<p>It is common for data science code to produce and consume many artifacts during
+both training and prediction. This causes many codebases to become saturated 
+with disk access to these artifacts and hardcoded paths in every single module. 
+In codebases where this is left unchecked, disk access can be nearly everywhere 
+and cause huge performance issues. It is common to find a class which has a 
+path as a constuctor argument to load some  config or data.</p>
+<p>Functions/classes should almost never read from disk to execute the provided 
+logic. The logic and the state management should always be separated.</p>
+<p>The following example may seem like an egregious use of serialization, but 
+these patterns can all be commonly found in code.</p>
+<div class="admonition fail">
+<p class="admonition-title">Avoid</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+
+<span class="k">class</span> <span class="nc">Encoder</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">categories_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>    
+        <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">config_filename</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_frequency</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;min_frequency&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">categories</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">categories_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">categories</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">categories_filename</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">training_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">training_filename</span><span class="p">)</span>
+        <span class="n">unique</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">categories</span> <span class="o">=</span> <span class="n">unique</span><span class="p">[</span><span class="n">counts</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_frequency</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">categories</span> <span class="o">=</span> <span class="n">categories</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">test_filename</span><span class="p">):</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">test_filename</span><span class="p">)</span>
+        <span class="n">lookup_table</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories</span><span class="p">))))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">lookup_table</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">values</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_filename</span><span class="p">):</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output_filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<p>The constructor expects two arguments, one for configuration and one for a 
+previously saved state. Unless the function body were read, it would be unclear
+that the second argument was used to load previously saved state. Next, each
+function takes a filename as input instead of an in-memory object which makes 
+the object far more difficult to use.</p>
+<p><strong>Solution</strong>: The exposed API should always assume that configurations and
+parameters will be in-memory (unless they absolutely cannot be). This vastly
+simplifies the usage of the object.</p>
+<div class="admonition success">
+<p class="admonition-title">Use</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">class</span> <span class="nc">Encoder</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">min_frequency</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">default</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>    
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_frequency</span> <span class="o">=</span> <span class="n">min_frequency</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="n">default</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lookup_table</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">unique</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">categories</span> <span class="o">=</span> <span class="n">unique</span><span class="p">[</span><span class="n">counts</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_frequency</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lookup_table</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">categories</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">categories</span><span class="p">))))</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">lookup_table</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">values</span><span class="p">])</span>
+</code></pre></div>
+</div>
+<p>This design requires that the <code>Encoder</code> object would be serialized by 
+user. This is preferable to implementing custom serialization logic as part of
+the class since the user can use common shared serialization facilities 
+(e.g. pickle) to manage disk access.</p>
+<h3 id="cohesion-coupling">Cohesion &amp; Coupling<a class="headerlink" href="#cohesion-coupling" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>High cohesion is when you have a class that does a well defined job. 
+Low cohesion is when a class does a lot of jobs that does't have much in common.</p>
+<p>High coupling is when modules are tightly interconnected via many complex interfaces and information flows.
+Low coupling is when modules are loosely interconnected and isolated from the implementation details of each other.  One module can be changed or replaced without impacting other modules. </p>
+</blockquote>
+<p>Coupling and cohension goes in pairs like the two faces of a coin.  </p>
+<p>Cohension is like an onion -- it requires layers to keep things separate and distinct.  It is not just about the size of your functions but also the relationships with each other. </p>
+<p>Coupling is like a knife -- it cuts through the layers and connects multiple facets. It is not just about the number of objects but also the degree of mutual interdependence.</p>
+<p>A good book for this is described in Chapter 10 of <a href="https://livebook.manning.com/book/code-like-a-pro/chapter-10">code like a pro</a> book.</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../code_style/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Code Style" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Code Style
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../anti_patterns/" class="md-footer__link md-footer__link--next" aria-label="Next: Anti Patterns" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Anti Patterns
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://github.com/felixgao/python-best-practices/" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>
