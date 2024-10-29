@@ -20,7 +20,7 @@ nav:
   - Pull Requests Etiquette: pullrequests.md
 
 repo_name: 'best-python-practices'
-repo_url: 'https://github.intuit.com/ggao/best-python-practices'
+repo_url: 'https://github.com/felixgao/python-best-practices'
 
 theme:
   name: material
@@ -50,4 +50,4 @@ markdown_extensions:
 extra:
   social:
     - icon: 'octicons/mark-github-16'
-      link: 'https://github.intuit.com/ggao/best-python-practices/'
+      link: 'https://github.com/felixgao/python-best-practices/'
