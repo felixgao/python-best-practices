@@ -263,8 +263,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-is-design-patterns" class="md-nav__link">
-    What is Design Patterns
+  <a href="#what-are-design-patterns" class="md-nav__link">
+    What are Design Patterns?
   </a>
   
 </li>
@@ -364,11 +364,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#behavior-patterns" class="md-nav__link">
-    Behavior Patterns
+  <a href="#behavioral-patterns" class="md-nav__link">
+    Behavioral Patterns
   </a>
   
-    <nav class="md-nav" aria-label="Behavior Patterns">
+    <nav class="md-nav" aria-label="Behavioral Patterns">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -406,11 +406,11 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#chain-of-responsiblity" class="md-nav__link">
-    Chain of responsiblity
+  <a href="#chain-of-responsibility" class="md-nav__link">
+    Chain of Responsibility
   </a>
   
-    <nav class="md-nav" aria-label="Chain of responsiblity">
+    <nav class="md-nav" aria-label="Chain of Responsibility">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -790,8 +790,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-is-design-patterns" class="md-nav__link">
-    What is Design Patterns
+  <a href="#what-are-design-patterns" class="md-nav__link">
+    What are Design Patterns?
   </a>
   
 </li>
@@ -891,11 +891,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#behavior-patterns" class="md-nav__link">
-    Behavior Patterns
+  <a href="#behavioral-patterns" class="md-nav__link">
+    Behavioral Patterns
   </a>
   
-    <nav class="md-nav" aria-label="Behavior Patterns">
+    <nav class="md-nav" aria-label="Behavioral Patterns">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -933,11 +933,11 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#chain-of-responsiblity" class="md-nav__link">
-    Chain of responsiblity
+  <a href="#chain-of-responsibility" class="md-nav__link">
+    Chain of Responsibility
   </a>
   
-    <nav class="md-nav" aria-label="Chain of responsiblity">
+    <nav class="md-nav" aria-label="Chain of Responsibility">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1018,31 +1018,32 @@
 
 <h1 id="design-patterns">Design Patterns<a class="headerlink" href="#design-patterns" title="Permanent link">&para;</a></h1>
 <hr />
-<h3 id="what-is-design-patterns">What is Design Patterns<a class="headerlink" href="#what-is-design-patterns" title="Permanent link">&para;</a></h3>
+<h3 id="what-are-design-patterns">What are Design Patterns?<a class="headerlink" href="#what-are-design-patterns" title="Permanent link">&para;</a></h3>
 <p>In software engineering, a <strong>design pattern</strong> is a general repeatable solution to a commonly occurring problem in software design.  </p>
-<p><strong>Design patterns can speed up the development process by providing tested, proven development paradigms.  Design patterns helps to prevent sublet issues that can cause major problems and improve code reability</strong></p>
-<p>Design patterns usually classified into three major categories
+<p><strong>Design patterns can speed up the development process by providing tested, proven development paradigms. Design patterns help to prevent subtle issues that can cause major problems and improve code readability.</strong></p>
+<p>Design patterns are usually classified into three major categories:
  - Creational Patterns
  - Structural Patterns
  - Behavioral Patterns</p>
-<p>Each of the pattern type helps to solve certain class of problems. We are not gonig to cover all the patterns in this document, but we will cover the ones we have frequent usage of instead.</p>
+<p>Each pattern type helps to solve a certain class of problems. We are not going to cover all the patterns in this document, but we will cover the ones we frequently use.</p>
 <h2 id="creational-patterns">Creational Patterns<a class="headerlink" href="#creational-patterns" title="Permanent link">&para;</a></h2>
+<hr />
 <h3 id="singleton">Singleton<a class="headerlink" href="#singleton" title="Permanent link">&para;</a></h3>
 <h4 id="intent">Intent<a class="headerlink" href="#intent" title="Permanent link">&para;</a></h4>
 <ul>
-<li>Ensure a class or object only one instance, and provide a global point of access to it</li>
+<li>Ensure a class has only one instance, and provide a global point of access to it.</li>
 </ul>
 <h4 id="problem">Problem<a class="headerlink" href="#problem" title="Permanent link">&para;</a></h4>
-<p>Application sometimes needs <em>one and only one</em> instance of an object during the life time of the application instance.  </p>
+<p>Applications sometimes need <em>one and only one</em> instance of an object during the lifetime of the application instance.</p>
 <h4 id="solution">Solution<a class="headerlink" href="#solution" title="Permanent link">&para;</a></h4>
-<p>It is recommend to name all your singletons in a <code>singleton.py</code> file within your project.  Optionally, you can also name the file to whatever you prefer, but expose the singleton object via <code>__all__</code> of the module's <code>__init__.py</code> </p>
-<p>Since we don't want to expose the ability to create a new instance of object to external modules and python modules are imported once and globally avaliable after import.  It is important to make sure the name of the class starts with <code>__</code> or dunder and use <code>__all__</code> to limit the symbols that needs to be exprted. </p>
+<p>It is recommended to name all your singletons in a <code>singleton.py</code> file within your project. Optionally, you can also name the file whatever you prefer, but expose the singleton object via <code>__all__</code> of the module's <code>__init__.py</code>.</p>
+<p>Since we don't want to expose the ability to create a new instance of the object to external modules and Python modules are imported once and globally available after import, it is important to make sure the name of the class starts with <code>__</code> (dunder) and use <code>__all__</code> to limit the symbols that need to be exported.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># in singleton.py</span>
 
 <span class="c1"># Only expose the singleton objects you want to be exposed for this module</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;s3client&quot;</span><span class="p">]</span>
 
-<span class="k">class</span> <span class="nc">__S3Client</span><span class="p">():</span>
+<span class="k">class</span> <span class="nc">__S3Client</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
         <span class="c1"># Implementation of your object</span>
         <span class="k">pass</span>
@@ -1050,68 +1051,63 @@
 <span class="n">s3client</span> <span class="o">=</span> <span class="n">__S3Client</span><span class="p">()</span>
 </code></pre></div>
 <h2 id="structural-patterns">Structural Patterns<a class="headerlink" href="#structural-patterns" title="Permanent link">&para;</a></h2>
+<hr />
 <h3 id="adapter">Adapter<a class="headerlink" href="#adapter" title="Permanent link">&para;</a></h3>
 <h4 id="intent_1">Intent<a class="headerlink" href="#intent_1" title="Permanent link">&para;</a></h4>
 <ul>
-<li>Wrap an existing class with a new interface</li>
-<li>Wrap an old component to a new system</li>
+<li>Wrap an existing class with a new interface.</li>
+<li>Wrap an old component to a new system.</li>
 <li>Let classes work together that couldn't otherwise because of incompatible interfaces.</li>
 </ul>
 <h4 id="problem_1">Problem<a class="headerlink" href="#problem_1" title="Permanent link">&para;</a></h4>
-<p>Take OCR as an example, each provider call the actual method that does OCR slightly differently.  Ex, EasyOCR uses a method called <code>readtext</code>, Google Vision SDK uses <code>document_text_detection</code> method and PyTesseract uses <code>ocr_client</code> method to obtain the OCR result. </p>
+<p>Take OCR as an example. Each provider calls the actual method that does OCR slightly differently. For example, EasyOCR uses a method called <code>readtext</code>, Google Vision SDK uses <code>document_text_detection</code>, and PyTesseract uses <code>ocr_client</code> to obtain the OCR result.</p>
 <h4 id="solution_1">Solution<a class="headerlink" href="#solution_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="c1"># in interface.py</span>
 
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
 
-<span class="c1"># ----------------</span>
 <span class="c1"># Our expected interface</span>
-<span class="c1"># ----------------</span>
 <span class="k">class</span> <span class="nc">OCRClient</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Interface for OCR Client</span>
+<span class="sd">    Interface for OCR Client</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">ocr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">ocr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
         <span class="k">pass</span>
-
 
 <span class="c1"># in adapter.py</span>
 
-<span class="c1"># ----------------</span>
-<span class="c1"># Adapter Class, the name adapter is not required</span>
-<span class="c1"># ----------------</span>
+<span class="c1"># Adapter Class</span>
 <span class="k">class</span> <span class="nc">GVisionOCRClientAdapter</span><span class="p">(</span><span class="n">OCRClient</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">GVisionOCRClientAdaptee</span><span class="p">()</span>
+
     <span class="k">def</span> <span class="nf">ocr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">adaptee_ocr</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
 
-<span class="c1"># ----------------</span>
-<span class="c1"># Adaptee Class, the name adaptee is not required</span>
-<span class="c1"># --------------</span>
+<span class="c1"># Adaptee Class</span>
 <span class="k">class</span> <span class="nc">GVisionOCRClientAdaptee</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">private_client</span> <span class="o">=</span> <span class="n">vision</span><span class="o">.</span><span class="n">from_service_account_json</span><span class="p">(</span><span class="s1">&#39;some_location.json&#39;</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">adaptee_ocr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">private_client</span><span class="o">.</span><span class="n">document_text_detection</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="behavior-patterns">Behavior Patterns<a class="headerlink" href="#behavior-patterns" title="Permanent link">&para;</a></h2>
+<h2 id="behavioral-patterns">Behavioral Patterns<a class="headerlink" href="#behavioral-patterns" title="Permanent link">&para;</a></h2>
+<hr />
 <h3 id="registry">Registry<a class="headerlink" href="#registry" title="Permanent link">&para;</a></h3>
 <h4 id="intent_2">Intent<a class="headerlink" href="#intent_2" title="Permanent link">&para;</a></h4>
 <ul>
-<li>keep track of all subclasses of a given class </li>
-<li>Creating objects of subclass that has different behaviors</li>
+<li>Keep track of all subclasses of a given class.</li>
+<li>Create objects of subclasses that have different behaviors.</li>
 </ul>
 <h4 id="problem_2">Problem<a class="headerlink" href="#problem_2" title="Permanent link">&para;</a></h4>
-<p>The need of some kind of manager class the manage all related subclasses.
-You want the manager class to iterate over all avaliable subclasses.  Call a particular method on each/some subclasses.
-You want to streamline a factory class, which takes an input and creates/returns an object of that type.</p>
+<p>The need for some kind of manager class to manage all related subclasses. You want the manager class to iterate over all available subclasses and call a particular method on each/some subclasses. You want to streamline a factory class, which takes an input and creates/returns an object of that type.</p>
 <h4 id="solution_2">Solution<a class="headerlink" href="#solution_2" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Type</span>
 
-<span class="n">Class</span> <span class="n">Document</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">Document</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
     <span class="n">_REGISTRY</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -1119,65 +1115,55 @@ You want to streamline a factory class, which takes an input and creates/returns
         <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;Document&quot;</span>
         <span class="k">assert</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
         <span class="n">form_type</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">):]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">_REGISTER</span><span class="p">[</span><span class="n">form_type</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_REGISTRY</span><span class="p">[</span><span class="n">form_type</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">factory</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">form_type</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Type</span><span class="p">[</span><span class="n">Document</span><span class="p">]</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_REGISTER</span><span class="p">[</span><span class="n">form_type</span><span class="p">]()</span>
+    <span class="k">def</span> <span class="nf">factory</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">form_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Type</span><span class="p">[</span><span class="n">Document</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_REGISTRY</span><span class="p">[</span><span class="n">form_type</span><span class="p">]()</span>
 
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">pass</span>
 
-
-
-<span class="n">Class</span> <span class="n">Document1040</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
-
-    <span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span><span class="n">ByteIO</span><span class="p">,</span> <span class="n">fields</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Document1040Results</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">Document1040</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">ByteIO</span><span class="p">,</span> <span class="n">fields</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Document1040Results</span><span class="p">:</span>
         <span class="c1"># some extract logic</span>
         <span class="k">pass</span>
 
-<span class="n">Class</span> <span class="n">Document1099K</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
-
-    <span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span><span class="n">ByteIO</span><span class="p">,</span> <span class="n">fields</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Document1099KResult</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">Document1099K</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">ByteIO</span><span class="p">,</span> <span class="n">fields</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Document1099KResult</span><span class="p">:</span>
         <span class="c1"># different logic to extract this form</span>
         <span class="k">pass</span>
 
-
-
-<span class="c1"># To use this </span>
-
+<span class="c1"># To use this</span>
 <span class="n">doc_1040</span> <span class="o">=</span> <span class="n">Document</span><span class="o">.</span><span class="n">factory</span><span class="p">(</span><span class="s2">&quot;1040&quot;</span><span class="p">)</span>
 <span class="n">result_1040</span> <span class="o">=</span> <span class="n">doc_1040</span><span class="o">.</span><span class="n">extract</span><span class="p">([</span><span class="s2">&quot;ssn&quot;</span><span class="p">,</span> <span class="s2">&quot;agi&quot;</span><span class="p">])</span>
 
 <span class="n">doc_1099k</span> <span class="o">=</span> <span class="n">Document</span><span class="o">.</span><span class="n">factory</span><span class="p">(</span><span class="s2">&quot;1099k&quot;</span><span class="p">)</span>
 <span class="n">result_1099k</span> <span class="o">=</span> <span class="n">doc_1099k</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
 
-<span class="c1"># a more power use case would be in a loop, you will not see large if/else blocks to </span>
+<span class="c1"># A more powerful use case would be in a loop, you will not see large if/else blocks to </span>
 <span class="c1"># process files based on the file type.</span>
-
 <span class="k">for</span> <span class="n">doc_content</span><span class="p">,</span> <span class="n">doc_type</span> <span class="ow">in</span> <span class="n">all_documents</span><span class="p">:</span>
     <span class="n">extractor</span> <span class="o">=</span> <span class="n">Document</span><span class="o">.</span><span class="n">factory</span><span class="p">(</span><span class="n">doc_type</span><span class="p">)</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">extractor</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span><span class="n">s</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">extractor</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
 </code></pre></div>
-<h3 id="chain-of-responsiblity">Chain of responsiblity<a class="headerlink" href="#chain-of-responsiblity" title="Permanent link">&para;</a></h3>
+<h3 id="chain-of-responsibility">Chain of Responsibility<a class="headerlink" href="#chain-of-responsibility" title="Permanent link">&para;</a></h3>
 <h4 id="intent_3">Intent<a class="headerlink" href="#intent_3" title="Permanent link">&para;</a></h4>
-<p>When an object needs to be processed by a potential chain of successive handlers.   Each handler may process it, pass it over, or break the chain and stop the task from proagating to the next handler. </p>
+<p>When an object needs to be processed by a potential chain of successive handlers. Each handler may process it, pass it over, or break the chain and stop the task from propagating to the next handler.</p>
 <h4 id="problem_3">Problem<a class="headerlink" href="#problem_3" title="Permanent link">&para;</a></h4>
-<p>The need of decoupling the sender of a request and its receiver.<br />
-It is unknown until runtime, what kind of request the object is, therefore, it needs a different processing handler to handle the request. 
-Sometimes, more than one handler needs a pass over the data. </p>
+<p>The need for decoupling the sender of a request and its receiver. It is unknown until runtime what kind of request the object is, therefore, it needs a different processing handler to handle the request. Sometimes, more than one handler needs to pass over the data.</p>
 <h4 id="solution_3">Solution<a class="headerlink" href="#solution_3" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">NamedEntityHandler</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">successor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Handler&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">successor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;NamedEntityHandler&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_successor</span> <span class="o">=</span> <span class="n">successor</span>
 
     <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span><span class="nb">str</span> <span class="o">|</span> <span class="n">Entity</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Entity</span><span class="p">:</span>
         <span class="k">pass</span>
 
 <span class="k">class</span> <span class="nc">PersonNameHandler</span><span class="p">(</span><span class="n">NamedEntityHandler</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Entity</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Entity</span><span class="p">:</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">PersonNameEntityParser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_successor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_successor</span><span class="o">.</span><span class="n">handle</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
@@ -1188,22 +1174,20 @@ Sometimes, more than one handler needs a pass over the data. </p>
         <span class="k">return</span> <span class="n">NameConfidenceCalibrator</span><span class="o">.</span><span class="n">calibrate</span><span class="p">(</span><span class="n">name_entity</span><span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">CompanyNameHandler</span><span class="p">(</span><span class="n">NamedEntityHandler</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Entity</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Entity</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">CompanyNameEntityParser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">DateHandler</span><span class="p">(</span><span class="n">NamedEntityHandler</span><span class="p">):</span> 
-    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Entity</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Entity</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">DateParser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 
 <span class="k">class</span> <span class="nc">AmountHandler</span><span class="p">(</span><span class="n">NamedEntityHandler</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Entity</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Entity</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">AmountParser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 
-<span class="k">class</span> 
-
-<span class="nc">class</span> <span class="n">NamedEntityExtractor</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">NamedEntityExtractor</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_person_name_handler</span> <span class="o">=</span> <span class="n">PersonNameHandler</span><span class="p">(</span><span class="n">NameConfidenceCalilbrationHandler</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_person_name_handler</span> <span class="o">=</span> <span class="n">PersonNameHandler</span><span class="p">(</span><span class="n">NameConfidenceCalibrationHandler</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_company_name_handler</span> <span class="o">=</span> <span class="n">CompanyNameHandler</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_address_handler</span> <span class="o">=</span> <span class="n">AddressHandler</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_date_handler</span> <span class="o">=</span> <span class="n">DateHandler</span><span class="p">()</span>
@@ -1211,19 +1195,19 @@ Sometimes, more than one handler needs a pass over the data. </p>
         <span class="bp">self</span><span class="o">.</span><span class="n">_doc_handler</span> <span class="o">=</span> <span class="p">{</span>
             <span class="n">DocTypeEnum</span><span class="o">.</span><span class="n">F_1040</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_person_name_handler</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_address_handler</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_date_handler</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_amount_handler</span><span class="p">],</span>
             <span class="n">DocTypeEnum</span><span class="o">.</span><span class="n">F_W2</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_person_name_handler</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_address_handler</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_amount_handler</span><span class="p">],</span>
-            <span class="n">DocTypeEnum</span><span class="o">.</span><span class="n">F_BILL</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_compnay_name_handler</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_date_handler</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">amount_handler</span><span class="p">]</span>
+            <span class="n">DocTypeEnum</span><span class="o">.</span><span class="n">F_BILL</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_company_name_handler</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_date_handler</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_amount_handler</span><span class="p">]</span>
         <span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">parse_entity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">:</span> <span class="n">DocTypeEnum</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Entity</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">parse_entity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">:</span> <span class="n">DocTypeEnum</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Entity</span><span class="p">]:</span>
         <span class="n">parse_chain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_doc_handler</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">doc_type</span><span class="p">)</span>
         <span class="n">entity_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">parser</span><span class="o">.</span><span class="n">handle</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="k">for</span> <span class="n">parser</span> <span class="ow">in</span> <span class="n">parse_chain</span><span class="p">]</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">entity_list</span><span class="p">))</span>
 </code></pre></div>
 <h3 id="strategy">Strategy<a class="headerlink" href="#strategy" title="Permanent link">&para;</a></h3>
 <h4 id="intent_4">Intent<a class="headerlink" href="#intent_4" title="Permanent link">&para;</a></h4>
-<p>Define a family of interchangable algorithms by a client (client decide which algorithm to use either dynamically or statistically) </p>
+<p>Define a family of interchangeable algorithms by a client (client decides which algorithm to use either dynamically or statically).</p>
 <h4 id="problem_4">Problem<a class="headerlink" href="#problem_4" title="Permanent link">&para;</a></h4>
-<p>There are multiple ways of solving the same problems and each of which have its own advantages/disadvantages. To be able to quickly change the behavior of the program. </p>
+<p>There are multiple ways of solving the same problem, each of which has its own advantages/disadvantages. To be able to quickly change the behavior of the program.</p>
 
               
             </article>
