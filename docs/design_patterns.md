@@ -1,38 +1,34 @@
 # Design Patterns
 ----
 
-### What is Design Patterns
+### What are Design Patterns?
 
 In software engineering, a **design pattern** is a general repeatable solution to a commonly occurring problem in software design.  
 
-**Design patterns can speed up the development process by providing tested, proven development paradigms.  Design patterns helps to prevent sublet issues that can cause major problems and improve code reability**
+**Design patterns can speed up the development process by providing tested, proven development paradigms. Design patterns help to prevent subtle issues that can cause major problems and improve code readability.**
 
-Design patterns usually classified into three major categories
+Design patterns are usually classified into three major categories:
  - Creational Patterns
  - Structural Patterns
  - Behavioral Patterns
 
-Each of the pattern type helps to solve certain class of problems. We are not gonig to cover all the patterns in this document, but we will cover the ones we have frequent usage of instead.
+Each pattern type helps to solve a certain class of problems. We are not going to cover all the patterns in this document, but we will cover the ones we frequently use.
 
-
-Creational Patterns
+## Creational Patterns
 ----
 
 ### Singleton
 
 #### Intent
-- Ensure a class or object only one instance, and provide a global point of access to it
-
-
+- Ensure a class has only one instance, and provide a global point of access to it.
 
 #### Problem
-Application sometimes needs *one and only one* instance of an object during the life time of the application instance.  
-
+Applications sometimes need *one and only one* instance of an object during the lifetime of the application instance.
 
 #### Solution
-It is recommend to name all your singletons in a `singleton.py` file within your project.  Optionally, you can also name the file to whatever you prefer, but expose the singleton object via `__all__` of the module's `__init__.py` 
+It is recommended to name all your singletons in a `singleton.py` file within your project. Optionally, you can also name the file whatever you prefer, but expose the singleton object via `__all__` of the module's `__init__.py`.
 
-Since we don't want to expose the ability to create a new instance of object to external modules and python modules are imported once and globally avaliable after import.  It is important to make sure the name of the class starts with `__` or dunder and use `__all__` to limit the symbols that needs to be exprted. 
+Since we don't want to expose the ability to create a new instance of the object to external modules and Python modules are imported once and globally available after import, it is important to make sure the name of the class starts with `__` (dunder) and use `__all__` to limit the symbols that need to be exported.
 
 ```python
 # in singleton.py
@@ -40,32 +36,26 @@ Since we don't want to expose the ability to create a new instance of object to 
 # Only expose the singleton objects you want to be exposed for this module
 __all__ = ["s3client"]
 
-class __S3Client():
+class __S3Client:
     def __init__(self, ...):
         # Implementation of your object
         pass
 
 s3client = __S3Client()
-
 ```
 
-
-
-
-Structural Patterns
+## Structural Patterns
 -----
 
 ### Adapter
 
 #### Intent
-- Wrap an existing class with a new interface
-- Wrap an old component to a new system
+- Wrap an existing class with a new interface.
+- Wrap an old component to a new system.
 - Let classes work together that couldn't otherwise because of incompatible interfaces.
 
-
 #### Problem
-Take OCR as an example, each provider call the actual method that does OCR slightly differently.  Ex, EasyOCR uses a method called `readtext`, Google Vision SDK uses `document_text_detection` method and PyTesseract uses `ocr_client` method to obtain the OCR result. 
-
+Take OCR as an example. Each provider calls the actual method that does OCR slightly differently. For example, EasyOCR uses a method called `readtext`, Google Vision SDK uses `document_text_detection`, and PyTesseract uses `ocr_client` to obtain the OCR result.
 
 #### Solution
 
@@ -74,63 +64,53 @@ Take OCR as an example, each provider call the actual method that does OCR sligh
 
 from abc import ABC, abstractmethod
 
-# ----------------
 # Our expected interface
-# ----------------
 class OCRClient(ABC):
     """
-        Interface for OCR Client
+    Interface for OCR Client
     """
 
     @abstractmethod
-    def ocr(self):
+    def ocr(self, image):
         pass
-
 
 # in adapter.py
 
-# ----------------
-# Adapter Class, the name adapter is not required
-# ----------------
+# Adapter Class
 class GVisionOCRClientAdapter(OCRClient):
     def __init__(self):
         self._client = GVisionOCRClientAdaptee()
+
     def ocr(self, image):
         return self._client.adaptee_ocr(image=image)
 
-# ----------------
-# Adaptee Class, the name adaptee is not required
-# --------------
+# Adaptee Class
 class GVisionOCRClientAdaptee:
     def __init__(self):
         self.private_client = vision.from_service_account_json('some_location.json')
+
     def adaptee_ocr(self, image):
         return self.private_client.document_text_detection(image)
-
 ```
 
-
-
-Behavior Patterns
+## Behavioral Patterns
 -----
 
 ### Registry
 
 #### Intent
-- keep track of all subclasses of a given class 
-- Creating objects of subclass that has different behaviors
+- Keep track of all subclasses of a given class.
+- Create objects of subclasses that have different behaviors.
 
 #### Problem
-The need of some kind of manager class the manage all related subclasses.
-You want the manager class to iterate over all avaliable subclasses.  Call a particular method on each/some subclasses.
-You want to streamline a factory class, which takes an input and creates/returns an object of that type.
+The need for some kind of manager class to manage all related subclasses. You want the manager class to iterate over all available subclasses and call a particular method on each/some subclasses. You want to streamline a factory class, which takes an input and creates/returns an object of that type.
 
 #### Solution
 
 ```python
 from typing import Type
 
-Class Document(ABC):
+class Document(ABC):
     _REGISTRY = {}
 
     def __new__(cls, *args, **kwargs):
@@ -138,77 +118,61 @@ Class Document(ABC):
         prefix = "Document"
         assert name.startswith(prefix)
         form_type = name[len(prefix):].lower()
-        cls._REGISTER[form_type] = cls
+        cls._REGISTRY[form_type] = cls
 
     @classmethod
-    def factory(cls, form_type:str) -> Type[Document]
-        return cls._REGISTER[form_type]()
+    def factory(cls, form_type: str) -> Type[Document]:
+        return cls._REGISTRY[form_type]()
 
     @abstractmethod
     def extract(self, *args, **kwargs):
         pass
 
-
-
-Class Document1040(Document):
-
-    def extract(self, file:ByteIO, fields: Iterable[str] = None) -> Document1040Results:
+class Document1040(Document):
+    def extract(self, file: ByteIO, fields: Iterable[str] = None) -> Document1040Results:
         # some extract logic
         pass
 
-Class Document1099K(Document):
-
-    def extract(self, file:ByteIO, fields: Iterable[str] = None ) -> Document1099KResult:
+class Document1099K(Document):
+    def extract(self, file: ByteIO, fields: Iterable[str] = None) -> Document1099KResult:
         # different logic to extract this form
         pass
 
-
-
-# To use this 
-
+# To use this
 doc_1040 = Document.factory("1040")
 result_1040 = doc_1040.extract(["ssn", "agi"])
 
 doc_1099k = Document.factory("1099k")
 result_1099k = doc_1099k.extract()
 
-# a more power use case would be in a loop, you will not see large if/else blocks to 
+# A more powerful use case would be in a loop, you will not see large if/else blocks to 
 # process files based on the file type.
-
 for doc_content, doc_type in all_documents:
     extractor = Document.factory(doc_type)
-    result = extractor.extract()s
-
+    result = extractor.extract()
 ```
 
-
-### Chain of responsiblity
+### Chain of Responsibility
 
 #### Intent
-When an object needs to be processed by a potential chain of successive handlers.   Each handler may process it, pass it over, or break the chain and stop the task from proagating to the next handler. 
-
+When an object needs to be processed by a potential chain of successive handlers. Each handler may process it, pass it over, or break the chain and stop the task from propagating to the next handler.
 
 #### Problem
-The need of decoupling the sender of a request and its receiver.  
-It is unknown until runtime, what kind of request the object is, therefore, it needs a different processing handler to handle the request. 
-Sometimes, more than one handler needs a pass over the data. 
-
+The need for decoupling the sender of a request and its receiver. It is unknown until runtime what kind of request the object is, therefore, it needs a different processing handler to handle the request. Sometimes, more than one handler needs to pass over the data.
 
 #### Solution
 
 ```python
-
-
 class NamedEntityHandler(ABC):
-    def __init__(self, successor: Optional["Handler"] = None):
+    def __init__(self, successor: Optional["NamedEntityHandler"] = None):
         self._successor = successor
 
     @abstractmethod
-    def handle(self, text:str | Entity, *args, **kwargs) -> None:
+    def handle(self, text: str) -> Entity:
         pass
 
 class PersonNameHandler(NamedEntityHandler):
-    def handle(self, text:str) -> Entity:
+    def handle(self, text: str) -> Entity:
         name = PersonNameEntityParser.parse(text)
         if self._successor is not None:
             name = self._successor.handle(name)
@@ -219,22 +183,20 @@ class NameConfidenceCalibrationHandler(NamedEntityHandler):
         return NameConfidenceCalibrator.calibrate(name_entity)
 
 class CompanyNameHandler(NamedEntityHandler):
-    def handle(self, text:str) -> Entity:
+    def handle(self, text: str) -> Entity:
         return CompanyNameEntityParser.parse(text)
 
 class DateHandler(NamedEntityHandler): 
-    def handle(self, text:str) -> Entity:
+    def handle(self, text: str) -> Entity:
         return DateParser.parse(text)
 
 class AmountHandler(NamedEntityHandler):
-    def handle(self, text:str) -> Entity:
+    def handle(self, text: str) -> Entity:
         return AmountParser.parse(text)
-
-class 
 
 class NamedEntityExtractor:
     def __init__(self):
-        self._person_name_handler = PersonNameHandler(NameConfidenceCalilbrationHandler)
+        self._person_name_handler = PersonNameHandler(NameConfidenceCalibrationHandler())
         self._company_name_handler = CompanyNameHandler()
         self._address_handler = AddressHandler()
         self._date_handler = DateHandler()
@@ -242,22 +204,21 @@ class NamedEntityExtractor:
         self._doc_handler = {
             DocTypeEnum.F_1040: [self._person_name_handler, self._address_handler, self._date_handler, self._amount_handler],
             DocTypeEnum.F_W2: [self._person_name_handler, self._address_handler, self._amount_handler],
-            DocTypeEnum.F_BILL: [self._compnay_name_handler, self._date_handler, self.amount_handler]
+            DocTypeEnum.F_BILL: [self._company_name_handler, self._date_handler, self._amount_handler]
         }
 
-    def parse_entity(self, text:str, doc_type: DocTypeEnum) -> List[Entity]:
+    def parse_entity(self, text: str, doc_type: DocTypeEnum) -> List[Entity]:
         parse_chain = self._doc_handler.get(doc_type)
         entity_list = [parser.handle(text) for parser in parse_chain]
         return list(filter(lambda x: x is not None, entity_list))
-
 ```
 
 ### Strategy
 
 #### Intent
-Define a family of interchangable algorithms by a client (client decide which algorithm to use either dynamically or statistically) 
+Define a family of interchangeable algorithms by a client (client decides which algorithm to use either dynamically or statically).
 
 #### Problem
-There are multiple ways of solving the same problems and each of which have its own advantages/disadvantages. To be able to quickly change the behavior of the program. 
+There are multiple ways of solving the same problem, each of which has its own advantages/disadvantages. To be able to quickly change the behavior of the program.
 
 
