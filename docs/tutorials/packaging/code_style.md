@@ -1,12 +1,10 @@
 !!! Summary
 
-    :white_check_mark: Use [black] code formatting.
-    
-    :white_check_mark: Use [Google-style docstrings].
+    :white_check_mark: Use [ruff] or [black] code formatting.
 
     :white_check_mark: Use either [napoleon] docstring type annotations or [PEP-484] built-in type annotations.
     
-    :white_check_mark: Use [flake8] for linting (static code analysis).
+    :white_check_mark: Use [ruff] for linting (static code analysis).
 
     :white_check_mark: Use [mypy] for type checking.
 
@@ -64,38 +62,16 @@ Stylistic Liners:
 
 Below are some of the popular tools
 
-- [pylint]: A logical and sytlistic liner (more restrictive than [PEP-8])
+- [ruff]; A modern(Rust) linter that combines the best features of flake8, pylint, and isort. It's highly customizable and offers fast performance.
 
-    The problem with pylint is that there is no automated way to apply the 
-    rules to your project. You must run it, look at the errors generated, and
-    then update your code manually. This makes it very easy to either ignore 
-    the warnings or place unnecessary burden on developers to modify their code 
-    until it passes linting. Pylint is opinionated about nearly all aspects of 
-    code style including variable naming and number of arguments. This one of 
-    the reasons that it is so common to see custom `pylint.rc` files in 
-    repositories with specific errors turned off.
+- [flake8]: the wrapper which verifies [PEP-8], pyflakes, and circular complexity “. It has a low rate of false positives.
 
-    The common complaints against Pylint are that it is slow, too verbose by default, and takes a lot of configuration to get it working the way you want.
-
-- [PyFlakes]: A logical liner.
-
-    Analyzes programs and detect various errors.  It doesn't complain about style and focus on logical code issues and potential errors.  Therefore, it runs faster than [pylint].  [flake8] is a tool that wraps around [PyFlakes] and [pycodestyle].
-
-- [pycodestyle]: A code stylistic checker formally known as the official [PEP-8] style.
-
-    pycodestyle is a tool to check your Python code against some of the style 
-    conventions in [PEP-8].   If you plan to use [black] for auto formatting and enforcing styles. You should turn off the checks for `E203` and `W503` so they can agree with each other in terms of styling.
-    
-- [yapf]: An automated code formatter that follows [PEP-8] style.
-
-    Unlike [autopep8] this does not not only remove linting errors, but rather
-    reformats all code in an opinionated style (which is [PEP-8] compliant). 
-    Like the previous code stylers, this allows for a huge amount of 
-    configuration and even allows you to swap out code style entirely.
 
 ### Formatters
 
 Formatters will format the actual python file based on rules.
+
+- [ruff] A drop-in replacement for [black], but much faster.
 
 - [black] An automated code formatter with no configuration options.
 
@@ -114,21 +90,16 @@ enabling the default behavior and forbidding custom options.
 
 ## Recommendation
 
-With any styling recommendation it is recommended to pair linters with formatters.
+For a comprehensive and efficient code style and linting solution, we highly recommend using `ruff`. It offers a powerful combination of features and performance benefits:
 
-The [black] library is a new code formatter that closely follows the principles 
-of the golang formatter [gofmt]. It only enforces the formatting of the code 
-like gofmt, black is opinionated and does not allow you to choose how to format 
-your code. The correctness of the code is checked upon formatting to ensure that 
-no mistake was made when updating the style.
+- **Fast Performance**: Leverages Rust for speed, making it ideal for large codebases.
+- **Comprehensive Linting**: Checks for a wide range of style issues, potential bugs, and performance problems.
+- **Customization**: Easily tailor the linting rules to your specific needs.
+- **Compatibility**: Seamlessly integrates with popular tools like `black` and `isort`.
 
-The only caveat to mention is that black is in beta and will not be perfect 
-until its official release.
+For formatting, `black` remains a solid choice for its simplicity and strict adherence to a specific style. However, for those seeking a faster alternative, `ruff` can also be used as a drop-in replacement.
 
-The [pylint] is one of the most popular linting library and well supported. However, 
-if you want integration with `pyproject.toml` you can use [flake8] which is a combination of tools ([PyFlakes], [pycodestyle] and [McCabe]). 
-
-We should also use [mypy] to check the type hinting is correct. 
+To ensure type safety, `mypy` should be used to statically type-check your code.
 
 
 ## Style Guides
@@ -183,7 +154,7 @@ def subtract(minuend: int, subtrahend: int) -> int:
     Result:
         difference: The difference between the numbers.
     """
-    return minuend + subtrahend
+    return minuend - subtrahend
 ```
 
 
@@ -203,7 +174,7 @@ variables should have the following properties:
 - Should be short if possible. Long names make code more difficult to read
 
 Abbrivations for names is ok if it is well-known but should be reframed.
-ie. n, sz, cnt, idx, dt, ts, env, cfg, ctx etc. 
+ie. `n`, `sz`, `cnt`, `idx`, `dt`, `ts`, `env`, `cfg`, `ctx` etc. 
 
 ### Dictionaries
 
@@ -407,16 +378,51 @@ Acceptable Forms:
     ```
 
 
-### Flake-8 plugins
+### Ruff Setup
 
-below is a set of useful plugins for flake8 to make it more useful for CI in your projects
+It is recommend to setup ruff in your `pyproject.toml` file. 
 
-- ***flake8-bugbear***: check generic bug and design problem.
-- ***flake8-cognitive-complexity***: check complex and unreadable code.
-- ***flake8-expression-complexity***: check complex and unreadable code.
-- ***flake8-pytest-style***: check style for pytest.
-- ***flake8-simplify***: check style that could be simplified.
-- ***pep8-naming***: strict naming convention.
+```toml
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "A",  # Assignment expressions
+    "ARG",  # Argument-related issues
+    "B",  # Builtin usage
+    "C",  # Complexity
+    "COM",  # Comments
+    "DTZ",  # Datetime and time zone issues
+    "E",  # Pythonic style guide violations
+    "EM",  # Empty blocks
+    "F",  # Formatting
+    "FBT",  # False positives and benign issues
+    "I",  # Imports
+    "ICN",  # Inconsistent naming
+    "ISC",  # Inconsistent spacing
+    "N",  # Naming conventions
+    "PLC",  # Potential logical errors
+    "PLE",  # Potential library errors
+    "PLR",  # Potential runtime errors
+    "PLW",  # Potential performance warnings
+    "Q",  # Quality of life suggestions
+    "RUF",  # Ruff-specific checks
+    "TID",  # Type checker issues
+    "UP",  # Unused code
+    "W",  # Warnings
+    "YTT",  # Yield type hints
+]
+ignore = [
+    "FBT003",  # Ignore a specific false positive or benign issue (boolean-positional-value-in-call)
+]
+
+[tool.mypy]
+files = ["your_modules", "tests"]
+no_implicit_optional = true
+check_untyped_defs = true
+```
 
 
 [yapf]: https://github.com/google/yapf/
@@ -430,6 +436,7 @@ below is a set of useful plugins for flake8 to make it more useful for CI in you
 [autopep8]: https://github.com/hhatto/autopep8
 [PEP-484]: https://www.python.org/dev/peps/pep-0484/
 [mypy]: http://mypy-lang.org/
+[ruff]: https://github.com/astral-sh/ruff
 [pyre-check]: https://pyre-check.org/
 [typing]: https://docs.python.org/3/library/typing.html
 [napoleon]: https://sphinxcontrib-napoleon.readthedocs.io/en/latest/#type-annotations

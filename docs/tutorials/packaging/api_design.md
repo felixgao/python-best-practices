@@ -16,77 +16,40 @@
 # API Design
 
 This guide uses the term "API" to refer to the interface of a package, module, 
-class or function. There are specific recommendations for each type of API but 
-the general rules apply to all.
+class or function. It outlines specific recommendations for each type, but general rules apply to all.
 
-API design is arguably the most important part of writing clean reusable code.
-A good API should not not stand out to the end-user because it's so easy and
-natural to use.
+**API design is arguably the most important part of writing clean reusable code.**
+A well-designed API should be intuitive and straightforward for users, requiring minimal reference to documentation.
 
-This topic is particularly relevant to data science code because API design is 
-often left as an afterthought to the actual functionality and data modeling. 
-This creates a problem where code is often used only once even when the core 
-functionality is fairly general. Duplicate functionality is implemented in
-completely separate repositories by different developers who decide that it is
-not worth the time to adapt hardcoded/specialized logic to their own projects.
+This topic is particularly relevant to data science code because API design often becomes an afterthought compared to the actual functionality and data modeling. This leads to code that's often single-use, even when the core functionality is quite general. Additionally, duplicate functionality gets implemented in separate repositories by different developers who find it not worthwhile to adapt hardcoded/specialized logic to their projects.
 
-The problem exists even within a single project/respository. Modules can be
-tailored so specifically to a dataset or model architecture that it becomes
-impossible to use outside of that context.
+This problem can also exist within a single project/repository. Modules can be tailored so specifically to a dataset or model architecture that using them outside of that context becomes impossible.
 
 
-## Goals
+## Goals of a Good API
 
-The goal of any API should be to have the following properties:
+A well-designed API should exhibit the following properties:
 
-- **Legibility**: The user should immediately understand how to use an API. 
-  The documentation should be largely unnecessary. The meaning of arguments
-  should be obvious. The return values of function/methods should be obvious.
-- **State Simplicity**: The user should immediately understand the state 
-  lifetime of an API. There should be no hidden caching behavior. A user should
-  be able to deallocate state on demand.
-- **Interoperability**: The user should immediately understand how to use 
-  library function/class with other functions/classes even outside of the given
-  library.
+- **Legibility**: Users should understand how to utilize an API immediately. The meaning of arguments and return values should be obvious, requiring minimal documentation.
+- **State Simplicity**: Users should readily comprehend the state's lifetime within an API. There should be no hidden caching behavior, allowing users to deallocate state on demand.
+- **Interoperability**: Users should immediately understand how to utilize library functions/classes with functions/classes from other libraries, even outside of the given library.
 
 
 ## Example Libraries
 
-The gold standard for a good python library is the [python standard library]. 
-This is a library that follows a consistent style and uses patterns that make it 
-extremely easy to use.
-
-The third party libraries [numpy] and [sklearn] have vastly different design 
-patterns but they both manage to make their APIs very easy to understand. Their 
-consistent interfaces allow users to quickly understand the full scope of the 
-library.
-
-- [numpy]: A function-oriented library which exposes one primary class and many 
-    functions.
-
-    For `numpy`, each function exposed through the API almost always takes a
-    `np.ndarray` as the first argument and returns an `np.ndarray` as its 
-    output. This means that to use the vast array of functions in the library, 
-    only one object type is necessary to understand.
-
-- [sklearn]: An object-oriented library which exposes many model classes.
-
-    For `sklearn` each object exposed through the API inherits from a small 
-    subset of base classes with well-defined methods. Almost all `sklearn` 
-    objects have a `fit(X, y)` method and a `predict(X)` method. This makes 
-    most `sklearn` objects interchangeable within the user application code 
-    since their APIs are the same.
+- **Python Standard Library**: This library embodies a consistent style and uses patterns that make it very user-friendly.
+- **NumPy**: This function-oriented library exposes one primary class and numerous functions. For most `numpy` functions, the first argument is typically a `np.ndarray`, and the output is also a `np.ndarray`. This means that understanding the vast array of functions in the library only necessitates familiarity with one object type.
+- **Scikit-learn**: This object-oriented library exposes many model classes. Most `scikit-learn` objects inherit from a small subset of base classes with well-defined methods. Nearly all `scikit-learn` objects have a `fit(X, y)` method and a `predict(X)` method. This consistency allows most scikit-learn objects to be interchangeable within user application code.
 
 The libraries mentioned above are all heavily used within data science code
 and they follow design patterns that we can learn from. We can derive a base 
 set of guidelines from the patterns we see in these interfaces.
 
 
-## Guidelines 
+## Design Guidelines 
 
-The following guidelines are principals which you should try to adhere to
-when designing an API but not absolute strict rules. There are always exceptions
-to the following cases:
+These guidelines are principles to strive for when designing an API, but not absolute rules. Exceptions exist:
+
 
 1. [Use a flat namespace for packages/modules.](#namespace)
 2. [Use primitive types in function/method interfaces.](#types)
@@ -110,20 +73,25 @@ namespace.
 
     ```python
     import my_library
-    result = my_library.my_function()
-    container = my_library.MyClass()
+
+    result = my_library.submodule1.function1()
+    obj = my_library.submodule1.Class1()
+
+    result2 = my_library.submodule2.function2()
+    obj2 = my_library.submodule2.Class2()
     ```
 
 !!! fail "Avoid"
 
     ```python
-    from my_library.my_submodule import my_function, MyClass
-    result = my_function()
-    container = MyClass()
-    
-    from my_library import my_submodule
-    result = my_submodule.my_function()
-    container = my_submodule.MyClass()
+    from my_library.submodule1 import function as function1, Class1
+    from my_library.submodule2 import function as function2, Class2
+
+    result = function1()
+    obj = Class1()
+
+    result2 = function2()
+    obj2 = Class2()
     ```
 
 An example of a library that does this extremely well is [numpy].
@@ -131,38 +99,29 @@ An example of a library that does this extremely well is [numpy].
 
 ### Use primitive types in function/method interfaces {#types}
 
-The following section describes how to best write the interface of a function or
-class. The interface of a function/method refers to the types of the arguments 
-and return values.
+The goal is to create simple and intuitive function/method interfaces by primarily using primitive data types (e.g., `str`, `int`, `float`, `bool`). This promotes code readability, maintainability, and testability.
 
-To model ourselves after the standard library, attempt to always use functions
-which consume primitive types on the arguments and as return types (`str`, 
-`float`, `int`, `bool`). The common case where this is not done is in library 
-oriented code (e.g. `numpy`, `pandas`, `sklearn`, `tensorflow`, `pytorch`). In
-many cases this is unavoidable when the logic requires a certain object type.
-Most of the time library-oriented code is avoidable. The use of external library 
-objects becomes a problem in data science codebases because it complicates 
-interfaces of functions/classes and makes them entirely dependent on library
-objects. Unit-testing becomes more difficult when a function/class uses a 
-specialized type (e.g. `pd.DataFrame`, `tf.Tensor`). in the interface.
+Why Primitive Types?
+- **Clarity**: Functions with clear input and output types are easier to understand and use.
+- **Testability**: Unit tests can be written more easily when dealing with simple data types.
+- **Flexibility**: Functions that rely on primitive types are more adaptable to different use cases.
 
-The approach to writing a function/class method for data science code
-should be as follows:
+#### When to Consider Complex Data Structures
+While primitive types are generally preferred, there are situations where complex data structures like dictionaries or DataFrames might be necessary:
 
-1. Implement the function/method with primitive python types when 
-   possible (`str`, `float`, `int`, `bool`).
-2. If the function requires collections, implement the function/method with 
-   native python data structures (`dict`, `list`, `tuple`)
-3. If the native python data structures are not performant enough, implement
-   the function/method with a `numpy` oriented interface. For performance and
-   simplicity, avoid `pd.Series` oriented APIs.
-4. Finally, if no simpler interface is feasible, use a library-object oriented
-   API (e.g. `pd.DataFrame`, `tf.Tensor`). This should always be a last resort.
+ - **Large Data Set**s: For performance reasons, using NumPy arrays or Pandas DataFrames can be more efficient.
+ - **Structured Data**: Dictionaries can be useful for representing key-value pairs, especially when the structure is not fixed.
+ - **Domain-Specific Data**: In some cases, using custom data classes might be appropriate to model complex domain-specific concepts.
 
-The cases where these rules are most often broken are where either dictionaries 
-or DataFrames are present in the interface. The following sections
-describe mechanisms to avoid the use of these when possible.
+However, even when using complex data structures, strive to minimize their complexity and expose a simple interface to the user.
 
+#### Best Practices
+1. **Prioritize Primitive Types**: Always consider using primitive types as the primary building blocks of your API.
+2. **Use Type Hints**: Employ Python's type hinting system to improve code readability and catch potential type errors early.
+3. **Minimize Dictionary Usage**: If dictionaries are necessary, consider using namedtuples or custom data classes for structured data.
+4.** Optimize Object Usage**: When working with Object, focus on exposing a simple interface that hides the underlying complexity.
+5. **Handle Errors Gracefully**: Implement robust error handling mechanisms to prevent unexpected behavior and provide informative error messages.
+By following these guidelines, you can create APIs that are both powerful and easy to use.
 
 #### Dictionary-Oriented Interfaces {#dictionary-types}
 
