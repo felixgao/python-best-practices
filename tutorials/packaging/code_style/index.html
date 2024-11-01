@@ -583,8 +583,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#flake-8-plugins" class="md-nav__link">
-    Flake-8 plugins
+  <a href="#ruff-setup" class="md-nav__link">
+    Ruff Setup
   </a>
   
 </li>
@@ -833,8 +833,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#flake-8-plugins" class="md-nav__link">
-    Flake-8 plugins
+  <a href="#ruff-setup" class="md-nav__link">
+    Ruff Setup
   </a>
   
 </li>
@@ -864,10 +864,9 @@
 
 <div class="admonition summary">
 <p class="admonition-title">Summary</p>
-<p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use <a href="https://github.com/psf/black">black</a> code formatting.</p>
-<p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use <a href="http://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings">Google-style docstrings</a>.</p>
+<p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use <a href="https://github.com/astral-sh/ruff">ruff</a> or <a href="https://github.com/psf/black">black</a> code formatting.</p>
 <p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use either <a href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/#type-annotations">napoleon</a> docstring type annotations or <a href="https://www.python.org/dev/peps/pep-0484/">PEP-484</a> built-in type annotations.</p>
-<p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use <a href="https://flake8.pycqa.org/en/latest/">flake8</a> for linting (static code analysis).</p>
+<p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use <a href="https://github.com/astral-sh/ruff">ruff</a> for linting (static code analysis).</p>
 <p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use <a href="http://mypy-lang.org/">mypy</a> for type checking.</p>
 </div>
 <h1 id="code-style">Code Style<a class="headerlink" href="#code-style" title="Permanent link">&para;</a></h1>
@@ -914,37 +913,18 @@ have the following properties:</p>
 <p>Below are some of the popular tools</p>
 <ul>
 <li>
-<p><a href="https://pypi.org/project/pylint/">pylint</a>: A logical and sytlistic liner (more restrictive than <a href="https://www.python.org/dev/peps/pep-0008/">PEP-8</a>)</p>
-<p>The problem with pylint is that there is no automated way to apply the 
-rules to your project. You must run it, look at the errors generated, and
-then update your code manually. This makes it very easy to either ignore 
-the warnings or place unnecessary burden on developers to modify their code 
-until it passes linting. Pylint is opinionated about nearly all aspects of 
-code style including variable naming and number of arguments. This one of 
-the reasons that it is so common to see custom <code>pylint.rc</code> files in 
-repositories with specific errors turned off.</p>
-<p>The common complaints against Pylint are that it is slow, too verbose by default, and takes a lot of configuration to get it working the way you want.</p>
+<p><a href="https://github.com/astral-sh/ruff">ruff</a>; A modern(Rust) linter that combines the best features of flake8, pylint, and isort. It's highly customizable and offers fast performance.</p>
 </li>
 <li>
-<p><a href="https://github.com/PyCQA/pyflakes">PyFlakes</a>: A logical liner.</p>
-<p>Analyzes programs and detect various errors.  It doesn't complain about style and focus on logical code issues and potential errors.  Therefore, it runs faster than <a href="https://pypi.org/project/pylint/">pylint</a>.  <a href="https://flake8.pycqa.org/en/latest/">flake8</a> is a tool that wraps around <a href="https://github.com/PyCQA/pyflakes">PyFlakes</a> and <a href="https://github.com/PyCQA/pycodestyle">pycodestyle</a>.</p>
-</li>
-<li>
-<p><a href="https://github.com/PyCQA/pycodestyle">pycodestyle</a>: A code stylistic checker formally known as the official <a href="https://www.python.org/dev/peps/pep-0008/">PEP-8</a> style.</p>
-<p>pycodestyle is a tool to check your Python code against some of the style 
-conventions in <a href="https://www.python.org/dev/peps/pep-0008/">PEP-8</a>.   If you plan to use <a href="https://github.com/psf/black">black</a> for auto formatting and enforcing styles. You should turn off the checks for <code>E203</code> and <code>W503</code> so they can agree with each other in terms of styling.</p>
-</li>
-<li>
-<p><a href="https://github.com/google/yapf/">yapf</a>: An automated code formatter that follows <a href="https://www.python.org/dev/peps/pep-0008/">PEP-8</a> style.</p>
-<p>Unlike <a href="https://github.com/hhatto/autopep8">autopep8</a> this does not not only remove linting errors, but rather
-reformats all code in an opinionated style (which is <a href="https://www.python.org/dev/peps/pep-0008/">PEP-8</a> compliant). 
-Like the previous code stylers, this allows for a huge amount of 
-configuration and even allows you to swap out code style entirely.</p>
+<p><a href="https://flake8.pycqa.org/en/latest/">flake8</a>: the wrapper which verifies <a href="https://www.python.org/dev/peps/pep-0008/">PEP-8</a>, pyflakes, and circular complexity “. It has a low rate of false positives.</p>
 </li>
 </ul>
 <h3 id="formatters">Formatters<a class="headerlink" href="#formatters" title="Permanent link">&para;</a></h3>
 <p>Formatters will format the actual python file based on rules.</p>
 <ul>
+<li>
+<p><a href="https://github.com/astral-sh/ruff">ruff</a> A drop-in replacement for <a href="https://github.com/psf/black">black</a>, but much faster.</p>
+</li>
 <li>
 <p><a href="https://github.com/psf/black">black</a> An automated code formatter with no configuration options.</p>
 <p>A huge benefit of black is that unlike the previously mentioned tools this 
@@ -961,17 +941,15 @@ check all of the styles problem that other <code>linters</code> do. </p>
 <p>In a very controlled development environment, each may be useful tools by just
 enabling the default behavior and forbidding custom options.</p>
 <h2 id="recommendation">Recommendation<a class="headerlink" href="#recommendation" title="Permanent link">&para;</a></h2>
-<p>With any styling recommendation it is recommended to pair linters with formatters.</p>
-<p>The <a href="https://github.com/psf/black">black</a> library is a new code formatter that closely follows the principles 
-of the golang formatter <a href="https://golang.org/cmd/gofmt/">gofmt</a>. It only enforces the formatting of the code 
-like gofmt, black is opinionated and does not allow you to choose how to format 
-your code. The correctness of the code is checked upon formatting to ensure that 
-no mistake was made when updating the style.</p>
-<p>The only caveat to mention is that black is in beta and will not be perfect 
-until its official release.</p>
-<p>The <a href="https://pypi.org/project/pylint/">pylint</a> is one of the most popular linting library and well supported. However, 
-if you want integration with <code>pyproject.toml</code> you can use <a href="https://flake8.pycqa.org/en/latest/">flake8</a> which is a combination of tools (<a href="https://github.com/PyCQA/pyflakes">PyFlakes</a>, <a href="https://github.com/PyCQA/pycodestyle">pycodestyle</a> and <a href="https://github.com/PyCQA/mccabe">McCabe</a>). </p>
-<p>We should also use <a href="http://mypy-lang.org/">mypy</a> to check the type hinting is correct. </p>
+<p>For a comprehensive and efficient code style and linting solution, we highly recommend using <code>ruff</code>. It offers a powerful combination of features and performance benefits:</p>
+<ul>
+<li><strong>Fast Performance</strong>: Leverages Rust for speed, making it ideal for large codebases.</li>
+<li><strong>Comprehensive Linting</strong>: Checks for a wide range of style issues, potential bugs, and performance problems.</li>
+<li><strong>Customization</strong>: Easily tailor the linting rules to your specific needs.</li>
+<li><strong>Compatibility</strong>: Seamlessly integrates with popular tools like <code>black</code> and <code>isort</code>.</li>
+</ul>
+<p>For formatting, <code>black</code> remains a solid choice for its simplicity and strict adherence to a specific style. However, for those seeking a faster alternative, <code>ruff</code> can also be used as a drop-in replacement.</p>
+<p>To ensure type safety, <code>mypy</code> should be used to statically type-check your code.</p>
 <h2 id="style-guides">Style Guides<a class="headerlink" href="#style-guides" title="Permanent link">&para;</a></h2>
 <p>Beyond automated checks and warnings for code, style guides provide good 
 recommendations for how you should write code.</p>
@@ -1015,7 +993,7 @@ code usage is less ambiguous.</p>
 <span class="sd">    Result:</span>
 <span class="sd">        difference: The difference between the numbers.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">minuend</span> <span class="o">+</span> <span class="n">subtrahend</span>
+    <span class="k">return</span> <span class="n">minuend</span> <span class="o">-</span> <span class="n">subtrahend</span>
 </code></pre></div>
 <h2 id="variable-naming">Variable Naming<a class="headerlink" href="#variable-naming" title="Permanent link">&para;</a></h2>
 <p>In the style guides mentioned above, the naming conventions are primarily
@@ -1031,7 +1009,7 @@ variables should have the following properties:</p>
 <li>Should be short if possible. Long names make code more difficult to read</li>
 </ul>
 <p>Abbrivations for names is ok if it is well-known but should be reframed.
-ie. n, sz, cnt, idx, dt, ts, env, cfg, ctx etc. </p>
+ie. <code>n</code>, <code>sz</code>, <code>cnt</code>, <code>idx</code>, <code>dt</code>, <code>ts</code>, <code>env</code>, <code>cfg</code>, <code>ctx</code> etc. </p>
 <h3 id="dictionaries">Dictionaries<a class="headerlink" href="#dictionaries" title="Permanent link">&para;</a></h3>
 <p>Dictionaries should have information about both the <strong>key and value</strong> in 
 the name. </p>
@@ -1198,16 +1176,48 @@ hints if you must return such types, ie. <code>List[int]</code> or <code>Dict[st
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="n">results</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
 </code></pre></div>
 </div>
-<h3 id="flake-8-plugins">Flake-8 plugins<a class="headerlink" href="#flake-8-plugins" title="Permanent link">&para;</a></h3>
-<p>below is a set of useful plugins for flake8 to make it more useful for CI in your projects</p>
-<ul>
-<li><strong><em>flake8-bugbear</em></strong>: check generic bug and design problem.</li>
-<li><strong><em>flake8-cognitive-complexity</em></strong>: check complex and unreadable code.</li>
-<li><strong><em>flake8-expression-complexity</em></strong>: check complex and unreadable code.</li>
-<li><strong><em>flake8-pytest-style</em></strong>: check style for pytest.</li>
-<li><strong><em>flake8-simplify</em></strong>: check style that could be simplified.</li>
-<li><strong><em>pep8-naming</em></strong>: strict naming convention.</li>
-</ul>
+<h3 id="ruff-setup">Ruff Setup<a class="headerlink" href="#ruff-setup" title="Permanent link">&para;</a></h3>
+<p>It is recommend to setup ruff in your <code>pyproject.toml</code> file. </p>
+<div class="highlight"><pre><span></span><code><span class="k">[tool.ruff]</span>
+<span class="n">line-length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">88</span>
+<span class="n">target-version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;py312&quot;</span>
+
+<span class="k">[tool.ruff.lint]</span>
+<span class="n">select</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;A&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Assignment expressions</span>
+<span class="w">    </span><span class="s2">&quot;ARG&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Argument-related issues</span>
+<span class="w">    </span><span class="s2">&quot;B&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Builtin usage</span>
+<span class="w">    </span><span class="s2">&quot;C&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Complexity</span>
+<span class="w">    </span><span class="s2">&quot;COM&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Comments</span>
+<span class="w">    </span><span class="s2">&quot;DTZ&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Datetime and time zone issues</span>
+<span class="w">    </span><span class="s2">&quot;E&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Pythonic style guide violations</span>
+<span class="w">    </span><span class="s2">&quot;EM&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Empty blocks</span>
+<span class="w">    </span><span class="s2">&quot;F&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Formatting</span>
+<span class="w">    </span><span class="s2">&quot;FBT&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># False positives and benign issues</span>
+<span class="w">    </span><span class="s2">&quot;I&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Imports</span>
+<span class="w">    </span><span class="s2">&quot;ICN&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Inconsistent naming</span>
+<span class="w">    </span><span class="s2">&quot;ISC&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Inconsistent spacing</span>
+<span class="w">    </span><span class="s2">&quot;N&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Naming conventions</span>
+<span class="w">    </span><span class="s2">&quot;PLC&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Potential logical errors</span>
+<span class="w">    </span><span class="s2">&quot;PLE&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Potential library errors</span>
+<span class="w">    </span><span class="s2">&quot;PLR&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Potential runtime errors</span>
+<span class="w">    </span><span class="s2">&quot;PLW&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Potential performance warnings</span>
+<span class="w">    </span><span class="s2">&quot;Q&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Quality of life suggestions</span>
+<span class="w">    </span><span class="s2">&quot;RUF&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Ruff-specific checks</span>
+<span class="w">    </span><span class="s2">&quot;TID&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Type checker issues</span>
+<span class="w">    </span><span class="s2">&quot;UP&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Unused code</span>
+<span class="w">    </span><span class="s2">&quot;W&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Warnings</span>
+<span class="w">    </span><span class="s2">&quot;YTT&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Yield type hints</span>
+<span class="p">]</span>
+<span class="n">ignore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;FBT003&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Ignore a specific false positive or benign issue (boolean-positional-value-in-call)</span>
+<span class="p">]</span>
+
+<span class="k">[tool.mypy]</span>
+<span class="n">files</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;your_modules&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;tests&quot;</span><span class="p">]</span>
+<span class="n">no_implicit_optional</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="n">check_untyped_defs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+</code></pre></div>
 
               
             </article>

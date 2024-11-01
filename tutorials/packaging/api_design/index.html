@@ -479,8 +479,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#goals" class="md-nav__link">
-    Goals
+  <a href="#goals-of-a-good-api" class="md-nav__link">
+    Goals of a Good API
   </a>
   
 </li>
@@ -493,11 +493,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#guidelines" class="md-nav__link">
-    Guidelines
+  <a href="#design-guidelines" class="md-nav__link">
+    Design Guidelines
   </a>
   
-    <nav class="md-nav" aria-label="Guidelines">
+    <nav class="md-nav" aria-label="Design Guidelines">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -514,6 +514,20 @@
   
     <nav class="md-nav" aria-label="Use primitive types in function/method interfaces">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-to-consider-complex-data-structures" class="md-nav__link">
+    When to Consider Complex Data Structures
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    Best Practices
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#dictionary-types" class="md-nav__link">
@@ -734,8 +748,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#goals" class="md-nav__link">
-    Goals
+  <a href="#goals-of-a-good-api" class="md-nav__link">
+    Goals of a Good API
   </a>
   
 </li>
@@ -748,11 +762,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#guidelines" class="md-nav__link">
-    Guidelines
+  <a href="#design-guidelines" class="md-nav__link">
+    Design Guidelines
   </a>
   
-    <nav class="md-nav" aria-label="Guidelines">
+    <nav class="md-nav" aria-label="Design Guidelines">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -769,6 +783,20 @@
   
     <nav class="md-nav" aria-label="Use primitive types in function/method interfaces">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-to-consider-complex-data-structures" class="md-nav__link">
+    When to Consider Complex Data Structures
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    Best Practices
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#dictionary-types" class="md-nav__link">
@@ -911,66 +939,29 @@
 </div>
 <h1 id="api-design">API Design<a class="headerlink" href="#api-design" title="Permanent link">&para;</a></h1>
 <p>This guide uses the term "API" to refer to the interface of a package, module, 
-class or function. There are specific recommendations for each type of API but 
-the general rules apply to all.</p>
-<p>API design is arguably the most important part of writing clean reusable code.
-A good API should not not stand out to the end-user because it's so easy and
-natural to use.</p>
-<p>This topic is particularly relevant to data science code because API design is 
-often left as an afterthought to the actual functionality and data modeling. 
-This creates a problem where code is often used only once even when the core 
-functionality is fairly general. Duplicate functionality is implemented in
-completely separate repositories by different developers who decide that it is
-not worth the time to adapt hardcoded/specialized logic to their own projects.</p>
-<p>The problem exists even within a single project/respository. Modules can be
-tailored so specifically to a dataset or model architecture that it becomes
-impossible to use outside of that context.</p>
-<h2 id="goals">Goals<a class="headerlink" href="#goals" title="Permanent link">&para;</a></h2>
-<p>The goal of any API should be to have the following properties:</p>
+class or function. It outlines specific recommendations for each type, but general rules apply to all.</p>
+<p><strong>API design is arguably the most important part of writing clean reusable code.</strong>
+A well-designed API should be intuitive and straightforward for users, requiring minimal reference to documentation.</p>
+<p>This topic is particularly relevant to data science code because API design often becomes an afterthought compared to the actual functionality and data modeling. This leads to code that's often single-use, even when the core functionality is quite general. Additionally, duplicate functionality gets implemented in separate repositories by different developers who find it not worthwhile to adapt hardcoded/specialized logic to their projects.</p>
+<p>This problem can also exist within a single project/repository. Modules can be tailored so specifically to a dataset or model architecture that using them outside of that context becomes impossible.</p>
+<h2 id="goals-of-a-good-api">Goals of a Good API<a class="headerlink" href="#goals-of-a-good-api" title="Permanent link">&para;</a></h2>
+<p>A well-designed API should exhibit the following properties:</p>
 <ul>
-<li><strong>Legibility</strong>: The user should immediately understand how to use an API. 
-  The documentation should be largely unnecessary. The meaning of arguments
-  should be obvious. The return values of function/methods should be obvious.</li>
-<li><strong>State Simplicity</strong>: The user should immediately understand the state 
-  lifetime of an API. There should be no hidden caching behavior. A user should
-  be able to deallocate state on demand.</li>
-<li><strong>Interoperability</strong>: The user should immediately understand how to use 
-  library function/class with other functions/classes even outside of the given
-  library.</li>
+<li><strong>Legibility</strong>: Users should understand how to utilize an API immediately. The meaning of arguments and return values should be obvious, requiring minimal documentation.</li>
+<li><strong>State Simplicity</strong>: Users should readily comprehend the state's lifetime within an API. There should be no hidden caching behavior, allowing users to deallocate state on demand.</li>
+<li><strong>Interoperability</strong>: Users should immediately understand how to utilize library functions/classes with functions/classes from other libraries, even outside of the given library.</li>
 </ul>
 <h2 id="example-libraries">Example Libraries<a class="headerlink" href="#example-libraries" title="Permanent link">&para;</a></h2>
-<p>The gold standard for a good python library is the <a href="https://docs.python.org/3/library/">python standard library</a>. 
-This is a library that follows a consistent style and uses patterns that make it 
-extremely easy to use.</p>
-<p>The third party libraries <a href="https://docs.scipy.org/doc/numpy/">numpy</a> and <a href="https://scikit-learn.org/stable/modules/classes.html">sklearn</a> have vastly different design 
-patterns but they both manage to make their APIs very easy to understand. Their 
-consistent interfaces allow users to quickly understand the full scope of the 
-library.</p>
 <ul>
-<li>
-<p><a href="https://docs.scipy.org/doc/numpy/">numpy</a>: A function-oriented library which exposes one primary class and many 
-    functions.</p>
-<p>For <code>numpy</code>, each function exposed through the API almost always takes a
-<code>np.ndarray</code> as the first argument and returns an <code>np.ndarray</code> as its 
-output. This means that to use the vast array of functions in the library, 
-only one object type is necessary to understand.</p>
-</li>
-<li>
-<p><a href="https://scikit-learn.org/stable/modules/classes.html">sklearn</a>: An object-oriented library which exposes many model classes.</p>
-<p>For <code>sklearn</code> each object exposed through the API inherits from a small 
-subset of base classes with well-defined methods. Almost all <code>sklearn</code> 
-objects have a <code>fit(X, y)</code> method and a <code>predict(X)</code> method. This makes 
-most <code>sklearn</code> objects interchangeable within the user application code 
-since their APIs are the same.</p>
-</li>
+<li><strong>Python Standard Library</strong>: This library embodies a consistent style and uses patterns that make it very user-friendly.</li>
+<li><strong>NumPy</strong>: This function-oriented library exposes one primary class and numerous functions. For most <code>numpy</code> functions, the first argument is typically a <code>np.ndarray</code>, and the output is also a <code>np.ndarray</code>. This means that understanding the vast array of functions in the library only necessitates familiarity with one object type.</li>
+<li><strong>Scikit-learn</strong>: This object-oriented library exposes many model classes. Most <code>scikit-learn</code> objects inherit from a small subset of base classes with well-defined methods. Nearly all <code>scikit-learn</code> objects have a <code>fit(X, y)</code> method and a <code>predict(X)</code> method. This consistency allows most scikit-learn objects to be interchangeable within user application code.</li>
 </ul>
 <p>The libraries mentioned above are all heavily used within data science code
 and they follow design patterns that we can learn from. We can derive a base 
 set of guidelines from the patterns we see in these interfaces.</p>
-<h2 id="guidelines">Guidelines<a class="headerlink" href="#guidelines" title="Permanent link">&para;</a></h2>
-<p>The following guidelines are principals which you should try to adhere to
-when designing an API but not absolute strict rules. There are always exceptions
-to the following cases:</p>
+<h2 id="design-guidelines">Design Guidelines<a class="headerlink" href="#design-guidelines" title="Permanent link">&para;</a></h2>
+<p>These guidelines are principles to strive for when designing an API, but not absolute rules. Exceptions exist:</p>
 <ol>
 <li><a href="#namespace">Use a flat namespace for packages/modules.</a></li>
 <li><a href="#types">Use primitive types in function/method interfaces.</a><ul>
@@ -992,52 +983,50 @@ namespace.</p>
 <div class="admonition success">
 <p class="admonition-title">Use</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">my_library</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">my_library</span><span class="o">.</span><span class="n">my_function</span><span class="p">()</span>
-<span class="n">container</span> <span class="o">=</span> <span class="n">my_library</span><span class="o">.</span><span class="n">MyClass</span><span class="p">()</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">my_library</span><span class="o">.</span><span class="n">submodule1</span><span class="o">.</span><span class="n">function1</span><span class="p">()</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">my_library</span><span class="o">.</span><span class="n">submodule1</span><span class="o">.</span><span class="n">Class1</span><span class="p">()</span>
+
+<span class="n">result2</span> <span class="o">=</span> <span class="n">my_library</span><span class="o">.</span><span class="n">submodule2</span><span class="o">.</span><span class="n">function2</span><span class="p">()</span>
+<span class="n">obj2</span> <span class="o">=</span> <span class="n">my_library</span><span class="o">.</span><span class="n">submodule2</span><span class="o">.</span><span class="n">Class2</span><span class="p">()</span>
 </code></pre></div>
 </div>
 <div class="admonition fail">
 <p class="admonition-title">Avoid</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">my_library.my_submodule</span> <span class="kn">import</span> <span class="n">my_function</span><span class="p">,</span> <span class="n">MyClass</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">my_function</span><span class="p">()</span>
-<span class="n">container</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">my_library.submodule1</span> <span class="kn">import</span> <span class="n">function</span> <span class="k">as</span> <span class="n">function1</span><span class="p">,</span> <span class="n">Class1</span>
+<span class="kn">from</span> <span class="nn">my_library.submodule2</span> <span class="kn">import</span> <span class="n">function</span> <span class="k">as</span> <span class="n">function2</span><span class="p">,</span> <span class="n">Class2</span>
 
-<span class="kn">from</span> <span class="nn">my_library</span> <span class="kn">import</span> <span class="n">my_submodule</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">my_submodule</span><span class="o">.</span><span class="n">my_function</span><span class="p">()</span>
-<span class="n">container</span> <span class="o">=</span> <span class="n">my_submodule</span><span class="o">.</span><span class="n">MyClass</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">function1</span><span class="p">()</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">Class1</span><span class="p">()</span>
+
+<span class="n">result2</span> <span class="o">=</span> <span class="n">function2</span><span class="p">()</span>
+<span class="n">obj2</span> <span class="o">=</span> <span class="n">Class2</span><span class="p">()</span>
 </code></pre></div>
 </div>
 <p>An example of a library that does this extremely well is <a href="https://docs.scipy.org/doc/numpy/">numpy</a>.</p>
 <h3 id="types">Use primitive types in function/method interfaces<a class="headerlink" href="#types" title="Permanent link">&para;</a></h3>
-<p>The following section describes how to best write the interface of a function or
-class. The interface of a function/method refers to the types of the arguments 
-and return values.</p>
-<p>To model ourselves after the standard library, attempt to always use functions
-which consume primitive types on the arguments and as return types (<code>str</code>, 
-<code>float</code>, <code>int</code>, <code>bool</code>). The common case where this is not done is in library 
-oriented code (e.g. <code>numpy</code>, <code>pandas</code>, <code>sklearn</code>, <code>tensorflow</code>, <code>pytorch</code>). In
-many cases this is unavoidable when the logic requires a certain object type.
-Most of the time library-oriented code is avoidable. The use of external library 
-objects becomes a problem in data science codebases because it complicates 
-interfaces of functions/classes and makes them entirely dependent on library
-objects. Unit-testing becomes more difficult when a function/class uses a 
-specialized type (e.g. <code>pd.DataFrame</code>, <code>tf.Tensor</code>). in the interface.</p>
-<p>The approach to writing a function/class method for data science code
-should be as follows:</p>
+<p>The goal is to create simple and intuitive function/method interfaces by primarily using primitive data types (e.g., <code>str</code>, <code>int</code>, <code>float</code>, <code>bool</code>). This promotes code readability, maintainability, and testability.</p>
+<p>Why Primitive Types?
+- <strong>Clarity</strong>: Functions with clear input and output types are easier to understand and use.
+- <strong>Testability</strong>: Unit tests can be written more easily when dealing with simple data types.
+- <strong>Flexibility</strong>: Functions that rely on primitive types are more adaptable to different use cases.</p>
+<h4 id="when-to-consider-complex-data-structures">When to Consider Complex Data Structures<a class="headerlink" href="#when-to-consider-complex-data-structures" title="Permanent link">&para;</a></h4>
+<p>While primitive types are generally preferred, there are situations where complex data structures like dictionaries or DataFrames might be necessary:</p>
+<ul>
+<li><strong>Large Data Set</strong>s: For performance reasons, using NumPy arrays or Pandas DataFrames can be more efficient.</li>
+<li><strong>Structured Data</strong>: Dictionaries can be useful for representing key-value pairs, especially when the structure is not fixed.</li>
+<li><strong>Domain-Specific Data</strong>: In some cases, using custom data classes might be appropriate to model complex domain-specific concepts.</li>
+</ul>
+<p>However, even when using complex data structures, strive to minimize their complexity and expose a simple interface to the user.</p>
+<h4 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h4>
 <ol>
-<li>Implement the function/method with primitive python types when 
-   possible (<code>str</code>, <code>float</code>, <code>int</code>, <code>bool</code>).</li>
-<li>If the function requires collections, implement the function/method with 
-   native python data structures (<code>dict</code>, <code>list</code>, <code>tuple</code>)</li>
-<li>If the native python data structures are not performant enough, implement
-   the function/method with a <code>numpy</code> oriented interface. For performance and
-   simplicity, avoid <code>pd.Series</code> oriented APIs.</li>
-<li>Finally, if no simpler interface is feasible, use a library-object oriented
-   API (e.g. <code>pd.DataFrame</code>, <code>tf.Tensor</code>). This should always be a last resort.</li>
+<li><strong>Prioritize Primitive Types</strong>: Always consider using primitive types as the primary building blocks of your API.</li>
+<li><strong>Use Type Hints</strong>: Employ Python's type hinting system to improve code readability and catch potential type errors early.</li>
+<li><strong>Minimize Dictionary Usage</strong>: If dictionaries are necessary, consider using namedtuples or custom data classes for structured data.
+4.<strong> Optimize Object Usage</strong>: When working with Object, focus on exposing a simple interface that hides the underlying complexity.</li>
+<li><strong>Handle Errors Gracefully</strong>: Implement robust error handling mechanisms to prevent unexpected behavior and provide informative error messages.
+By following these guidelines, you can create APIs that are both powerful and easy to use.</li>
 </ol>
-<p>The cases where these rules are most often broken are where either dictionaries 
-or DataFrames are present in the interface. The following sections
-describe mechanisms to avoid the use of these when possible.</p>
 <h4 id="dictionary-types">Dictionary-Oriented Interfaces<a class="headerlink" href="#dictionary-types" title="Permanent link">&para;</a></h4>
 <p>A common pattern is to use dictionary arguments and return values. The problem 
 with this kind of design is it often creates an implicit API which is not 
