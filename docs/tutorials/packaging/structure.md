@@ -2,7 +2,7 @@
 
     :white_check_mark: Use [pyproject.toml] for project and dependency management
 
-    :white_check_mark: Use [poetry] for packaging and releasing
+    :white_check_mark: Use [poetry] or [uv] for managing dependency and versions
     
     :white_check_mark: Use [tox] or [nox] for environment automation in testing
 
@@ -25,8 +25,6 @@ for simple projects.
 ├── .gitignore
 ├── .pre-commit-config.yaml
 ├── .python-version
-├── mypy.ini
-├── pytest.ini
 ├── pyproject.toml
 ├── README.md
 └── Makefile
@@ -42,7 +40,7 @@ If your project is rather large, you may opt for the monorepo pattern
 │   ├── common-lib
 │   ├── lib-one
 │   └── lib-one
-├── poetry.lock
+├── uv_or_poerty.lock
 ├── projects
 │   ├── __init__.py
 │   ├── project-one
@@ -70,5 +68,6 @@ project under `/projects` will use path import of the lib under `/libs`.
 [pytest]: https://docs.pytest.org/en/latest/
 [setuptools]: https://setuptools.readthedocs.io/en/latest/
 [setuptools-scm]: https://github.com/pypa/setuptools_scm/
+[uv]: https://docs.astral.sh/uv/
 [poetry]: https://python-poetry.org/
 [pyproject.toml]: https://www.python.org/dev/peps/pep-0518/

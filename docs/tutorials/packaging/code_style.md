@@ -384,8 +384,11 @@ It is recommend to setup ruff in your `pyproject.toml` file.
 
 ```toml
 [tool.ruff]
-line-length = 88
 target-version = "py312"
+
+# Line length configuration
+line-length = 88  # Same as black
+indent-width = 4
 
 [tool.ruff.lint]
 select = [
@@ -417,6 +420,72 @@ select = [
 ignore = [
     "FBT003",  # Ignore a specific false positive or benign issue (boolean-positional-value-in-call)
 ]
+
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+# Files to exclude
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+
+# Same as Black.
+[
+tool.ruff.format
+]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+# Ignore `E402` (import violations) in all `__init__.py` files
+[
+tool.ruff.per-file-ignores
+]
+"__init__.py" = ["E402"]
+"tests/**/*" = ["D100", "D101", "D102", "D103", "D104"]
+
+[
+tool.ruff.mccabe
+]
+max-complexity = 10
+
+[
+tool.ruff.pydocstyle
+]
+convention = "google"  # Follows Google-style docstrings
+
+[
+tool.ruff.pylint
+]
+max-args = 5  # Maximum number of arguments for functions
+max-returns = 5  # Maximum number of return statements
+
+[
+tool.ruff.pycodestyle
+]
+max-doc-length = 88  # Same as line length
 
 [tool.mypy]
 files = ["your_modules", "tests"]
