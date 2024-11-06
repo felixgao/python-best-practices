@@ -13,7 +13,7 @@
 
 # Multi-Processing
 
-Due to the infamous python GIL, when you need more CPU power to crunch some data, multi-processing is the way to go.   Python has a built-in multiprocessing library that make this feature avaiable out of the box. 
+Due to the infamous python GIL (Python 3.13 have flags to disable it in experiment), when you need more CPU power to crunch some data, multi-processing is the way to go.   Python has a built-in multiprocessing library that make this feature avaiable out of the box. 
 
 ## Multiprocessing library
 
@@ -39,6 +39,50 @@ Python have some capabilities build-in for this.  You can use [shared_memory] mo
 > As mentioned above, when doing concurrent programming it is usually best to avoid using shared state as far as possible. This is particularly true when using multiple processes.
 >
 > However, if you really do need to use some shared data then multiprocessing provides a couple of ways of doing so.
+
+Below is an example program that divide the image into smaller chunks and process each chunk in separate process using shared memory, then combine the result.
+
+```python
+import multiprocessing as mp
+import numpy as np
+from PIL import Image
+
+def process_chunk(shared_array, start, end):
+    # Access the chunk from the shared array
+    chunk = shared_array[start:end]
+
+    # Simulate image processing: invert colors
+    chunk = 255 - chunk
+
+    # Write the processed chunk back to the shared array
+    shared_array[start:end] = chunk
+
+if __name__ == '__main__':
+    # Load a large image
+    img = np.array(Image.open('large_image.jpg'))
+
+    # Create a shared memory block for the image
+    shared_img = mp.Array('B', img.flatten())
+
+    # Create multiple processes
+    num_processes = 4
+    chunk_size = len(img.flatten()) // num_processes
+    processes = []
+    for i in range(num_processes):
+        start = i * chunk_size
+        end = (i + 1) * chunk_size
+        p = mp.Process(target=process_chunk, args=(shared_img, start, end))
+        processes.append(p)
+        p.start()
+
+    # Wait for all processes to finish
+    for p in processes:
+        p.join()
+
+    # Convert the shared array back to an image
+    result_img = np.frombuffer(shared_img.get_obj()).reshape(img.shape)
+    Image.fromarray(result_img).save('processed_image.jpg')
+```
 
 
 ### Numpy multiprocessing
