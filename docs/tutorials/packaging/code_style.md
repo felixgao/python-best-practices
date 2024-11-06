@@ -387,8 +387,16 @@ It is recommend to setup ruff in your `pyproject.toml` file.
 target-version = "py312"
 
 # Line length configuration
-line-length = 88  # Same as black
+line-length = 100  # Black default to 88 
 indent-width = 4
+
+# Same as Black.
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+docstring-code-format = true
+line-ending = "auto"
 
 [tool.ruff.lint]
 select = [
@@ -450,42 +458,24 @@ exclude = [
     "venv",
 ]
 
-# Same as Black.
-[
-tool.ruff.format
-]
-quote-style = "double"
-indent-style = "space"
-skip-magic-trailing-comma = false
-line-ending = "auto"
 
+[tool.ruff.lint.per-file-ignores]
 # Ignore `E402` (import violations) in all `__init__.py` files
-[
-tool.ruff.per-file-ignores
-]
 "__init__.py" = ["E402"]
 "tests/**/*" = ["D100", "D101", "D102", "D103", "D104"]
 
-[
-tool.ruff.mccabe
-]
+[tool.ruff.lint.mccabe]
 max-complexity = 10
 
-[
-tool.ruff.pydocstyle
-]
+[tool.ruff.lint.pydocstyle]
 convention = "google"  # Follows Google-style docstrings
 
-[
-tool.ruff.pylint
-]
+[tool.ruff.lint.pylint]
 max-args = 5  # Maximum number of arguments for functions
 max-returns = 5  # Maximum number of return statements
 
-[
-tool.ruff.pycodestyle
-]
-max-doc-length = 88  # Same as line length
+[tool.ruff.lint.pycodestyle]
+max-doc-length = 100  # Same as line length
 
 [tool.mypy]
 files = ["your_modules", "tests"]
