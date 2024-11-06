@@ -573,7 +573,7 @@
 <div class="admonition summary">
 <p class="admonition-title">Summary</p>
 <p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use <a href="https://www.python.org/dev/peps/pep-0518/">pyproject.toml</a> for project and dependency management</p>
-<p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use <a href="https://python-poetry.org/">poetry</a> for packaging and releasing</p>
+<p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use <a href="https://python-poetry.org/">poetry</a> or <a href="https://docs.astral.sh/uv/">uv</a> for managing dependency and versions</p>
 <p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use <a href="https://tox.readthedocs.io/">tox</a> or <a href="https://nox.readthedocs.io/">nox</a> for environment automation in testing</p>
 <p><img alt="✅" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/2705.svg" title=":white_check_mark:" /> Use <a href="https://docs.pytest.org/en/latest/">pytest</a> for testing framework</p>
 <p><img alt="❌" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/274c.svg" title=":x:" /> Avoid deeply nested namespaces (e.g. Java-style)</p>
@@ -589,8 +589,6 @@
 ├── .gitignore
 ├── .pre-commit-config.yaml
 ├── .python-version
-├── mypy.ini
-├── pytest.ini
 ├── pyproject.toml
 ├── README.md
 └── Makefile
@@ -602,7 +600,7 @@
 │   ├── common-lib
 │   ├── lib-one
 │   └── lib-one
-├── poetry.lock
+├── uv_or_poerty.lock
 ├── projects
 │   ├── __init__.py
 │   ├── project-one
