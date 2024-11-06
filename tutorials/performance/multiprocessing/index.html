@@ -773,7 +773,7 @@
 <p><img alt="❌" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/274c.svg" title=":x:" /> Avoid Using multiprocessing for IO-bound tasks.</p>
 </div>
 <h1 id="multi-processing">Multi-Processing<a class="headerlink" href="#multi-processing" title="Permanent link">&para;</a></h1>
-<p>Due to the infamous python GIL, when you need more CPU power to crunch some data, multi-processing is the way to go.   Python has a built-in multiprocessing library that make this feature avaiable out of the box. </p>
+<p>Due to the infamous python GIL (Python 3.13 have flags to disable it in experiment), when you need more CPU power to crunch some data, multi-processing is the way to go.   Python has a built-in multiprocessing library that make this feature avaiable out of the box. </p>
 <h2 id="multiprocessing-library">Multiprocessing library<a class="headerlink" href="#multiprocessing-library" title="Permanent link">&para;</a></h2>
 <p>Let's take a look of the basic example of using multiprocessing in python.</p>
 <p><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">multiprocessing</span>
@@ -792,6 +792,47 @@ with this example you can now utitlize more CPU cores to do CPU bound tasks.</p>
 <p>As mentioned above, when doing concurrent programming it is usually best to avoid using shared state as far as possible. This is particularly true when using multiple processes.</p>
 <p>However, if you really do need to use some shared data then multiprocessing provides a couple of ways of doing so.</p>
 </blockquote>
+<p>Below is an example program that divide the image into smaller chunks and process each chunk in separate process using shared memory, then combine the result.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">multiprocessing</span> <span class="k">as</span> <span class="nn">mp</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="k">def</span> <span class="nf">process_chunk</span><span class="p">(</span><span class="n">shared_array</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+    <span class="c1"># Access the chunk from the shared array</span>
+    <span class="n">chunk</span> <span class="o">=</span> <span class="n">shared_array</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+
+    <span class="c1"># Simulate image processing: invert colors</span>
+    <span class="n">chunk</span> <span class="o">=</span> <span class="mi">255</span> <span class="o">-</span> <span class="n">chunk</span>
+
+    <span class="c1"># Write the processed chunk back to the shared array</span>
+    <span class="n">shared_array</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span> <span class="o">=</span> <span class="n">chunk</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># Load a large image</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;large_image.jpg&#39;</span><span class="p">))</span>
+
+    <span class="c1"># Create a shared memory block for the image</span>
+    <span class="n">shared_img</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+
+    <span class="c1"># Create multiple processes</span>
+    <span class="n">num_processes</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">chunk_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span> <span class="o">//</span> <span class="n">num_processes</span>
+    <span class="n">processes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_processes</span><span class="p">):</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">chunk_size</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">chunk_size</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">process_chunk</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">shared_img</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+        <span class="n">processes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c1"># Wait for all processes to finish</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">processes</span><span class="p">:</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+    <span class="c1"># Convert the shared array back to an image</span>
+    <span class="n">result_img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">shared_img</span><span class="o">.</span><span class="n">get_obj</span><span class="p">())</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">result_img</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;processed_image.jpg&#39;</span><span class="p">)</span>
+</code></pre></div>
 <h3 id="numpy-multiprocessing">Numpy multiprocessing<a class="headerlink" href="#numpy-multiprocessing" title="Permanent link">&para;</a></h3>
 <p>Often we uses <a href="https://numpy.org/">NumPy</a> arrays to represent image or video data.  This is a great candidate for multiprocessing.  Everything can be done with the build-in <a href="https://docs.python.org/3/library/multiprocessing.shared_memory.html#module-multiprocessing.shared_memory">shared_memory</a> module above, but the <a href="https://pypi.org/project/SharedArray/">SharedArray</a> library it is a wrapper around <code>shm_open</code>, <code>mmap</code> and friends function in C with python binding to makes this more user friendly when working with numpy. </p>
 <p>SharedArray has a few key functions:</p>
