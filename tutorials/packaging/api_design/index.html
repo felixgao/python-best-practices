@@ -8,8 +8,15 @@
       
       
       
+      
+        <link rel="prev" href="../code_style/">
+      
+      
+        <link rel="next" href="../anti_patterns/">
+      
+      
       <link rel="icon" href="../../../assets/python.svg">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.44">
     
     
       
@@ -17,14 +24,17 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.1d29e8d0.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.0253249f.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
-        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
       
       
+
+
     
+    
+      
     
     
       
@@ -36,10 +46,11 @@
       
     
     
-    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
+    
     
     
   </head>
@@ -54,9 +65,6 @@
     
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="yello">
   
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -76,7 +84,9 @@
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../../.." title="Best Python Practices" class="md-header__button md-logo" aria-label="Best Python Practices" data-md-component="logo">
       
@@ -84,7 +94,8 @@
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
@@ -103,19 +114,26 @@
       </div>
     </div>
     
-      <form class="md-header__option" data-md-component="palette">
-        
-          
-          
-          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="yello"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
-          
-        
-      </form>
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="yello"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
       <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
       </label>
       <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
@@ -123,24 +141,27 @@
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
-        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </nav>
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list" role="presentation"></ol>
         </div>
       </div>
     </div>
@@ -152,7 +173,7 @@
         <a href="https://github.com/felixgao/python-best-practices" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     best-python-practices
@@ -182,6 +203,7 @@
                     
 
 
+
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../../.." title="Best Python Practices" class="md-nav__button md-logo" aria-label="Best Python Practices" data-md-component="logo">
@@ -196,7 +218,7 @@
       <a href="https://github.com/felixgao/python-best-practices" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     best-python-practices
@@ -208,14 +230,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../.." class="md-nav__link">
-        Home
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
       </a>
     </li>
   
@@ -223,14 +250,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../../design_patterns/" class="md-nav__link">
-        Design Patterns
+        
+  
+  <span class="md-ellipsis">
+    Design Patterns
+  </span>
+  
+
       </a>
     </li>
   
@@ -238,14 +270,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../../docker/" class="md-nav__link">
-        Docker
+        
+  
+  <span class="md-ellipsis">
+    Docker
+  </span>
+  
+
       </a>
     </li>
   
@@ -253,229 +290,324 @@
     
       
       
-      
-
   
   
     
   
   
+  
+    
+    
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4">
-          Tutorials
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
-        <label class="md-nav__title" for="__nav_4">
-          <span class="md-nav__icon md-icon"></span>
-          Tutorials
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
           
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../" class="md-nav__link">
-        Overview
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     
+    
+    
+    
     <li class="md-nav__item md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_2">
-          Performance
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Performance" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_2">
-          <span class="md-nav__icon md-icon"></span>
-          Performance
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
           
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Performance
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Performance
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../performance/lookup_tables/" class="md-nav__link">
-        Lookup Tables
+        
+  
+  <span class="md-ellipsis">
+    Lookup Tables
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../performance/profiling_tools/" class="md-nav__link">
-        Profiling Tools & Strategy
+        
+  
+  <span class="md-ellipsis">
+    Profiling Tools & Strategy
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../performance/multiprocessing/" class="md-nav__link">
-        Multi-Processing
+        
+  
+  <span class="md-ellipsis">
+    Multi-Processing
+  </span>
+  
+
       </a>
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
 
-            
-          
+              
             
               
+                
   
   
     
   
   
+  
+    
+    
+    
     
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" checked>
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_3">
-          Packaging
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Packaging" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_3">
-          <span class="md-nav__icon md-icon"></span>
-          Packaging
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" checked>
+        
           
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Packaging
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            Packaging
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../structure/" class="md-nav__link">
-        Structure
+        
+  
+  <span class="md-ellipsis">
+    Structure
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../makefile/" class="md-nav__link">
-        Makefile
+        
+  
+  <span class="md-ellipsis">
+    Makefile
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../logging/" class="md-nav__link">
-        Logging
+        
+  
+  <span class="md-ellipsis">
+    Logging
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../code_style/" class="md-nav__link">
-        Code Style
+        
+  
+  <span class="md-ellipsis">
+    Code Style
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
   
   
     
   
   
+  
     <li class="md-nav__item md-nav__item--active">
       
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
         
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          API Design
+          
+  
+  <span class="md-ellipsis">
+    API Design
+  </span>
+  
+
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        API Design
+        
+  
+  <span class="md-ellipsis">
+    API Design
+  </span>
+  
+
       </a>
       
         
@@ -495,21 +627,27 @@
       
         <li class="md-nav__item">
   <a href="#goals-of-a-good-api" class="md-nav__link">
-    Goals of a Good API
+    <span class="md-ellipsis">
+      Goals of a Good API
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#example-libraries" class="md-nav__link">
-    Example Libraries
+    <span class="md-ellipsis">
+      Example Libraries
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#design-guidelines" class="md-nav__link">
-    Design Guidelines
+    <span class="md-ellipsis">
+      Design Guidelines
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Design Guidelines">
@@ -517,14 +655,18 @@
         
           <li class="md-nav__item">
   <a href="#namespace" class="md-nav__link">
-    Use a flat namespace for packages/modules
+    <span class="md-ellipsis">
+      Use a flat namespace for packages/modules
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#types" class="md-nav__link">
-    Use primitive types in function/method interfaces
+    <span class="md-ellipsis">
+      Use primitive types in function/method interfaces
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Use primitive types in function/method interfaces">
@@ -532,21 +674,27 @@
         
           <li class="md-nav__item">
   <a href="#when-to-consider-complex-data-structures" class="md-nav__link">
-    When to Consider Complex Data Structures
+    <span class="md-ellipsis">
+      When to Consider Complex Data Structures
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#best-practices" class="md-nav__link">
-    Best Practices
+    <span class="md-ellipsis">
+      Best Practices
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#dictionary-types" class="md-nav__link">
-    Dictionary-Oriented Interfaces
+    <span class="md-ellipsis">
+      Dictionary-Oriented Interfaces
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Dictionary-Oriented Interfaces">
@@ -554,14 +702,18 @@
         
           <li class="md-nav__item">
   <a href="#dictionary-arguments" class="md-nav__link">
-    Dictionary Arguments
+    <span class="md-ellipsis">
+      Dictionary Arguments
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#dictionary-returns" class="md-nav__link">
-    Dictionary Returns
+    <span class="md-ellipsis">
+      Dictionary Returns
+    </span>
   </a>
   
 </li>
@@ -573,7 +725,9 @@
         
           <li class="md-nav__item">
   <a href="#pandas-types" class="md-nav__link">
-    Pandas-Oriented Interfaces
+    <span class="md-ellipsis">
+      Pandas-Oriented Interfaces
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Pandas-Oriented Interfaces">
@@ -581,14 +735,18 @@
         
           <li class="md-nav__item">
   <a href="#pandas-arguments" class="md-nav__link">
-    Pandas Arguments
+    <span class="md-ellipsis">
+      Pandas Arguments
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#pandas-class-arguments" class="md-nav__link">
-    Pandas Class Arguments
+    <span class="md-ellipsis">
+      Pandas Class Arguments
+    </span>
   </a>
   
 </li>
@@ -605,14 +763,18 @@
         
           <li class="md-nav__item">
   <a href="#kwargs" class="md-nav__link">
-    Avoid variable length keyword arguments (**kwargs)
+    <span class="md-ellipsis">
+      Avoid variable length keyword arguments (**kwargs)
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#classes" class="md-nav__link">
-    Avoid exposing stateful objects
+    <span class="md-ellipsis">
+      Avoid exposing stateful objects
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Avoid exposing stateful objects">
@@ -620,14 +782,18 @@
         
           <li class="md-nav__item">
   <a href="#single-method-classes" class="md-nav__link">
-    Single Method Classes
+    <span class="md-ellipsis">
+      Single Method Classes
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#argument-avoidance" class="md-nav__link">
-    Argument Avoidance
+    <span class="md-ellipsis">
+      Argument Avoidance
+    </span>
   </a>
   
 </li>
@@ -639,14 +805,18 @@
         
           <li class="md-nav__item">
   <a href="#serialization" class="md-nav__link">
-    Minimize disk access and serialization.
+    <span class="md-ellipsis">
+      Minimize disk access and serialization.
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#cohesion-coupling" class="md-nav__link">
-    Cohesion &amp; Coupling
+    <span class="md-ellipsis">
+      Cohesion &amp; Coupling
+    </span>
   </a>
   
 </li>
@@ -663,59 +833,80 @@
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../anti_patterns/" class="md-nav__link">
-        Anti Patterns
+        
+  
+  <span class="md-ellipsis">
+    Anti Patterns
+  </span>
+  
+
       </a>
     </li>
   
 
-            
-          
+              
             
               
+                
+  
   
   
   
     <li class="md-nav__item">
       <a href="../testing/" class="md-nav__link">
-        Testing
+        
+  
+  <span class="md-ellipsis">
+    Testing
+  </span>
+  
+
       </a>
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
 
+              
             
-          
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      
     </li>
   
 
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../../libraries/" class="md-nav__link">
-        Libraries & Tools
+        
+  
+  <span class="md-ellipsis">
+    Libraries & Tools
+  </span>
+  
+
       </a>
     </li>
   
@@ -723,14 +914,19 @@
     
       
       
-      
-
+  
   
   
   
     <li class="md-nav__item">
       <a href="../../../pullrequests/" class="md-nav__link">
-        Pull Requests Etiquette
+        
+  
+  <span class="md-ellipsis">
+    Pull Requests Etiquette
+  </span>
+  
+
       </a>
     </li>
   
@@ -764,21 +960,27 @@
       
         <li class="md-nav__item">
   <a href="#goals-of-a-good-api" class="md-nav__link">
-    Goals of a Good API
+    <span class="md-ellipsis">
+      Goals of a Good API
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#example-libraries" class="md-nav__link">
-    Example Libraries
+    <span class="md-ellipsis">
+      Example Libraries
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#design-guidelines" class="md-nav__link">
-    Design Guidelines
+    <span class="md-ellipsis">
+      Design Guidelines
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Design Guidelines">
@@ -786,14 +988,18 @@
         
           <li class="md-nav__item">
   <a href="#namespace" class="md-nav__link">
-    Use a flat namespace for packages/modules
+    <span class="md-ellipsis">
+      Use a flat namespace for packages/modules
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#types" class="md-nav__link">
-    Use primitive types in function/method interfaces
+    <span class="md-ellipsis">
+      Use primitive types in function/method interfaces
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Use primitive types in function/method interfaces">
@@ -801,21 +1007,27 @@
         
           <li class="md-nav__item">
   <a href="#when-to-consider-complex-data-structures" class="md-nav__link">
-    When to Consider Complex Data Structures
+    <span class="md-ellipsis">
+      When to Consider Complex Data Structures
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#best-practices" class="md-nav__link">
-    Best Practices
+    <span class="md-ellipsis">
+      Best Practices
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#dictionary-types" class="md-nav__link">
-    Dictionary-Oriented Interfaces
+    <span class="md-ellipsis">
+      Dictionary-Oriented Interfaces
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Dictionary-Oriented Interfaces">
@@ -823,14 +1035,18 @@
         
           <li class="md-nav__item">
   <a href="#dictionary-arguments" class="md-nav__link">
-    Dictionary Arguments
+    <span class="md-ellipsis">
+      Dictionary Arguments
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#dictionary-returns" class="md-nav__link">
-    Dictionary Returns
+    <span class="md-ellipsis">
+      Dictionary Returns
+    </span>
   </a>
   
 </li>
@@ -842,7 +1058,9 @@
         
           <li class="md-nav__item">
   <a href="#pandas-types" class="md-nav__link">
-    Pandas-Oriented Interfaces
+    <span class="md-ellipsis">
+      Pandas-Oriented Interfaces
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Pandas-Oriented Interfaces">
@@ -850,14 +1068,18 @@
         
           <li class="md-nav__item">
   <a href="#pandas-arguments" class="md-nav__link">
-    Pandas Arguments
+    <span class="md-ellipsis">
+      Pandas Arguments
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#pandas-class-arguments" class="md-nav__link">
-    Pandas Class Arguments
+    <span class="md-ellipsis">
+      Pandas Class Arguments
+    </span>
   </a>
   
 </li>
@@ -874,14 +1096,18 @@
         
           <li class="md-nav__item">
   <a href="#kwargs" class="md-nav__link">
-    Avoid variable length keyword arguments (**kwargs)
+    <span class="md-ellipsis">
+      Avoid variable length keyword arguments (**kwargs)
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#classes" class="md-nav__link">
-    Avoid exposing stateful objects
+    <span class="md-ellipsis">
+      Avoid exposing stateful objects
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Avoid exposing stateful objects">
@@ -889,14 +1115,18 @@
         
           <li class="md-nav__item">
   <a href="#single-method-classes" class="md-nav__link">
-    Single Method Classes
+    <span class="md-ellipsis">
+      Single Method Classes
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#argument-avoidance" class="md-nav__link">
-    Argument Avoidance
+    <span class="md-ellipsis">
+      Argument Avoidance
+    </span>
   </a>
   
 </li>
@@ -908,14 +1138,18 @@
         
           <li class="md-nav__item">
   <a href="#serialization" class="md-nav__link">
-    Minimize disk access and serialization.
+    <span class="md-ellipsis">
+      Minimize disk access and serialization.
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#cohesion-coupling" class="md-nav__link">
-    Cohesion &amp; Coupling
+    <span class="md-ellipsis">
+      Cohesion &amp; Coupling
+    </span>
   </a>
   
 </li>
@@ -933,14 +1167,14 @@
               </div>
             
           
-          <div class="md-content" data-md-component="content">
-            <article class="md-content__inner md-typeset">
-              
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
                 
-  <a href="https://github.com/felixgao/python-best-practices/edit/master/docs/tutorials/packaging/api_design.md" title="Edit this page" class="md-content__button md-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+                  
 
+  
+  
 
 
 <div class="admonition summary">
@@ -1429,51 +1663,28 @@ Low coupling is when modules are loosely interconnected and isolated from the im
 <p>Coupling is like a knife -- it cuts through the layers and connects multiple facets. It is not just about the number of objects but also the degree of mutual interdependence.</p>
 <p>A good book for this is described in Chapter 10 of <a href="https://livebook.manning.com/book/code-like-a-pro/chapter-10">code like a pro</a> book.</p>
 
-              
-            </article>
-            
-          </div>
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="../code_style/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Code Style" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Code Style
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="../anti_patterns/" class="md-footer__link md-footer__link--next" aria-label="Next: Anti Patterns" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Anti Patterns
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -1491,11 +1702,13 @@ Low coupling is when modules are loosely interconnected and isolated from the im
   
     
     
+    
+    
       
       
     
     <a href="https://github.com/felixgao/python-best-practices/" target="_blank" rel="noopener" title="github.com" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 0c4.42 0 8 3.58 8 8a8.01 8.01 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27s-1.36.09-2 .27c-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8"/></svg>
     </a>
   
 </div>
@@ -1508,10 +1721,12 @@ Low coupling is when modules are loosely interconnected and isolated from the im
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
       
     
   </body>
