@@ -378,7 +378,7 @@ Acceptable Forms:
     ```
 
 
-### Ruff Setup
+## Ruff Setup
 
 It is recommend to setup ruff in your `pyproject.toml` file. 
 

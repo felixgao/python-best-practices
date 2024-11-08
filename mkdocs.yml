@@ -2,6 +2,7 @@ site_name: Best Python Practices
 nav:
   - Home: index.md
   - Design Patterns: design_patterns.md
+  - Docker: docker.md
   - Tutorials:
       - Overview: tutorials.md
       - Performance:
