@@ -385,6 +385,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#use-multi-stage-builds" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Multi-stage Builds
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#use-healthchecks" class="md-nav__link">
     <span class="md-ellipsis">
       Use Healthchecks
@@ -974,6 +983,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#use-multi-stage-builds" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Multi-stage Builds
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#use-healthchecks" class="md-nav__link">
     <span class="md-ellipsis">
       Use Healthchecks
@@ -1176,6 +1194,49 @@ This example changes the base docker to the latest python version and set the en
 <span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;app.py&quot;</span><span class="p">]</span>
 </code></pre></div>
 <p>In the above example we assume <code>requirements.txt</code> is relatively stable only the application code is changing often. Then all of the dependencies installed by the pip command is already cached in the layer that will not need to be re-installed again</p>
+<h3 id="use-multi-stage-builds">Use Multi-stage Builds<a class="headerlink" href="#use-multi-stage-builds" title="Permanent link">&para;</a></h3>
+<p>Take advantage of multi-stage builds to create leaner, more secure Docker images.</p>
+<p>Multi-stage Docker builds allow you to break up your Dockerfiles into several stages. For example, you can have a stage for compiling and building your application, which can then be copied to subsequent stages. Since only the final stage is used to create the image, the dependencies and tools associated with building your application are discarded, leaving a lean and modular production-ready image.</p>
+<div class="highlight"><pre><span></span><code><span class="c"># builder stage</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">python:3.12.2-slim</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="s">builder</span>
+
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+
+<span class="k">ENV</span><span class="w"> </span>PYTHONDONTWRITEBYTECODE<span class="w"> </span><span class="m">1</span>
+<span class="k">ENV</span><span class="w"> </span>PYTHONUNBUFFERED<span class="w"> </span><span class="m">1</span>
+
+<span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--no-install-recommends<span class="w"> </span>gcc
+
+<span class="k">COPY</span><span class="w"> </span>requirements.txt<span class="w"> </span>.
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>wheel<span class="w"> </span>--no-cache-dir<span class="w"> </span>--no-deps<span class="w"> </span>--wheel-dir<span class="w"> </span>/app/wheels<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+
+
+<span class="c"># production stage</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">python:3.12.2-slim</span>
+
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+
+<span class="k">COPY</span><span class="w"> </span>--from<span class="o">=</span>builder<span class="w"> </span>/app/wheels<span class="w"> </span>/wheels
+<span class="k">COPY</span><span class="w"> </span>--from<span class="o">=</span>builder<span class="w"> </span>/app/requirements.txt<span class="w"> </span>.
+
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--no-cache<span class="w"> </span>/wheels/*
+</code></pre></div>
+<p>a Data Science multi-stage docker could looks like</p>
+<div class="highlight"><pre><span></span><code><span class="c"># development stage</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">python:3.12.2</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="s">builder</span>
+
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>wheel<span class="w"> </span>--no-cache-dir<span class="w"> </span>--no-deps<span class="w"> </span>--wheel-dir<span class="w"> </span>/wheels<span class="w"> </span>jupyter<span class="w"> </span>pandas
+
+
+<span class="c"># final stage</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">python:3.12.2-slim</span>
+
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/notebooks</span>
+
+<span class="k">COPY</span><span class="w"> </span>--from<span class="o">=</span>builder<span class="w"> </span>/wheels<span class="w"> </span>/wheels
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--no-cache<span class="w"> </span>/wheels/*
+</code></pre></div>
 <h3 id="use-healthchecks">Use Healthchecks<a class="headerlink" href="#use-healthchecks" title="Permanent link">&para;</a></h3>
 <p>A Docker healthcheck is a useful tool to monitor the health of a container. For long-running training jobs, a custom healthcheck can provide valuable insights into the job's progress and potential issues. This is not limited to the long running tasks, it can be used to attempt to reach an application endpoint or check a process’s status. If the health check command returns a failure due to an application crash, the container is marked as unhealthy. You can then restart the container or stop it and shift traffic to other instances.</p>
 <p><div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">tensorflow/tensorflow:latest</span>
@@ -1235,16 +1296,16 @@ Since python is under 3.13 still have GIL in place. The command above assume you
 <span class="k">FROM</span><span class="w"> </span><span class="s">python:3.12-slim</span>
 
 <span class="c"># Set environment variables for memory optimization</span>
-<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONMALLOC</span><span class="o">=</span>malloc
-<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONMALLOCSTATS</span><span class="o">=</span><span class="m">1</span>
-<span class="k">ENV</span><span class="w"> </span><span class="nv">MALLOC_TRIM_THRESHOLD_</span><span class="o">=</span><span class="m">100000</span>
-<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONHASHSEED</span><span class="o">=</span><span class="m">0</span>
-<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONASYNCIODEBUG</span><span class="o">=</span><span class="m">1</span>
-<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONTRACEMALLOC</span><span class="o">=</span><span class="m">1</span>
-<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONDEVMODE</span><span class="o">=</span><span class="m">1</span>
-<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONMEMORY</span><span class="o">=</span><span class="m">4294967296</span><span class="w">  </span><span class="c"># Set memory limit to 4GB</span>
-<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONGC</span><span class="o">=</span><span class="m">1</span>
-<span class="k">ENV</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">4</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONMALLOC</span><span class="o">=</span>malloc<span class="w">            </span><span class="c"># Use the standard C malloc allocator</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONMALLOCSTATS</span><span class="o">=</span><span class="m">1</span><span class="w">            </span><span class="c"># Enable detailed memory allocation statistics</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">MALLOC_TRIM_THRESHOLD_</span><span class="o">=</span><span class="m">100000</span><span class="w">  </span><span class="c"># Set the minimum block size to trigger memory trimming</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONHASHSEED</span><span class="o">=</span><span class="m">0</span><span class="w">               </span><span class="c"># Set a fixed hash seed for deterministic behavior</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONASYNCIODEBUG</span><span class="o">=</span><span class="m">1</span><span class="w">           </span><span class="c"># Enable debugging for asyncio</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONTRACEMALLOC</span><span class="o">=</span><span class="m">1</span><span class="w">            </span><span class="c"># Enable tracing of memory allocations</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONDEVMODE</span><span class="o">=</span><span class="m">1</span><span class="w">                </span><span class="c"># Enable Python&#39;s debug mode</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONMEMORY</span><span class="o">=</span><span class="m">4294967296</span><span class="w">        </span><span class="c"># Set a 4GB memory limit for Python</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONGC</span><span class="o">=</span><span class="m">1</span><span class="w">                     </span><span class="c"># Enable garbage collection</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">4</span><span class="w">              </span><span class="c"># Set the number of OpenMP threads to 4</span>
 
 ...
 
