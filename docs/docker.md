@@ -226,6 +226,7 @@ CMD ["python", "app.py"]
 The above is just an example, your usage may vary.
 
 Here's a breakdown of the environment variables used:
+
 - PYTHONMALLOC=malloc: Uses the standard C malloc instead of Python's custom allocator.
 - PYTHONMALLOCSTATS=1: Prints memory allocation statistics.
 - MALLOC_TRIM_THRESHOLD_=100000: Sets a lower threshold for releasing memory back to the system.
