@@ -117,6 +117,57 @@ CMD ["python", "app.py"]
 
 In the above example we assume `requirements.txt` is relatively stable only the application code is changing often. Then all of the dependencies installed by the pip command is already cached in the layer that will not need to be re-installed again
 
+
+### Use Multi-stage Builds
+Take advantage of multi-stage builds to create leaner, more secure Docker images.
+
+Multi-stage Docker builds allow you to break up your Dockerfiles into several stages. For example, you can have a stage for compiling and building your application, which can then be copied to subsequent stages. Since only the final stage is used to create the image, the dependencies and tools associated with building your application are discarded, leaving a lean and modular production-ready image.
+
+```dockerfile
+# builder stage
+FROM python:3.12.2-slim as builder
+
+WORKDIR /app
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends gcc
+
+COPY requirements.txt .
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.txt
+
+
+# production stage
+FROM python:3.12.2-slim
+
+WORKDIR /app
+
+COPY --from=builder /app/wheels /wheels
+COPY --from=builder /app/requirements.txt .
+
+RUN pip install --no-cache /wheels/*
+```
+
+a Data Science multi-stage docker could looks like
+
+```dockerfile
+# development stage
+FROM python:3.12.2 as builder
+
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /wheels jupyter pandas
+
+
+# final stage
+FROM python:3.12.2-slim
+
+WORKDIR /notebooks
+
+COPY --from=builder /wheels /wheels
+RUN pip install --no-cache /wheels/*
+```
+
 ###  Use Healthchecks
 
 A Docker healthcheck is a useful tool to monitor the health of a container. For long-running training jobs, a custom healthcheck can provide valuable insights into the job's progress and potential issues. This is not limited to the long running tasks, it can be used to attempt to reach an application endpoint or check a process’s status. If the health check command returns a failure due to an application crash, the container is marked as unhealthy. You can then restart the container or stop it and shift traffic to other instances.
@@ -207,16 +258,16 @@ Since python is under 3.13 still have GIL in place. The command above assume you
 FROM python:3.12-slim
 
 # Set environment variables for memory optimization
-ENV PYTHONMALLOC=malloc
-ENV PYTHONMALLOCSTATS=1
-ENV MALLOC_TRIM_THRESHOLD_=100000
-ENV PYTHONHASHSEED=0
-ENV PYTHONASYNCIODEBUG=1
-ENV PYTHONTRACEMALLOC=1
-ENV PYTHONDEVMODE=1
-ENV PYTHONMEMORY=4294967296  # Set memory limit to 4GB
-ENV PYTHONGC=1
-ENV OMP_NUM_THREADS=4
+ENV PYTHONMALLOC=malloc            # Use the standard C malloc allocator
+ENV PYTHONMALLOCSTATS=1            # Enable detailed memory allocation statistics
+ENV MALLOC_TRIM_THRESHOLD_=100000  # Set the minimum block size to trigger memory trimming
+ENV PYTHONHASHSEED=0               # Set a fixed hash seed for deterministic behavior
+ENV PYTHONASYNCIODEBUG=1           # Enable debugging for asyncio
+ENV PYTHONTRACEMALLOC=1            # Enable tracing of memory allocations
+ENV PYTHONDEVMODE=1                # Enable Python's debug mode
+ENV PYTHONMEMORY=4294967296        # Set a 4GB memory limit for Python
+ENV PYTHONGC=1                     # Enable garbage collection
+ENV OMP_NUM_THREADS=4              # Set the number of OpenMP threads to 4
 
 ...
 
