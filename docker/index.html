@@ -1,0 +1,1131 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/python.svg">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>Docker - Best Python Practices</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="yello">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#docker-best-practice" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Best Python Practices" class="md-header__button md-logo" aria-label="Best Python Practices" data-md-component="logo">
+      
+  <img src="../assets/python.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Best Python Practices
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Docker
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="yello"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/felixgao/python-best-practices" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    best-python-practices
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Best Python Practices" class="md-nav__button md-logo" aria-label="Best Python Practices" data-md-component="logo">
+      
+  <img src="../assets/python.svg" alt="logo">
+
+    </a>
+    Best Python Practices
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/felixgao/python-best-practices" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    best-python-practices
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design_patterns/" class="md-nav__link">
+        Design Patterns
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Docker
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Docker
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#general-best-practices" class="md-nav__link">
+    General Best Practices
+  </a>
+  
+    <nav class="md-nav" aria-label="General Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-officil-base-images" class="md-nav__link">
+    Use Officil Base Images
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-a-dockerignore-file" class="md-nav__link">
+    Use a .dockerignore File
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minimize-the-number-of-layers" class="md-nav__link">
+    Minimize the Number of Layers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-as-non-root-user" class="md-nav__link">
+    Run as Non-Root User
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-enviornment-variables-and-arguments" class="md-nav__link">
+    Use Enviornment Variables and Arguments
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimize-caching" class="md-nav__link">
+    Optimize Caching
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-healthchecks" class="md-nav__link">
+    Use Healthchecks
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ml-docker-container-best-practice" class="md-nav__link">
+    ML Docker Container Best Practice
+  </a>
+  
+    <nav class="md-nav" aria-label="ML Docker Container Best Practice">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-gpu-enabled-base-images" class="md-nav__link">
+    Use GPU-enabled Base Images.
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-ml-specific-libraries" class="md-nav__link">
+    Install ML-specific libraries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manage-large-model-files-or-datasets" class="md-nav__link">
+    Manage Large Model Files or datasets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimize-for-inference" class="md-nav__link">
+    Optimize for Inference
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-control-for-models-and-data" class="md-nav__link">
+    Version Control for Models and Data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-appropriate-concurrency" class="md-nav__link">
+    Use Appropriate Concurrency
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimize-memory" class="md-nav__link">
+    Optimize memory
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Tutorials
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Tutorials" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorials
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2">
+          Performance
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Performance" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          Performance
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/performance/lookup_tables/" class="md-nav__link">
+        Lookup Tables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/performance/profiling_tools/" class="md-nav__link">
+        Profiling Tools & Strategy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/performance/multiprocessing/" class="md-nav__link">
+        Multi-Processing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3">
+          Packaging
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Packaging" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          Packaging
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/packaging/structure/" class="md-nav__link">
+        Structure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/packaging/makefile/" class="md-nav__link">
+        Makefile
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/packaging/logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/packaging/code_style/" class="md-nav__link">
+        Code Style
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/packaging/api_design/" class="md-nav__link">
+        API Design
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/packaging/anti_patterns/" class="md-nav__link">
+        Anti Patterns
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/packaging/testing/" class="md-nav__link">
+        Testing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../libraries/" class="md-nav__link">
+        Libraries & Tools
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pullrequests/" class="md-nav__link">
+        Pull Requests Etiquette
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#general-best-practices" class="md-nav__link">
+    General Best Practices
+  </a>
+  
+    <nav class="md-nav" aria-label="General Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-officil-base-images" class="md-nav__link">
+    Use Officil Base Images
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-a-dockerignore-file" class="md-nav__link">
+    Use a .dockerignore File
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minimize-the-number-of-layers" class="md-nav__link">
+    Minimize the Number of Layers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-as-non-root-user" class="md-nav__link">
+    Run as Non-Root User
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-enviornment-variables-and-arguments" class="md-nav__link">
+    Use Enviornment Variables and Arguments
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimize-caching" class="md-nav__link">
+    Optimize Caching
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-healthchecks" class="md-nav__link">
+    Use Healthchecks
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ml-docker-container-best-practice" class="md-nav__link">
+    ML Docker Container Best Practice
+  </a>
+  
+    <nav class="md-nav" aria-label="ML Docker Container Best Practice">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-gpu-enabled-base-images" class="md-nav__link">
+    Use GPU-enabled Base Images.
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-ml-specific-libraries" class="md-nav__link">
+    Install ML-specific libraries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manage-large-model-files-or-datasets" class="md-nav__link">
+    Manage Large Model Files or datasets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimize-for-inference" class="md-nav__link">
+    Optimize for Inference
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-control-for-models-and-data" class="md-nav__link">
+    Version Control for Models and Data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-appropriate-concurrency" class="md-nav__link">
+    Use Appropriate Concurrency
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimize-memory" class="md-nav__link">
+    Optimize memory
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/felixgao/python-best-practices/edit/master/docs/docker.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+<h1 id="docker-best-practice">Docker Best Practice<a class="headerlink" href="#docker-best-practice" title="Permanent link">&para;</a></h1>
+<p>In the realm of machine learning, reproducibility is paramount. Ensuring that experiments can be replicated reliably across different environments is crucial for scientific rigor and collaboration. Docker, a powerful containerization tool, has emerged as a vital component in modern ML workflows. By encapsulating applications and their dependencies into standardized containers, Docker provides a consistent and portable environment for ML development, deployment, and collaboration.</p>
+<h2 id="general-best-practices">General Best Practices<a class="headerlink" href="#general-best-practices" title="Permanent link">&para;</a></h2>
+<h3 id="use-officil-base-images">Use Officil Base Images<a class="headerlink" href="#use-officil-base-images" title="Permanent link">&para;</a></h3>
+<p>Start with official Python images to ensure compatibility and security.  It is important to use the latest Python version to ensure the system is up to date. </p>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.12-slim</span>
+</code></pre></div>
+<h3 id="use-a-dockerignore-file">Use a .dockerignore File<a class="headerlink" href="#use-a-dockerignore-file" title="Permanent link">&para;</a></h3>
+<p>Exclude unnecessary files from the build context.</p>
+<div class="highlight"><pre><span></span><code>__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env
+pip-log.txt
+pip-delete-this-directory.txt
+.tox
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.git
+.mypy_cache
+.pytest_cache
+.hypothesis
+</code></pre></div>
+<h3 id="minimize-the-number-of-layers">Minimize the Number of Layers<a class="headerlink" href="#minimize-the-number-of-layers" title="Permanent link">&para;</a></h3>
+<p>Combine related commands into a single RUN instruction to reduce the number of layers and image size.
+Intead of running the <code>RUN</code> command on every input, you can combine them to create a single layer. </p>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">ubuntu:20.04</span>
+<span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>python3<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>python3-pip<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/apt/lists/*
+</code></pre></div>
+<h3 id="run-as-non-root-user">Run as Non-Root User<a class="headerlink" href="#run-as-non-root-user" title="Permanent link">&para;</a></h3>
+<p>Container escaping is possible due to bugs in the code/host.  Create and use a non-root user for better security. </p>
+<div class="highlight"><pre><span></span><code><span class="k">RUN</span><span class="w"> </span>adduser<span class="w"> </span>--disabled-password<span class="w"> </span>--gecos<span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span>appuser
+<span class="k">USER</span><span class="w"> </span><span class="s">appuser</span>
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/home/appuser/app</span>
+</code></pre></div>
+<h3 id="use-enviornment-variables-and-arguments">Use Enviornment Variables and Arguments<a class="headerlink" href="#use-enviornment-variables-and-arguments" title="Permanent link">&para;</a></h3>
+<p>Environment variables and arguments in Dockerfiles are powerful tools for creating flexible and customizable container images. They allow you to dynamically configure your application's behavior without rebuilding the image. This is particularly useful in machine learning workflows where you may need to experiment with different hyperparameters, datasets, or models.</p>
+<div class="highlight"><pre><span></span><code><span class="c"># Build-time argument for the base image</span>
+<span class="k">ARG</span><span class="w"> </span><span class="nv">PYTHON_VERSION</span><span class="o">=</span><span class="m">3</span>.11-slim-buster
+
+<span class="c"># Base image</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">python:${PYTHON_VERSION}</span>
+
+<span class="c"># Build-time argument for the dataset URL</span>
+<span class="k">ARG</span><span class="w"> </span><span class="nv">DATASET_URL</span><span class="o">=</span>https://example.com/dataset.zip
+
+<span class="k">ARG</span><span class="w"> </span><span class="nv">MODEL_ENV</span><span class="o">=</span><span class="nb">test</span>
+<span class="c"># Environment variables</span>
+<span class="k">ENV</span><span class="w"> </span>PYTHONUNBUFFERED<span class="w"> </span><span class="m">1</span>
+<span class="k">ENV</span><span class="w"> </span>MODEL_DIR<span class="w"> </span>/model
+<span class="k">ENV</span><span class="w"> </span>DATASET_DIR<span class="w"> </span>/data
+<span class="k">ENV</span><span class="w"> </span><span class="nv">MODEL_ENV</span><span class="o">=</span><span class="nv">$MODEL_ENV</span>
+
+<span class="c"># Set the working directory</span>
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+
+<span class="c"># Download and extract the dataset (using a script)</span>
+<span class="k">RUN</span><span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;ds_loader -q </span><span class="nv">$DATASET_URL</span><span class="s2"> &amp;&amp; unzip dataset.zip -d </span><span class="nv">$DATASET_DIR</span><span class="s2">&quot;</span>
+
+<span class="c"># Install dependencies</span>
+<span class="k">COPY</span><span class="w"> </span>requirements.txt<span class="w"> </span>requirements.txt
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+
+<span class="c"># Copy the application code</span>
+<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+
+<span class="c"># Define the command to run the training script</span>
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;train.py&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--data_dir&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;$DATASET_DIR&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--model_dir&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;$MODEL_DIR&quot;</span><span class="p">]</span>
+</code></pre></div>
+<p>In the above example. The user could control the version of the <code>PYTHON_VERSION</code> and the <code>MODEL_ENV</code> parameter to alter the code behavior in <code>train.py</code></p>
+<p>an example use would be</p>
+<p><code>docker build --build-arg PYTHON_VERSION=latest --build-arg MODEL_ENV=production --no-cache .</code>
+This example changes the base docker to the latest python version and set the environment variable to production.</p>
+<h3 id="optimize-caching">Optimize Caching<a class="headerlink" href="#optimize-caching" title="Permanent link">&para;</a></h3>
+<p>Order Dockerfile instructions from least to most frequently changing to optimize the caching.  This will result in a faster docker build when changes needs to happen.</p>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.12-slim</span>
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+<span class="k">COPY</span><span class="w"> </span>requirements.txt<span class="w"> </span>.
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--no-cache-dir<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;app.py&quot;</span><span class="p">]</span>
+</code></pre></div>
+<p>In the above example we assume <code>requirements.txt</code> is relatively stable only the application code is changing often. Then all of the dependencies installed by the pip command is already cached in the layer that will not need to be re-installed again</p>
+<h3 id="use-healthchecks">Use Healthchecks<a class="headerlink" href="#use-healthchecks" title="Permanent link">&para;</a></h3>
+<p>A Docker healthcheck is a useful tool to monitor the health of a container. For long-running training jobs, a custom healthcheck can provide valuable insights into the job's progress and potential issues. This is not limited to the long running tasks, it can be used to attempt to reach an application endpoint or check a process’s status. If the health check command returns a failure due to an application crash, the container is marked as unhealthy. You can then restart the container or stop it and shift traffic to other instances.</p>
+<p><div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">tensorflow/tensorflow:latest</span>
+
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+
+<span class="c"># dependencies installed for the job</span>
+<span class="c"># COPY requirements.txt requirements.txt</span>
+<span class="c"># RUN pip install -r requirements.txt</span>
+
+<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+
+<span class="c"># ... other build instructions ...</span>
+
+<span class="k">HEALTHCHECK</span><span class="w"> </span>--interval<span class="o">=</span>30s<span class="w"> </span>--timeout<span class="o">=</span>10s<span class="w"> </span><span class="k">CMD</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-f<span class="w"> </span>/app/train.log<span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="k">$(</span>stat<span class="w"> </span>-c<span class="w"> </span>%s<span class="w"> </span>/app/train.log<span class="k">)</span><span class="w"> </span>-gt<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">0</span><span class="p">;</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+</code></pre></div>
+The above example checks the health every 30 seconds, times out the check after 10 seconds. The command to use for checking the health is checks if the train.log file exists and the file size is greater than 0. If both conditions are met, the healthcheck passes.</p>
+<h2 id="ml-docker-container-best-practice">ML Docker Container Best Practice<a class="headerlink" href="#ml-docker-container-best-practice" title="Permanent link">&para;</a></h2>
+<p>As an opinonated guide, I highly recommend to use <a href="https://cog.run/">cog</a> to create your ML docker container</p>
+<h3 id="use-gpu-enabled-base-images">Use GPU-enabled Base Images.<a class="headerlink" href="#use-gpu-enabled-base-images" title="Permanent link">&para;</a></h3>
+<p>For ML projects requiring GPU, use CUDA-enabled base images.  Whenever possible we should try to leverage the official base images because security fixes. </p>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">nvidia/cuda:11.3.1-runtime-ubuntu20.04</span>
+</code></pre></div>
+<h3 id="install-ml-specific-libraries">Install ML-specific libraries<a class="headerlink" href="#install-ml-specific-libraries" title="Permanent link">&para;</a></h3>
+<p>Install commonly used ML libraries efficiently. To avoid cuda hell with other well known libraries, it is recommended to install the commonly used libraries for ML into the container.</p>
+<div class="highlight"><pre><span></span><code><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--no-cache-dir<span class="w"> </span>numpy<span class="w"> </span>pandas<span class="w"> </span>scikit-learn<span class="w"> </span>torch<span class="w"> </span>torchvision
+</code></pre></div>
+<p>Note: the above didn't specify the version number of each dependnecies.  It is recommended to pin to a version instead of relying on pip to figure out the latest.</p>
+<h3 id="manage-large-model-files-or-datasets">Manage Large Model Files or datasets<a class="headerlink" href="#manage-large-model-files-or-datasets" title="Permanent link">&para;</a></h3>
+<p>Use volume mounts for large model files instead of including them in the image.</p>
+<div class="highlight"><pre><span></span><code><span class="k">VOLUME</span><span class="w"> </span><span class="s">/app/models</span>
+<span class="k">VOLUME</span><span class="w"> </span><span class="s">/app/datasets</span>
+</code></pre></div>
+<p>This assumes the models or dataset could use <code>init-container</code> to be downloaded.  </p>
+<h3 id="optimize-for-inference">Optimize for Inference<a class="headerlink" href="#optimize-for-inference" title="Permanent link">&para;</a></h3>
+<p>For inference containers, focus on runtime dependencies only.</p>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.12-slim</span>
+<span class="k">COPY</span><span class="w"> </span>--from<span class="o">=</span>builder<span class="w"> </span>/app/model<span class="w"> </span>/app/model
+<span class="k">COPY</span><span class="w"> </span>requirements-inference.txt<span class="w"> </span>.
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--no-cache-dir<span class="w"> </span>-r<span class="w"> </span>requirements-inference.txt
+<span class="k">COPY</span><span class="w"> </span>inference.py<span class="w"> </span>.
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;inference.py&quot;</span><span class="p">]</span>
+</code></pre></div>
+<p>Only install what is necessary for inference.</p>
+<h3 id="version-control-for-models-and-data">Version Control for Models and Data<a class="headerlink" href="#version-control-for-models-and-data" title="Permanent link">&para;</a></h3>
+<p>Use version control systems for models and data, and reference specific versions in your Dockerfile.</p>
+<div class="highlight"><pre><span></span><code><span class="k">ARG</span><span class="w"> </span><span class="nv">MODEL_VERSION</span><span class="o">=</span>v1.2.3
+<span class="k">RUN</span><span class="w"> </span>wget<span class="w"> </span>https://model-repo.com/model-<span class="si">${</span><span class="nv">MODEL_VERSION</span><span class="si">}</span>.pkl<span class="w"> </span>-O<span class="w"> </span>/app/model.pkl
+</code></pre></div>
+<h3 id="use-appropriate-concurrency">Use Appropriate Concurrency<a class="headerlink" href="#use-appropriate-concurrency" title="Permanent link">&para;</a></h3>
+<p>Set the number of workers based on available resources.</p>
+<p><div class="highlight"><pre><span></span><code><span class="k">CMD</span><span class="w"> </span>gunicorn<span class="w"> </span>--workers<span class="w"> </span><span class="m">4</span><span class="w"> </span>--threads<span class="w"> </span><span class="m">4</span><span class="w"> </span>--bind<span class="w"> </span><span class="m">0</span>.0.0.0:8000<span class="w"> </span>app:app
+</code></pre></div>
+Since python is under 3.13 still have GIL in place. The command above assume you have a quad core(4) CPU and each core have hyperthreading enabled to fill the instruction pipeline of the CPU.</p>
+<h3 id="optimize-memory">Optimize memory<a class="headerlink" href="#optimize-memory" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="c"># Use an official Python runtime as a parent image</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">python:3.12-slim</span>
+
+<span class="c"># Set environment variables for memory optimization</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONMALLOC</span><span class="o">=</span>malloc
+<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONMALLOCSTATS</span><span class="o">=</span><span class="m">1</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">MALLOC_TRIM_THRESHOLD_</span><span class="o">=</span><span class="m">100000</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONHASHSEED</span><span class="o">=</span><span class="m">0</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONASYNCIODEBUG</span><span class="o">=</span><span class="m">1</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONTRACEMALLOC</span><span class="o">=</span><span class="m">1</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONDEVMODE</span><span class="o">=</span><span class="m">1</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONMEMORY</span><span class="o">=</span><span class="m">4294967296</span><span class="w">  </span><span class="c"># Set memory limit to 4GB</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">PYTHONGC</span><span class="o">=</span><span class="m">1</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">4</span>
+
+...
+
+<span class="c"># Run app.py when the container launches</span>
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;app.py&quot;</span><span class="p">]</span>
+</code></pre></div>
+The above is just an example, your usage may vary.</p>
+<p>Here's a breakdown of the environment variables used:
+- PYTHONMALLOC=malloc: Uses the standard C malloc instead of Python's custom allocator.
+- PYTHONMALLOCSTATS=1: Prints memory allocation statistics.
+- MALLOC_TRIM_THRESHOLD_=100000: Sets a lower threshold for releasing memory back to the system.
+- PYTHONHASHSEED=0: Makes memory usage more predictable across runs.
+- PYTHONASYNCIODEBUG=1: Enables debugging mode for asyncio to help identify memory leaks in asynchronous code.
+- PYTHONTRACEMALLOC=1: Enables tracemalloc to track memory allocations.
+- PYTHONDEVMODE=1: Enables additional checks that can help catch memory-related issues earlier.
+- PYTHONMEMORY=4294967296: Sets a memory limit of 4GB for Python processes.
+- PYTHONGC=1: Enables garbage collection.
+- OMP_NUM_THREADS=4: Limits OpenMP to 4 threads, which can help control memory usage in scientific computing libraries.</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../design_patterns/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Design Patterns" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Design Patterns
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../tutorials/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Overview
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://github.com/felixgao/python-best-practices/" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+    
+  </body>
+</html>
