@@ -4,7 +4,7 @@ In the realm of machine learning, reproducibility is paramount. Ensuring that ex
 
 ## General Best Practices
 
-### Use Officil Base Images
+### Use Official Base Images
 Start with official Python images to ensure compatibility and security.  It is important to use the latest Python version to ensure the system is up to date. 
 
 ```dockerfile
